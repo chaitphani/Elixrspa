@@ -1,12 +1,9 @@
 from django.db import models
-# from mptt.models import MPTTModel, TreeForeignKey
-
 from django.contrib.auth.models import AbstractUser
-# Create your models here.
-# from dashboard.models import Addduration
 
 
 class Register(models.Model):
+
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=100)
@@ -14,58 +11,62 @@ class Register(models.Model):
     password1=models.CharField(max_length=100)
     password2=models.CharField(max_length=100)
 
-def __str__(self):
-    return self.firstame
+    def __str__(self):
+        return '{}'.format(self.firstame)
+
 
 class Citys(models.Model):
-        name=models.CharField(max_length=50,default="delhi")
+    name=models.CharField(max_length=50,default="delhi")
 
-        def __str__(self):
-            return self.name
+    def __str__(self):
+        return '{}'.format(self.name)
+
 
 class User(AbstractUser):
-    city = models.ForeignKey(Citys, on_delete=models.CASCADE,null=True,blank=True)
+    city = models.ForeignKey(Citys, on_delete=models.SET_NULL,null=True,blank=True)
+
 
 class Services(models.Model):
-        name=models.CharField(max_length=500,default="Services")
-        # duration = models.ForeignKey(Addduration, on_delete=models.CASCADE,null=True)
-        # price  = models.ForeignKey(Addprice, on_delete=CASCADE,null=True)
 
+    name=models.CharField(max_length=500,default="Services")
+    # duration = models.ForeignKey(Addduration, on_delete=models.CASCADE,null=True)
+    # price  = models.ForeignKey(Addprice, on_delete=CASCADE,null=True)
 
-
-
-        def __str__(self):
-            return self.name
+    def __str__(self):
+        return '{}'.format(self.name)
 
 
 class Gift(models.Model):
-        name=models.CharField(max_length=50)
-        email=models.CharField(max_length=50)
-        mobile=models.IntegerField()
-        address=models.CharField(max_length=200)
-        message=models.CharField(max_length=500)
-        price=models.IntegerField()
 
+    name=models.CharField(max_length=50)
+    email=models.CharField(max_length=50)
+    mobile=models.IntegerField()
+    address=models.CharField(max_length=200)
+    message=models.CharField(max_length=500)
+    price=models.IntegerField()
 
-        def __str__(self):
-            return self.name
-
+    def __str__(self):
+        return '{}'.format(self.name)
 
 
 class Appointment(models.Model):
+
     name=models.CharField(max_length=50)
     mobileno = models.IntegerField()
     email=models.CharField(max_length=50, default="null")
-    city = models.ForeignKey(Citys, on_delete=models.CASCADE,null=True)
     date=models.DateField()
     time=models.TimeField()
-    services = models.ForeignKey(Services, on_delete=models.CASCADE)
-    status = models.CharField(max_length=250,null=True)
+
+    city = models.ForeignKey(Citys, on_delete=models.SET_NULL,null=True)
+    services = models.ForeignKey(Services, on_delete=models.SET_NULL, null=True)
+
+    status = models.CharField(max_length=250, null=True)
 
     def __str__(self):
-        return self.name
+        return '{}'.format(self.name)
 
 class Carriers(models.Model):
+
     name=models.CharField(max_length=100)
     address=models.CharField(max_length=200)
     date=models.DateField()
@@ -77,9 +78,11 @@ class Carriers(models.Model):
     profile_pic=models.ImageField(upload_to='Images/img/')
 
     def __str__(self):
-        return self.name
+        return '{}'.format(self.name)
+
 
 class Franchisee(models.Model):
+
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=200)
     mobileno = models.CharField(max_length=15)
@@ -87,9 +90,7 @@ class Franchisee(models.Model):
     subject = models.CharField(max_length=500)
 
     def __str__(self):
-        return self.name
-
-
+        return '{}'.format(self.name)
 
 
 # class Genre(MPTTModel):
