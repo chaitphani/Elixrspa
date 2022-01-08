@@ -1,0 +1,241 @@
+
+{% extends 'spadashboard/index.html' %}
+{% load static %}
+{% block heading %}
+<div class="page-title-wrapper">
+
+<div class="page-title-heading">  
+    <div class="page-title-icon">
+        <i class="fa fa-user icon-gradient bg-mean-fruit">
+        </i>
+    </div>
+    <div>
+        Manage Staff
+        <div class="page-title-subheading">You can manage your staff here.
+        </div>
+    </div>
+</div>
+<div class="page-title-actions">
+   
+        <button id="btnaddstaff" type="button" class="btn btn-info">
+            <span class="btn-icon-wrapper">
+                <i class="fa fa-user-plus fa-fw"></i>
+            </span>
+            Add Staff
+        </button> 
+
+</div> 
+                           
+</div>
+{% endblock %}
+{% block home %}
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#stafflistsection").hide();
+      $("#btnaddstaff").click(function(){
+        $("#stafflistsection").toggle();
+      });
+    });
+</script>
+
+
+<div class="container-fluid p-3 mb-3 rounded bg-white" id="stafflistsection">
+    <div class="row">
+        <div class="col-md-12 text-center"><h4>Staff Details</h4><hr/></div>
+    </div>
+    
+       
+            <form  action="{% url 'addstaff' %}" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="label" for="name">Staff Name</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <input type="name" name="name" class="form-control"  required="required"/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                </div>
+            
+                <div class="col-md-4 form-group">
+                    <label class="label" for="mobileno">Mobile_No</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <input type="text" name="mobileno" class="form-control"  required="required"/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                </div>
+            
+                <div class="col-md-4 form-group">
+                    <label for="city" class="label">City</label>
+                <select id="city" name="city" class="form-control" required>
+                    <option selected disabled> Select City..<option>
+                      {% for cities in city %}
+                      <option value="{{cities.id}}">{{ cities.name }}</option>
+                      {%endfor%}
+                  </select>
+                </div>
+            <div class="offset-md-8 col-md-4">
+                <button type="submit" class="btn btn-info btn-lg btn-block font-weight-bold ">Add New Staff</button>
+            </div>
+        </div>
+            </form>
+        </div>
+ 
+
+
+
+<!--staff details -->
+<div class="container-fluid p-3 mb-3 rounded bg-white" id="stafflistsection">
+    <div class="row">
+        <div class="col-md-12 text-center"><h4>Staff Details</h4></div>
+    </div>
+
+<div class="row">
+  <div class="col-12">
+        <table class="table table-bordered">
+            <thead class="alert-light">
+                <tr>
+                    <th>NAME</th>
+                    <th>Mobile_No</th>
+                    <th>city</th>
+                    <!-- <th>Service</th> -->
+                    <th class="text-center">Action</th>
+      
+      
+                </tr>
+            </thead>
+            <tbody>
+              {% for staf in staff %}
+                <tr>
+                    <td>{{ staf.name }}</td>
+                    <td>{{ staf.mobileno }}</td>
+                    <td>{{ staf.city }}</td>
+                    <!-- <td>{{ staf.services }}</td> -->
+      
+                    <input type="hidden" name="{{ staf.id }}" value="">
+                    <td><center><a class="btn btn-sm btn-warning" onclick="edit_{{ staf.id }}()" data-toggle="modal" data-target="#myModal">
+                     Edit</a>
+                 <!--    {% if request.user.is_superuser %}
+      
+                      <a class="btn btn-sm btn-danger" delete_{{ staf.id }}  data-toggle="modal" data-target="#myModals">
+              Delete</a>{%endif%}</center></td>-->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+      
+      <div class="container">
+      
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+      
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="modal-title text-center">EDIT STAFF DETAILS</h4>
+              </div>
+              <div class="modal-body">
+                <form id="update_form" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name" class="label">Change Name</label>
+                        <input id="name" type="text" name="name"  class="form-control" required="required"/>
+                    </div>
+      
+                    <div class="form-group">
+                        <label for="name" class="label">Mobile_No</label>
+                        <input id="mobileno" type="text" name="mobileno"  class="form-control" required="required"/>
+                    </div>
+      
+                   
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-sm btn-success">Update</button>
+                    </div>
+                </form>
+      
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+      
+          </div>
+        </div>
+      
+      </div>
+      
+      
+      <!-- delete-->
+      
+      <div class="container">
+      
+        <!-- Modal -->
+        <div class="modal fade" id="myModals" role="dialog">
+          <div class="modal-dialog">
+      
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="modal-title text-center">Delete Client Details</h4>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure want to delete city</p>
+              
+      
+                <a id="s_delete" class="btn btn-danger" >Delete</a>
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+      
+      <!-- end of delete -->
+      
+      
+      
+      
+      <script>
+      
+        {% for staf in staff %}
+      
+        function edit_{{ staf.id }}()
+        {
+          console.log("{{ staf.id }}")
+          $("#name").val("{{ staf.name }}")
+          $("#mobileno").val("{{ staf.mobileno }}")
+          // $("#service").val("{{ staf.services }}")
+      
+      
+          $("#update_form").attr("action","update_staff/{{ staf.id}}")
+        }
+      
+      
+           function delete_{{ staf.id }}(){
+      
+      
+          $('#s_delete').attr('href',"delete_staff/{{ staf.id }}")
+      
+          }
+      
+      
+      
+        {% endfor %}
+      </script>
+</div>
+</div>
+
+
+
+
+
+
+{% endblock %}

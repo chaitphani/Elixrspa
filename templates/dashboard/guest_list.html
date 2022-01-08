@@ -1,0 +1,468 @@
+{% extends 'dashboard/index.html' %} {%load static%} {% block addcity %}
+<div class="text-center ">
+    <h3>Client List
+        <hr class="hr1">
+    </h3>
+</div><br>
+
+
+
+
+<div class="container-fluid ">
+
+
+
+    <form style="float: right;" class="form-inline" method="POST">{% csrf_token %}
+        <input type="hidden" value="fordate" name="fordate">
+        <input name="to_date" type="date" class="form-control"> &nbsp&nbsp&nbsp
+        <span style="color:white"> To &nbsp&nbsp&nbsp</span><input name="from_date" type="date"
+            class="form-control">&nbsp&nbsp&nbsp
+        <input type="submit" class="btn btn-success" placeholder="Filter">&nbsp&nbsp&nbsp
+
+    </form><br><br>
+
+
+    <div>
+
+
+
+        {# url 'report' #}
+
+        <br>
+        <br>
+
+        <div id="customers">
+            <table id="example" class="table table-striped table-bordered table-sm table-responsive " cellspacing="0"
+                width="100%">
+
+                <colgroup>
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                </colgroup>
+
+                <thead class="alert-warning">
+                    <tr>
+                        <th class=" text-center th-sm">Date
+
+                        </th>
+                        <th class=" text-center th-sm">Client_Name
+
+                        </th>
+                        <th class=" text-center th-sm">Mobile_NO
+
+                        </th>
+                        <th class="text-center th-sm">Treatment Service
+
+                        </th>
+                        <th class=" text-center th-sm">Treatment By
+
+                        </th>
+                        <th class="text-center th-sm">Duration
+
+                        </th>
+
+                        <th class="text-center th-sm">City
+
+                        </th>
+                        <th class=" text-center th-sm">Time In
+
+                        </th>
+                        <th class="text-center th-sm">Time Out
+
+                        </th>
+
+
+
+
+
+
+                        <th class="text-center th-sm">Price
+
+                        </th>
+                        <th class="text-center th-sm">Payment MOD</th>
+                        <th class="text-center th-sm">Comments</th>
+                        <th class="text-center th-sm notexport">Action</th>
+
+
+                        <th class="text-center th-sm notexport">Delete</th>
+
+
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for g in guests %}
+                    <tr class="text-center">
+                        <td class="text-center">{{g.date|date:'Y-m-d'}}</td>
+                        <td class="text-center">{{g.gname}}</td>
+                        <td class="text-center">{{g.mobile}}</td>
+                        <td class="text-center">{{g.services}}</td>
+                        <td class="text-center">{{g.treatment_by}}</td>
+                        <td class="text-center">{{g.duration}}</td>
+                        <td class="text-center">{{g.city}}</td>
+                        <td class="text-center">{{g.time_in}}</td>
+                        <td class="text-center">{{g.time_out}}</td>
+                        <td class="text-center">{{g.price}}</td>
+                        <td class="text-center">{{g.payment}}</td>
+                        <td class="text-center">{{g.comments}}</td>
+                        <td class="notexport"> <a class="btn btn-sm btn-warning" id="out{{g.id}}"
+                                onclick="out_{{g.id}}(this)" data-toggle="modal" data-target="#myModalss">Out</a>
+                        </td>
+
+
+                        <td class="notexport"> <a class="btn btn-sm btn-danger" onclick="delete_{{ g.id }}()"
+                                data-toggle="modal" data-target="#delete_modal">Delete</a></td>
+
+                    </tr>
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+        </div>
+        <!--  -->
+    </div>
+</div>
+<div class="container">
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title text-center">EDIT CLIENTS DETAIL</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="update_form" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="name" class="label">Duration</label>
+                            <input id="duration" type="text" name="duration" class="form-control" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="label">Time_In</label>
+                            <input id="timein" type="time" name="time_in" class="form-control" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="label">Time_Out</label>
+                            <input id="timeout" type="time" name="time_out" class="form-control" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="total_time" class="label">Total Time</label>
+                            <input id="total_time" type="text" name="total_time" onfocus="myFunction()"
+                                class="form-control" required="required" />
+                        </div>
+
+                        <div id="com" class="form-group">
+                            <label for="comments" class="label">Comments(Why Delay)</label>
+                            <textarea id="comments" name="comments" class="form-control"
+                                required="required"> </textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-sm btn-success">Update</button>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- end of modal -->
+</div>
+
+<div class="container">
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModals" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title text-center">Delete Client Details</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure want to delete city</p>
+                    {% for g in guests %}
+
+                    <a href="guest/gdel/{{g.id}}" class="btn btn-danger">Delete</a> 
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade myModalss" id="myModalss" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title text-center">Client</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="updates_form" method="POST">
+                        {% csrf_token %}
+                        <label id="delay">Why Delay</label>
+                        <textarea name="cmt" rows="8" cols="80" class="form-control" id="cmt"></textarea>
+                        <br>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-lg btn-success" style="width:100%">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal for delete -->
+
+<div class="container">
+
+    <!-- Modal -->
+    <div class="modal fade" id="delete_modal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title text-center">Delete Client Details</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure want to delete city</p>
+
+
+                    <a id="s_delete" class="btn btn-danger">Delete</a>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- end of delete modal-->
+
+
+
+<!--Demo question asked on
+https://qawithexperts.com/questions/228/how-to-export-html-table-to-pdf-excel-in-jquery-datatable -->
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+<link href="{% static 'dashboard/css/dt.css'%}" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+
+<script>
+    $('#example').dataTable({
+
+        dom: 'lBfrtip',
+        order: [
+            [0, 'desc']
+        ],
+        buttons: [{
+            extend: 'excelHtml5',
+            title: new Date() + '  CLIENT LIST',
+            text: 'Export to excel',
+            className: 'btn btn-primary',
+            footer: true,
+            exportOptions: {
+                columns: ':not(.notexport)'
+            }
+
+            //Columns to export
+            //exportOptions: {
+            //     columns: [0, 1, 2, 3,4,5,6]
+            // }
+        }, {
+            extend: 'pdfHtml5',
+            title: new Date().toString() + '  CLIENT LIST',
+            text: 'Export to PDF',
+            className: 'btn btn-success',
+            orientation: 'landscape',
+
+            footer: true,
+            exportOptions: {
+                columns: ':not(.notexport)'
+            }
+            //Columns to export
+            //exportOptions: {
+            //     columns: [0, 1, 2, 3, 4, 5, 6]
+            //  }
+        }],
+
+        //CALULATE FOOTER TOTALS ON FOTER CALLBACK
+
+        "fnFooterCallback": function (nRow, aasData, iStart, iEnd, aiDisplay) {
+
+            var columnas = [9,]; //the columns you wish to add
+            for (var j in columnas) {
+                var columnaActual = columnas[j];
+                var total = 0;
+                for (var i = iStart; i < iEnd; i++) {
+                    total = total + parseFloat(aasData[aiDisplay[i]][columnaActual]);
+                }
+                $($(nRow).children().get(columnaActual)).html(total);
+
+            } // end
+
+        } // end footercallbac
+
+
+    });
+
+    // $(document).ready(function(){
+
+
+    // });
+</script>
+
+
+<script>
+    // {% for g in guests %}
+
+
+    // delete Client
+
+
+    function delete_ {
+        {
+            g.id
+        }
+    } () {
+
+
+        $('#s_delete').attr('href', "guest/gdel/{{g.id}}")
+
+    }
+
+    //end of delete Client
+    //console.log('working..');
+    //
+
+    function out_ {{g.id}} (x) {
+
+        console.log("{{ g.id }}")
+        $("#cmt").val("{{ g.cmt }}")
+        $("#updates_form").attr("action", "update_guest/{{ g.id}}")
+
+        let t_out = "{{g.time_out}}"
+        let t_now = new Date().toLocaleTimeString()
+
+        let t_24_out = get24hTime(t_out)
+        let t_24_now = get24hTime(t_now)
+
+        let [h1, m1] = t_24_out.split(":");
+        let [h2, m2] = t_24_now.split(":");
+        //console.log(h1);
+        let hh = eval(h2) - eval(h1);
+        let mm = eval(m2) - eval(m1);
+        //mm = mm.replace(/-/g,"");
+        mm = Math.abs(mm);
+
+        time_now = get24tomin(t_24_now);
+        time_out = get24tomin(t_24_out);
+        min_diff = eval(time_now) - eval(time_out);
+        $("#delay").html("<label>Why delay by  " + min_diff + " Minutes</label>");
+
+        if (time_now <= time_out) {
+            $(".myModalss").removeAttr('id');
+            //$("#out{{g.id}}").hide();
+        } else {
+            $(".myModalss").attr('id', 'myModalss')
+        }
+    }
+
+    // {÷% endfor %}
+
+    function get24tomin(time) {
+        let [h, m] = time.split(":");
+
+        console.log(h + "  ==== " + m)
+
+        return (eval(h) * 60) + eval(m)
+
+    }
+
+    function get24hTime(str) {
+        str = String(str).toLowerCase().replace(/\s/g, '');
+        // console.log(str)
+        str = String(str).toLowerCase().replace(/\./g, '');
+        // console.log(str)
+        var has_am = str.indexOf('am') >= 0;
+        var has_pm = str.indexOf('pm') >= 0;
+        // first strip off the am/pm, leave it either hour or hour:minute
+        str = str.replace('am', '').replace('pm', '');
+        // if hour, convert to hour:00
+        if (str.indexOf(':') < 0) str = str + ':00';
+        // now it's hour:minute
+        // we add am/pm back if striped out before
+        if (has_am) str += ' am';
+        if (has_pm) str += ' pm';
+        // now its either hour:minute, or hour:minute am/pm
+        // put it in a date object, it will convert to 24 hours format for us
+        var d = new Date("1/1/2011 " + str);
+        // make hours and minutes double digits
+        var doubleDigits = function (n) {
+            return (parseInt(n) < 10) ? "0" + n : String(n);
+        };
+        return doubleDigits(d.getHours()) + ':' + doubleDigits(d.getMinutes());
+    }
+</script>
+
+<!-- {%endfor%} -->
+{%endblock%}
