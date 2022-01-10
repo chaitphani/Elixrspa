@@ -172,7 +172,7 @@
             <h4>Client Details</h4>
         </div>
         <div class="col-12">
-            <table id="example" class="table table-striped table-bordered table-sm table-responsive">
+            <table id="tblclientlist" class="table table-striped table-bordered table-sm table-responsive">
                 <thead class="alert-light">
                     <tr>
                         <th class=" text-center th-sm">Date</th>
@@ -206,12 +206,14 @@
                         <td class="text-center">{{guest.payment}}</td>
                         <td class="text-center">{{guest.comments}}</td>
                         <td class="notexport"> 
-                            <a class="btn btn-sm btn-warning" id="out{{guest.id}}"
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a class="btn btn-sm btn-warning text-white" id="out{{guest.id}}"
                                 onclick="out_{{guest.id}}(this)" data-toggle="modal" data-target="#myModalss">Out
                             </a>
-                            <a class="btn btn-sm btn-danger" onclick="delete_{{ guest.id }}()"
+                            <a class="btn btn-sm btn-danger text-white" onclick="delete_{{ guest.id }}()"
                                 data-toggle="modal" data-target="#delete_modal">Delete
                             </a>
+                        </div>
                         </td>
                     </tr>
                     {% endfor %}
@@ -274,9 +276,9 @@
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header text-center">
                         <button type="button" class="close" data-dismiss="modal"></button>
-                        <h4 class="modal-title text-center">Delete Client Details</h4>
+                        <h4 class="modal-title">Delete Client Details</h4>
                     </div>
                     <div class="modal-body">
                         <table class="table table-bordered table-responsive" style="color: black">
@@ -317,9 +319,9 @@
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header text-center">
                         <button type="button" class="close" data-dismiss="modal"></button>
-                        <h4 class="modal-title text-center">Client</h4>
+                        <h4 class="modal-title">Client</h4>
                     </div>
                     <div class="modal-body">
                         <form id="updates_form" method="POST">
@@ -327,14 +329,13 @@
                             <label id="delay">Why Delay</label>
                             <textarea name="cmt" rows="8" cols="80" class="form-control" id="cmt"></textarea>
                             <br>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-lg btn-success" style="width:100%">Submit</button>
+                            <div class="row form-group">
+                                <div class="col-6"><button type="submit" class="btn btn-lg btn-block btn-success">Submit</button></div>
+                                <div class="col-6 text-right"><button type="button" class="btn btn-lg btn-danger" data-dismiss="modal">Close</button></div>
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -433,6 +434,41 @@
     }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script>
+    $('#tblclientlist').dataTable({
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'excelHtml5',
+            title: 'GUEST LIST',
+            text: 'Export to excel',
+            className: 'btn btn-success',
+            footer: true,
+            exportOptions: {
+                columns: ':not(.notexport)'
+            }
+
+            //Columns to export
+            //exportOptions: {
+            //     columns: [0, 1, 2, 3,4,5,6]
+            // }
+        }, {
+            extend: 'pdfHtml5',
+            title: 'GUEST LIST',
+            text: 'Export to PDF',
+            className: 'btn btn-primary ml-1',
+            footer: true,
+            exportOptions: {
+                columns: ':not(.notexport)'
+            }
+            //Columns to export
+            //exportOptions: {
+            //     columns: [0, 1, 2, 3, 4, 5, 6]
+            //  }
+        }],
+    })
+</script>
+
 
 <script>
     $(window).load(function () {
