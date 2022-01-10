@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db.models.fields import DurationField
 
 from .models import *
 from dashboard.models import *
@@ -18,3 +19,5 @@ admin.site.register(Guest)
 admin.site.register(Expenses)
 admin.site.register(Addstaff)
 admin.site.register(Franchisee)
+admin.site.register(Addduration)
+admin.site.register(Paymentmod)

@@ -124,18 +124,18 @@ def franchise_delete(request, id):
 def managerlist(request):
     
     if request.method == 'POST':
-        mobileno = request.POST['mobileno']
+        email = request.POST['email']
         city = Citys.objects.get(id=request.POST['city'])
         username=request.POST['username']
 
         if User.objects.filter(username=username).exists():
             messages.info(request,'username taken')
             return redirect('managerlist')
-        elif User.objects.filter(email=mobileno).exists():
+        elif User.objects.filter(email=email).exists():
             messages.info(request,'mobile number is taken')
             return redirect('managerlist')
         else:
-            user=User.objects.create_user(username=username, email=mobileno, password=request.POST['password'], city=city, is_staff=True)
+            user=User.objects.create_user(username=username, email=email, password=request.POST['password'], city=city, is_staff=True)
             user.save()
             return redirect('managerlist')
 
@@ -151,8 +151,8 @@ def manager_edit(request, id):
     manager_obj = User.objects.get(id=id)
     city=Citys.objects.get(id=request.POST.get('city'))
 
-    manager_obj.first_name = request.POST['name']
-    manager_obj.email = request.POST['mobileno']
+    # manager_obj.first_name = request.POST['name']
+    manager_obj.email = request.POST['email']
 
     manager_obj.city = city
     manager_obj.username = request.POST['username']
