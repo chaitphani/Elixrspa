@@ -52,20 +52,25 @@ def clientlist(request):
         else:
             return redirect('clientlist')
 
-    if request.user.is_superuser:
-        staff_members = Addstaff.objects.all()
-    else:
-        staff_members = Addstaff.objects.filter(city=request.user.city)
+    # if request.user.is_superuser:
+    # staff_members = Addstaff.objects.all()
+    # else:
+    #     staff_members = Addstaff.objects.filter(city=request.user.city)
+
+    # if request.user.is_superuser:
+    # guests = Guest.objects.all()
+    # else:
+        # guests = Guest.objects.filter(city=request.user.city)
 
     data = {
         'cities':Citys.objects.all(),
         'payment_modes':Paymentmod.objects.all(),
         'durations':Addduration.objects.all(),
         'services':Services.objects.all(),
-        'staffs':staff_members,
+        'staffs':Addstaff.objects.all(),
         'duration':Addduration.objects.all(),
-        "paym":Paymentmod.objects.all(),
-        'guests':Guest.objects.all() if request.user.is_superuser else Guest.objects.filter(city=request.user.city),
+        "paym": Paymentmod.objects.all(),
+        'guests':Guest.objects.all(),
     }
     return render(request,'spadashboard/clientlist.html', data)
 
@@ -124,18 +129,18 @@ def franchise_delete(request, id):
 def managerlist(request):
     
     if request.method == 'POST':
-        mobileno = request.POST['mobileno']
+        email = request.POST['email']
         city = Citys.objects.get(id=request.POST['city'])
         username=request.POST['username']
 
         if User.objects.filter(username=username).exists():
             messages.info(request,'username taken')
             return redirect('managerlist')
-        elif User.objects.filter(email=mobileno).exists():
+        elif User.objects.filter(email=email).exists():
             messages.info(request,'mobile number is taken')
             return redirect('managerlist')
         else:
-            user=User.objects.create_user(username=username, email=mobileno, password=request.POST['password'], city=city, is_staff=True)
+            user=User.objects.create_user(username=username, email=email, password=request.POST['password'], city=city, is_staff=True)
             user.save()
             return redirect('managerlist')
 
