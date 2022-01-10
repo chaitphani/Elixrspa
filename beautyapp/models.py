@@ -14,6 +14,9 @@ class Register(models.Model):
     def __str__(self):
         return '{}'.format(self.firstame)
 
+    class Meta: 
+        verbose_name = "Attendance"
+        verbose_name_plural = "Attendance"
 
 class Citys(models.Model):
     name=models.CharField(max_length=50,default="delhi")
@@ -21,6 +24,9 @@ class Citys(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
+    class Meta: 
+        verbose_name = "City"
+        verbose_name_plural = "Cities"
 
 class User(AbstractUser):
     city = models.ForeignKey(Citys, on_delete=models.SET_NULL,null=True,blank=True)
@@ -35,6 +41,9 @@ class Services(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
+    class Meta: 
+        verbose_name = "Service"
+        verbose_name_plural = "Services"
 
 class Gift(models.Model):
 
@@ -80,6 +89,9 @@ class Carriers(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
+    class Meta: 
+        verbose_name = "Career"
+        verbose_name_plural = "Career"
 
 class Franchisee(models.Model):
 
@@ -91,6 +103,10 @@ class Franchisee(models.Model):
 
     def __str__(self):
         return '{}'.format(self.name)
+
+    class Meta: 
+        verbose_name = "Franchise"
+        verbose_name_plural = "Franchises"
 
 
 # class Genre(MPTTModel):
