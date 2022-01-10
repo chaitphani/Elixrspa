@@ -51,7 +51,7 @@
                 <div class="row">
                     <div class="col-md-4 form-group">
                         <label>Date</label>
-                        <input id="date" type="date" name="date" class="form-control" required />
+                        <input id="date" type="date" name="date" class="form-control" readonly />
                     </div>
                     <div class="col-md-4 form-group">
                         <label>Client Name</label>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label>Duration(In-Minute)</label>
-                        <select id="duration" name="duration" class="form-control" required>
+                        <select id="duration" name="duration" onchange="myFunction($('#timein.val'), this)" class="form-control" required>
                             <option value="">Select Duration..</option>
                             {% for d in duration %}
                                 <option value="{{d.duration}}">{{ d.duration }}</option>
@@ -100,7 +100,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label>Time-In</label>
-                        <input id="timein" onchange="myFunction(this)" type="time" name="timein" class="form-control"
+                        <input id="timein" onchange="myFunction(this, $('#duration.val'))" type="time" name="timein" class="form-control"
                             required />
                     </div>
                     <div class="col-md-4 form-group">
@@ -126,44 +126,37 @@
         </div>
     </div>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 <!--  -->
 <script>
-    function myFunction(x) {
-        let [h, m] = x.value.split(":")
+    function myFunction(time_in_id, duration_id) {
+
+        let [h, m] = $('#timein').val().split(":")
         let d = eval($('#duration').val()) + eval(15) + eval(m)
         let r = Math.floor(d / 60)
         m2 = d - (60 * r)
         h2 = eval(h) + eval(r)
+
         if (h2 < 10 & m2 < 10) {
             $('#timeout').val("0" + h2 + ":0" + m2)
-            console.log("0" + h2 + ":0" + m2)
-
         } else if (m2 < 10) {
             $('#timeout').val(h2 + ":0" + m2)
-            console.log(h2 + ":0" + m2)
-
         }
         else if (h2 < 10) {
             $('#timeout').val("0" + h2 + ":" + m2)
-            console.log("0" + h2 + ":" + m2)
-
         }
         else if (h2 >= 24) {
             let carry = h2 - 24
             $('#timeout').val("0" + carry + ":" + m2)
         }
-
         else {
             $('#timeout').val(h2 + ":" + m2)
-            console.log(h2 + ":" + m2)
         }
     }
 
 </script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!--Client details here-->
 
 <div class="container-fluid p-3 rounded bg-white" id="clientlisttable">
@@ -432,7 +425,7 @@
         return doubleDigits(d.getHours()) + ':' + doubleDigits(d.getMinutes());
     }
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 
 <script>
     $(window).load(function () {

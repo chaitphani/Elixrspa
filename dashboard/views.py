@@ -589,3 +589,4 @@ def deleteduration(request,id):
     a = Addduration.objects.get(id=id)
     a.delete()
     return redirect(adduration)
+

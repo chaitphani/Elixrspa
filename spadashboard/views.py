@@ -49,8 +49,8 @@ def clientlist(request):
         if repeated_client:
             data_1 = {'repeated':'repeated', 'rep_guests':repeated_client}
             return render(request,'spadashboard/clientlist.html', data_1)
-        else:
-            return redirect('clientlist')
+        # else:
+        return redirect('clientlist')
 
     # if request.user.is_superuser:
     # staff_members = Addstaff.objects.all()
