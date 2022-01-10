@@ -156,8 +156,8 @@ def manager_edit(request, id):
     manager_obj = User.objects.get(id=id)
     city=Citys.objects.get(id=request.POST.get('city'))
 
-    manager_obj.first_name = request.POST['name']
-    manager_obj.email = request.POST['mobileno']
+    # manager_obj.first_name = request.POST['name']
+    manager_obj.email = request.POST['email']
 
     manager_obj.city = city
     manager_obj.username = request.POST['username']
