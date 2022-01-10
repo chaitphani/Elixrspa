@@ -1,80 +1,75 @@
 {% extends 'dashboard/index.html' %}
 {% load static %}
 {% block addcity %}
+
 <div class="container">
-<form class="form-inline"  action="{% url 'paymentmod' %}" method="POST">
-    {% csrf_token %}
-    <div class="form-group">
-        <label  class="label" for="city">Add Payment Mod</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        <input type="text" name="name" class="form-control"  required="required"/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-
-        <button type="submit" class="btn btn-sm btn-primary"> ADD</button>
-    </div>
-</form>
-
-<br /></div>
-<div class="container">
-<table class="table table-bordered " id="dtBasicExample">
-    <thead class="alert-warning">
-        <tr>
-            <th>NAME</th>
-            <th class="text-center">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-      {% for p in pay %}
-        <tr>
-            <td>{{ p.name }}</td>
-            <input type="hidden" name="{{ p.id }}" value="">
-            <td><center><a class="btn btn-sm btn-warning" onclick="edit_{{ p.id }}()" data-toggle="modal" data-target="#myModal">
-             Edit</a>
-             <a class="btn btn-sm btn-danger" href="deletepaymentmod/{{ p.id }}">
-                 Delete</a></center></td>
-
-                 <!-- href="delete/{{ cities.id }} -->
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+	<form class="form-inline" action="{% url 'paymentmod' %}" method="POST">
+		{% csrf_token %}
+		<div class="form-group">
+			<label class="label" for="city">Add Payment Mod</label>
+			<input type="text" name="name" class="form-control" required>
+			<input type="submit" class="btn btn-sm btn-primary" value="ADD">
+		</div>
+	</form>
 </div>
 
-
 <div class="container">
+	<table class="table table-bordered " id="dtBasicExample">
+		<thead class="alert-warning">
+			<tr>
+				<th>NAME</th>
+				<th class="text-center">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for p in pay %}
+				<tr>
+					<td>{{ p.name }}</td>
+					<input type="hidden" name="{{ p.id }}" value="">
+					<td>
+						<a class="btn btn-sm btn-warning" 
+							onclick="edit_{{ p.id }}()" data-toggle="modal" data-target="#myModal">Edit
+						</a>
+						<a class="btn btn-sm btn-danger" href="deletepaymentmod/{{ p.id }}">Delete</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"></button>
+					<h4 class="modal-title text-center">Edit Paymentmod</h4>
+				</div>
+				<div class="modal-body">
+					<form id="update_form" method="POST">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="name" class="label">Change Name</label>
+							<input id="payname" type="text" name="name" class="form-control" required="required" />
+						</div>
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"></button>
-          <h4 class="modal-title text-center">Edit Paymentmod</h4>
-        </div>
-        <div class="modal-body">
-          <form id="update_form" method="POST">
-              {% csrf_token %}
-              <div class="form-group">
-                  <label for="name" class="label">Change Name</label>
-                  <input id="payname" type="text" name="name"  class="form-control" required="required"/>
-              </div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-sm btn-success">Update</button>
+						</div>
+					</form>
 
-              <div class="form-group">
-                  <button type="submit" class="btn btn-sm btn-success">Update</button>
-              </div>
-          </form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-      </div>
+		</div>
+	</div>
 
-    </div>
-  </div>
-
-
-  <!-- <div class="modal fade" id="myModals" role="dialog">
+	<!-- <div class="modal fade" id="myModals" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -92,23 +87,14 @@
     </div>
   </div> -->
 
-</div>
 <script>
-  {% for p in pay %}
-
-  function edit_{{ p.id }}()
-  {
-    console.log("{{ p.id }}")
-    $("#payname").val("{{ p.name }}")
-    $("#update_form").attr("action","paymentmodchange/{{ p.id}}")
-  }
-
-
-
-  {% endfor %}
+	{% for p in pay %}
+		function edit_{ { p.id } } (){
+			$("#payname").val("{{ p.name }}")
+			$("#update_form").attr("action", "paymentmodchange/{{ p.id}}")
+		}
+	{% endfor %}
 </script>
-
-
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 <link href="{% static 'dashboard/css/dt.css'%}" rel="stylesheet">
@@ -124,46 +110,41 @@
 <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
 
 <script>
+	$('#dtBasicExample').dataTable({
+		dom: 'Bfrtip',
+		buttons: [
+			{
+				extend: 'excelHtml5',
+				title: 'GUEST LIST',
+				text: 'Export to excel',
+				className: 'btn btn-success',
+				footer: true,
+				exportOptions: {
+					columns: ':not(.notexport)'
+				}
 
-$('#dtBasicExample').dataTable({
-
-               dom: 'Bfrtip',
-               buttons: [
-                   {
-                       extend: 'excelHtml5',
-                       title: 'GUEST LIST',
-                       text:'Export to excel',
-                       className: 'btn btn-success',
-                       footer:true,
-                       exportOptions: {
-                       columns: ':not(.notexport)'
-                         }
-
-                       //Columns to export
-                       //exportOptions: {
-                      //     columns: [0, 1, 2, 3,4,5,6]
-                      // }
-                   },
-                   {
-                       extend: 'pdfHtml5',
-                       title: 'GUEST LIST',
-                       text: 'Export to PDF',
-                       className: 'btn btn-primary ml-1',
-                       footer:true,
-                       exportOptions: {
-                       columns: ':not(.notexport)'
-                         }
-                       //Columns to export
-                       //exportOptions: {
-                      //     columns: [0, 1, 2, 3, 4, 5, 6]
-                     //  }
-                   }
-               ],})
-
-
+				//Columns to export
+				//exportOptions: {
+				//     columns: [0, 1, 2, 3,4,5,6]
+				// }
+			},
+			{
+				extend: 'pdfHtml5',
+				title: 'GUEST LIST',
+				text: 'Export to PDF',
+				className: 'btn btn-primary ml-1',
+				footer: true,
+				exportOptions: {
+					columns: ':not(.notexport)'
+				}
+				//Columns to export
+				//exportOptions: {
+				//     columns: [0, 1, 2, 3, 4, 5, 6]
+				//  }
+			}
+		],
+	})
 
 </script>
-
-
 
 {% endblock %}

@@ -4,471 +4,380 @@
 
 <div class="page-title-wrapper">
 
-<div class="page-title-heading">  
-    <div class="page-title-icon">
-        <i class="fa fa-user icon-gradient bg-mean-fruit">
-        </i>
-    </div>
-    <div>
-        Manage Client
-        <div class="page-title-subheading">You can manage your clients here.
+    <div class="page-title-heading">
+        <div class="page-title-icon">
+            <i class="fa fa-user icon-gradient bg-mean-fruit">
+            </i>
+        </div>
+        <div>
+            Manage Client
+            <div class="page-title-subheading">You can manage your clients here.
+            </div>
         </div>
     </div>
-</div>
-<div class="page-title-actions">
-   
+    <div class="page-title-actions">
         <button id="btnaddclient" type="button" class="btn btn-info">
             <span class="btn-icon-wrapper">
                 <i class="fa fa-user-plus fa-fw"></i>
             </span>
             Add Client
-        </button> 
-
-</div> 
-                           
+        </button>
+    </div>
 </div>
+
 {% endblock %}
 {% block home %}
 
-
-
-
-
-
-
-
-
-
-<!--add client--> 
+<!--add client-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-    $("#addclientsection").hide();
-  $("#btnaddclient").click(function(){
-    $("#addclientsection").toggle();
-  });
-});
+    $(document).ready(function () {
+        $("#addclientsection").hide();
+        $("#btnaddclient").click(function () {
+            $("#addclientsection").toggle();
+        });
+    });
 </script>
-
 
 <div class="container-fluid p-5 mb-3 rounded bg-white" id="addclientsection">
     <div class="row">
-            <div class="col-md-12 text-center"><h4>Add Client Details</h4><hr/></div>
-            
-            <div class="container gcn">
-            <form  action="{% url 'guest' %}" method="POST">
+        <div class="col-md-12 text-center">
+            <h4>Add Client Details</h4>
+            <hr>
+        </div>
+        <div class="container gcn">
+            <form method="POST">
                 {% csrf_token %}
-            <div class="row">
-                <div class="col-md-4 form-group">
-                    <label for="date" class="labels">Date</label>
-                    <input id="date" type="date" name="date" class="form-control"  required="required"/>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label for="date" class="labels">Date</label>
+                        <input id="today_date" type="date" name="date" class="form-control" required="required" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="gname" class="labels">Client Name</label>
+                        <input type="text" name="name" class="form-control" required="required" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="mno" class="labels">Mobile No</label>
+                        <input type="text" name="mobileno" class="form-control" required="required" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="city" class="labels">City</label>
+                        <!-- <input type="text" id="city" name="city" class="form-control" value="{{user_city}}" readonly /> -->
+                        <select name="city" class="form-control" id="" required>
+                            <option value="">Select City</option>
+                            {% for city in cities %}
+                                <option value="{{city.id}}">{{city.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="service" class="labels"> Treatment Service</label>
+                        <select name="service" class="form-control" required="required">
+                            <option value=""> Select Service..</option>
+                                {% for service in services %}
+                            <option value="{{service.id}}">{{ service.name }}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="serviceby" class="labels"> Treatment By-</label>
+                        <select name="serviceby" class="form-control" required>
+                            <option value=""> Select Staff..</option>
+                                {% for staff in staffs %}
+                            <option value="{{staff.id}}">{{ staff.name }}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="duration" class="labels">Duration(In-Minute)</label>
+                        <select id="duration" name="duration" class="form-control" required>
+                            <option value="">Select Duration..</option>
+                            {% for d in duration %}
+                                <option value="{{d.duration}}">{{ d.duration }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="timein" class="labels">Time-In</label>
+                        <input id="timein" onchange="myFunction(this)" type="time" name="timein" class="form-control"
+                            required="required" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="timeout" class="labels">Time-Out</label>
+                        <input id="timeout" type="time" name="timeout" class="form-control" required="required" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="service" class="labels">Price</label>
+                        <input type="text" name="price" class="form-control" required="required" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="paym" class="labels">Payment Mode</label>
+                        <select id="pm" name="paym" class="form-control" required>
+                            <option value=""> Select Payment mode</option>
+                            {% for p in paym %}
+                                <option value="{{p.id}}">{{ p.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-            
-                <div class="col-md-4 form-group">
-                    <label for="gname" class="labels">Client Name</label>
-                    <input type="text" name="name" class="form-control"  required="required"/>
-                </div>
-            
-            <div class="col-md-4 form-group">
-                <label for="mno" class="labels">Mobile No</label>
-                <input type="text" name="mobileno" class="form-control"  required="required"/>
-            </div>
-            
-            <div class="col-md-4 form-group">
-                <label for="city" class="labels">City</label>
-                <input type="text" id="city" name="city" class="form-control" value="{{user_city}}"  readonly/>
-            </div>
-            
-            <div class="col-md-4 form-group">
-                <label for="service" class="labels"> Treatment Service</label>
-                <select name="service" class="form-control" required="required">
-                    <option value=""> Select Service..<option>
-                        {% for service in services %}
-                    <option value="{{service.id}}">{{ service.name }}</option>
-                        {%endfor%}
-                </select>
-            </div>
-            
-            
-            <div class="col-md-4 form-group">
-                    <label for="serviceby" class="labels"> Treatment By-</label>
-                <select name="serviceby" class="form-control" required>
-                        <option value=""> Select Staff..<option>
-                              {% for staff in staffs %}
-                        <option value="{{staff.id}}">{{ staff.name }}</option>
-                              {%endfor%}
-                    </select>
-            </div>
-            
-            
-            <div class="col-md-4 form-group">
-                    <label for="duration" class="labels">Duration(In-Minute)</label>
-                    <select id="duration" name="duration" class="form-control" required>
-                        <option value="">Select Duration..<option>
-                              {% for d in duration %}
-                        <option value="{{d.duration}}">{{ d.duration }}</option>
-                              {%endfor%}
-                    </select>
-            </div>
-            
-            
-            <div class="col-md-4 form-group">
-                <label for="timein" class="labels">Time-In</label>
-                <input id="timein" onchange="myFunction(this)" type="time" name="timein" class="form-control"  required="required"/>
-            </div>
-            
-            <div class="col-md-4 form-group">
-                <label for="timeout" class="labels">Time-Out</label>
-                <input id="timeout"  type="time" name="timeout" class="form-control"  required="required"/>
-            </div>
-            
-            
-            <div class="col-md-4 form-group">
-                <label for="service" class="labels">Price</label>
-                <input type="text" name="price" class="form-control"  required="required"/>
-            </div>
-            
-            <div class="col-md-4 form-group">
-                <label for="paym" class="labels">Payment Mode</label>
-            <select id="pm" name="paym" class="form-control" required>
-                <option value=""> Select Payment mode<option>
-                  {% for p in paym %}
-                  <option value="{{p.id}}">{{ p.name }}</option>
-                  {%endfor%}
-              </select>
-            </div>
-            <div class="col-md-4 pt-2"></br>
-            <button type="submit "class="btn btn-block font-weight-bold btn-lg btn-info">Add New Client</button>
-           </div>
+                <input type="submit" class="btn btn-primary w-100 font-weight-bold" value="Add New Client">
             </form>
-            </div>
-           
-        </div> 
-    </div> 
+        </div>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <!--  -->
+<!--  -->
 <script>
-  function myFunction(x) {
-          // console.log(x.value)
-          let [h,m] =  x.value.split(":")
-  
-          // console.log()
-          let d = eval ( $('#duration').val()) + eval(15) + eval(m)
-  
-          let r = Math.floor(d/60)
-          m2 = d - (60*r)
-  
-          // console.log(r+' === '+d)
-  
-          h2 = eval(h)+eval(r)
-  
-          
-  
-          if (h2<10  & m2<10){
-              $('#timeout').val("0"+h2+":0"+m2)
-              console.log("0"+h2+":0"+m2)
-              
-          }else if(m2<10){
-              $('#timeout').val(h2+":0"+m2)
-              console.log(h2+":0"+m2)
-  
-          }
-          else if(h2<10){
-              $('#timeout').val("0"+h2+":"+m2)
-              console.log("0"+h2+":"+m2)
-             
-          }
-          else if (h2>=24){
-              let carry = h2 - 24
-              $('#timeout').val("0"+carry+":"+m2)
-          }
-          
-          else{
-              $('#timeout').val(h2+":"+m2)
-              console.log(h2+":"+m2)
-          }
-          
-      }
-  
-      
-  
-   $(window).load(function(){
-      //
-       date = document.getElementById("date")
-  
-       date.value = new Date().toISOString().substr(0, 10)
-  
-      //  console.log(' ------ '+ date.value)
-  
-      //
-  
-  
-      {% if repeated == 'repeated' %}
-  
-      $("#myModals").modal("show");
-  
-      {% endif %}
-  
-  
-   });
+    function myFunction(x) {
+        let [h, m] = x.value.split(":")
+        let d = eval($('#duration').val()) + eval(15) + eval(m)
+        let r = Math.floor(d / 60)
+        m2 = d - (60 * r)
+        h2 = eval(h) + eval(r)
+        if (h2 < 10 & m2 < 10) {
+            $('#timeout').val("0" + h2 + ":0" + m2)
+            console.log("0" + h2 + ":0" + m2)
+
+        } else if (m2 < 10) {
+            $('#timeout').val(h2 + ":0" + m2)
+            console.log(h2 + ":0" + m2)
+
+        }
+        else if (h2 < 10) {
+            $('#timeout').val("0" + h2 + ":" + m2)
+            console.log("0" + h2 + ":" + m2)
+
+        }
+        else if (h2 >= 24) {
+            let carry = h2 - 24
+            $('#timeout').val("0" + carry + ":" + m2)
+        }
+
+        else {
+            $('#timeout').val(h2 + ":" + m2)
+            console.log(h2 + ":" + m2)
+        }
+    }
 
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
-
-
-
-
-
-
-
-
 <!--Client details here-->
+
 <div class="container-fluid p-3 rounded bg-white" id="clientlisttable">
-  <div class="row">
-    <div class="col-md-12 text-center"><h4>Client Details</h4><hr/></div>
-
-    <div class="col-12" id="customers">
-        <form style="float: right;" class="form-inline" method="POST">{% csrf_token %}
-            <input type="hidden" value="fordate" name="fordate">
-            <input name="to_date" type="date" class="form-control"> &nbsp&nbsp&nbsp
-            <span style="color:white"> To &nbsp&nbsp&nbsp</span><input name="from_date" type="date"
-                class="form-control">&nbsp&nbsp&nbsp
-            <input type="submit" class="btn btn-success font-weight-bold" placeholder="Filter">&nbsp&nbsp&nbsp
-        </form>
-        </br></br>
-        <table id="example" class="table table-striped table-bordered table-sm table-responsive " cellspacing="0"
-            width="100%">
-
-
-            <thead class="alert-light">
-                <tr>
-                    <th class=" text-center th-sm">Date
-
-                    </th>
-                    <th class=" text-center th-sm">Client_Name
-
-                    </th>
-                    <th class=" text-center th-sm">Mobile_NO
-
-                    </th>
-                    <th class="text-center th-sm">Treatment Service
-
-                    </th>
-                    <th class=" text-center th-sm">Treatment By
-
-                    </th>
-                    <th class="text-center th-sm">Duration
-
-                    </th>
-
-                    <th class="text-center th-sm">City
-
-                    </th>
-                    <th class=" text-center th-sm">Time In
-
-                    </th>
-                    <th class="text-center th-sm">Time Out
-
-                    </th>
-
-
-
-
-
-
-                    <th class="text-center th-sm">Price
-
-                    </th>
-                    <th class="text-center th-sm">Payment MOD</th>
-                    <th class="text-center th-sm">Comments</th>
-                    <th class="text-center th-sm notexport">Action</th>
-
-
-                    <th class="text-center th-sm notexport">Delete</th>
-
-
-
-                </tr>
-            </thead>
-            <tbody>
-
-                {% for g in guests %}
-                <tr class="text-center">
-                    <td class="text-center">{{g.date|date:'Y-m-d'}}</td>
-                    <td class="text-center">{{g.gname}}</td>
-                    <td class="text-center">{{g.mobile}}</td>
-                    <td class="text-center">{{g.services}}</td>
-                    <td class="text-center">{{g.treatment_by}}</td>
-                    <td class="text-center">{{g.duration}}</td>
-                    <td class="text-center">{{g.city}}</td>
-                    <td class="text-center">{{g.time_in}}</td>
-                    <td class="text-center">{{g.time_out}}</td>
-                    <td class="text-center">{{g.price}}</td>
-                    <td class="text-center">{{g.payment}}</td>
-                    <td class="text-center">{{g.comments}}</td>
-                    <td class="notexport"> <a class="btn btn-sm btn-warning" id="out{{g.id}}"
-                            onclick="out_{{g.id}}(this)" data-toggle="modal" data-target="#myModalss">Out</a>
-                    </td>
-
-
-                    <td class="notexport"> <a class="btn btn-sm btn-danger" onclick="delete_{{ g.id }}()"
-                            data-toggle="modal" data-target="#delete_modal">Delete</a></td>
-
-                </tr>
-                {% endfor %}
-
-
-            </tbody>
-
-        </table>
-    </div>
-
-
-
-    <!--edit client details Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"></button>
-                    <h4 class="modal-title text-center">EDIT CLIENTS DETAIL</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="update_form" method="POST">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="name" class="label">Duration</label>
-                            <input id="duration" type="text" name="duration" class="form-control" required="required" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="name" class="label">Time_In</label>
-                            <input id="timein" type="time" name="time_in" class="form-control" required="required" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="name" class="label">Time_Out</label>
-                            <input id="timeout" type="time" name="time_out" class="form-control" required="required" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="total_time" class="label">Total Time</label>
-                            <input id="total_time" type="text" name="total_time" onfocus="myFunction()"
-                                class="form-control" required="required" />
-                        </div>
-
-                        <div id="com" class="form-group">
-                            <label for="comments" class="label">Comments(Why Delay)</label>
-                            <textarea id="comments" name="comments" class="form-control"
-                                required="required"> </textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-sm btn-success">Update</button>
-                        </div>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h4>Client Details</h4>
         </div>
-    </div>
-    <!-- end of edit client details Modal -->
-
-       <!--Delete client details Modal -->
-       <div class="modal fade" id="myModals" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"></button>
-                    <h4 class="modal-title text-center">Delete Client Details</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure want to delete city</p>
-                    {% for g in guests %}
-
-                    <a href="guest/gdel/{{g.id}}" class="btn btn-danger">Delete</a> 
+        <div class="col-12">
+            <table id="example" class="table table-striped table-bordered table-sm table-responsive">
+                <thead class="alert-light">
+                    <tr>
+                        <th class=" text-center th-sm">Date</th>
+                        <th class=" text-center th-sm">Client Name</th>
+                        <th class=" text-center th-sm">Mobile</th>
+                        <th class="text-center th-sm">Treatment</th>
+                        <th class=" text-center th-sm">Treatment By</th>
+                        <th class="text-center th-sm">Duration</th>
+                        <th class="text-center th-sm">City</th>
+                        <th class=" text-center th-sm">Time In</th>
+                        <th class="text-center th-sm">Time Out</th>
+                        <th class="text-center th-sm">Price</th>
+                        <th class="text-center th-sm">Payment Mode</th>
+                        <th class="text-center th-sm">Comments</th>
+                        <th class="text-center th-sm notexport">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for guest in guests %}
+                    <tr class="text-center">
+                        <td class="text-center">{{guest.date|date:'Y-m-d'}}</td>
+                        <td class="text-center">{{guest.gname}}</td>
+                        <td class="text-center">{{guest.mobile}}</td>
+                        <td class="text-center">{{guest.services}}</td>
+                        <td class="text-center">{{guest.treatment_by}}</td>
+                        <td class="text-center">{{guest.duration}}</td>
+                        <td class="text-center">{{guest.city}}</td>
+                        <td class="text-center">{{guest.time_in}}</td>
+                        <td class="text-center">{{guest.time_out}}</td>
+                        <td class="text-center">{{guest.price}}</td>
+                        <td class="text-center">{{guest.payment}}</td>
+                        <td class="text-center">{{guest.comments}}</td>
+                        <td class="notexport"> 
+                            <a class="btn btn-sm btn-warning" id="out{{guest.id}}"
+                                onclick="out_{{guest.id}}(this)" data-toggle="modal" data-target="#myModalss">Out
+                            </a>
+                            <a class="btn btn-sm btn-danger" onclick="delete_{{ guest.id }}()"
+                                data-toggle="modal" data-target="#delete_modal">Delete
+                            </a>
+                        </td>
+                    </tr>
                     {% endfor %}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </tbody>
+            </table>
+        </div>
+
+        <!--edit client details Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"></button>
+                        <h4 class="modal-title text-center">EDIT CLIENTS DETAIL</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="update_form" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="name" class="label">Duration</label>
+                                <input id="duration" type="text" name="duration" class="form-control"
+                                    required="required" />
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="label">Time_In</label>
+                                <input id="timein" type="time" name="time_in" class="form-control"
+                                    required="required" />
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="label">Time_Out</label>
+                                <input id="timeout" type="time" name="time_out" class="form-control"
+                                    required="required" />
+                            </div>
+                            <div class="form-group">
+                                <label for="total_time" class="label">Total Time</label>
+                                <input id="total_time" type="text" name="total_time" onfocus="myFunction()"
+                                    class="form-control" required="required" />
+                            </div>
+                            <div id="com" class="form-group">
+                                <label for="comments" class="label">Comments(Why Delay)</label>
+                                <textarea id="comments" name="comments" class="form-control"
+                                    required="required"> </textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-success">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
-
         </div>
-    </div>
-    <!--end of Delete client details Modal -->
+        <!-- end of edit client details Modal -->
 
-    <!--Delay option Modal -->
-    <div class="modal fade myModalss" id="myModalss" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"></button>
-                    <h4 class="modal-title text-center">Client</h4>
+        <!--Delete client details Modal -->
+        <div class="modal fade" id="myModals" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"></button>
+                        <h4 class="modal-title text-center">Delete Client Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered table-responsive" style="color: black">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Name</th>
+                                    <th>Service</th>
+                                    <th>Treatment By</th>
+                                    <th>Payment</th>
+                                </tr>
+                            </thead>
+        
+                            <tbody>
+                                {% for rep in rep_guests %}
+                                <tr>
+                                    <td>{{rep.date}}</td>
+                                    <td>{{rep.gname}}</td>
+                                    <td>{{rep.services.name}}</td>
+                                    <td>{{rep.treatment_by}}</td>
+                                    <td>{{rep.payment}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form id="updates_form" method="POST">
-                        {% csrf_token %}
-                        <label id="delay">Why Delay</label>
-                        <textarea name="cmt" rows="8" cols="80" class="form-control" id="cmt"></textarea>
-                        <br>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-lg btn-success" style="width:100%">Submit</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+        <!--end of Delete client details Modal -->
+
+        <!--Delay option Modal -->
+        <div class="modal fade myModalss" id="myModalss" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"></button>
+                        <h4 class="modal-title text-center">Client</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updates_form" method="POST">
+                            {% csrf_token %}
+                            <label id="delay">Why Delay</label>
+                            <textarea name="cmt" rows="8" cols="80" class="form-control" id="cmt"></textarea>
+                            <br>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn-success" style="width:100%">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--end of Delay option Modal -->
+        <!--end of Delay option Modal -->
 
-    <!--delete client details-->
-    <div class="modal fade" id="delete_modal" role="dialog">
-        <div class="modal-dialog">
+        <!--delete client details-->
+        <div class="modal fade" id="delete_modal" role="dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"></button>
-                    <h4 class="modal-title text-center">Delete Client Details</h4>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"></button>
+                        <h4 class="modal-title text-center">Delete Client Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure want to delete city</p>
+
+
+                        <a id="s_delete" class="btn btn-danger">Delete</a>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p>Are you sure want to delete city</p>
 
-
-                    <a id="s_delete" class="btn btn-danger">Delete</a>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
             </div>
-
         </div>
+        <!--end of delete client details-->
     </div>
-    <!--end of delete client details-->
-  </div>
 </div>
 <script>
+    $(window).load(function () {
+        date = document.getElementById("today_date")
+        date.value = new Date().toISOString().substr(0, 10)
+        {% if repeated == 'repeated' %}
+            $("#myModals").modal("show");
+        {% endif %}
+    });
+</script>
+<script>
     $('#example').dataTable({
-
         dom: 'lBfrtip',
         order: [
             [0, 'desc']
@@ -520,46 +429,20 @@ $(document).ready(function(){
             } // end
 
         } // end footercallbac
-
-
     });
 
-    // $(document).ready(function(){
-
-
-    // });
 </script>
-
-
 <script>
-    {% for g in guests %}
+    {% for guest in guests %}
 
-
-    // delete Client
-
-
-    function delete_ {
-        {
-            g.id
-        }
-    } () {
-
-
-        $('#s_delete').attr('href', "guest/gdel/{{g.id}}")
-
+    function delete_ {{guest.id}} () {
+        $('#s_delete').attr('href', "guest/gdel/{{guest.id}}")
     }
-
     //end of delete Client
-    //console.log('working..');
-    //
-
-    function out_ {{g.id}} (x) {
-
-        console.log("{{ g.id }}")
-        $("#cmt").val("{{ g.cmt }}")
-        $("#updates_form").attr("action", "update_guest/{{ g.id}}")
-
-        let t_out = "{{g.time_out}}"
+    function out_ { { guest.id } } (x) {
+        $("#cmt").val("{{ guest.cmt }}")
+        $("#updates_form").attr("action", "update_guest/{{ guest.id}}")
+        let t_out = "{{guest.time_out}}"
         let t_now = new Date().toLocaleTimeString()
 
         let t_24_out = get24hTime(t_out)
@@ -567,17 +450,14 @@ $(document).ready(function(){
 
         let [h1, m1] = t_24_out.split(":");
         let [h2, m2] = t_24_now.split(":");
-        //console.log(h1);
         let hh = eval(h2) - eval(h1);
         let mm = eval(m2) - eval(m1);
         //mm = mm.replace(/-/g,"");
         mm = Math.abs(mm);
-
         time_now = get24tomin(t_24_now);
         time_out = get24tomin(t_24_out);
         min_diff = eval(time_now) - eval(time_out);
         $("#delay").html("<label>Why delay by  " + min_diff + " Minutes</label>");
-
         if (time_now <= time_out) {
             $(".myModalss").removeAttr('id');
             //$("#out{{g.id}}").hide();
@@ -585,23 +465,16 @@ $(document).ready(function(){
             $(".myModalss").attr('id', 'myModalss')
         }
     }
-
     {% endfor %}
 
     function get24tomin(time) {
         let [h, m] = time.split(":");
-
-        console.log(h + "  ==== " + m)
-
         return (eval(h) * 60) + eval(m)
-
     }
 
     function get24hTime(str) {
         str = String(str).toLowerCase().replace(/\s/g, '');
-        // console.log(str)
         str = String(str).toLowerCase().replace(/\./g, '');
-        // console.log(str)
         var has_am = str.indexOf('am') >= 0;
         var has_pm = str.indexOf('pm') >= 0;
         // first strip off the am/pm, leave it either hour or hour:minute
@@ -624,8 +497,3 @@ $(document).ready(function(){
 </script>
 
 {% endblock %}
-
-
- 
-                                
- 

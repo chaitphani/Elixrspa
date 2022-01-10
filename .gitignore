@@ -128,5 +128,8 @@ dmypy.json
 # migrations
 *migrations/
 
+# media
+*media/
+
 # Pyre type checker
 .pyre/

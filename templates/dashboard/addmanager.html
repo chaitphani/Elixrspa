@@ -4,49 +4,38 @@
         {% csrf_token %}
         <div class="form-group">
             <label class="label" for="name">Manager Name</label>
-            <input type="name" name="name" class="form-control" required="required" />
-
+            <input type="name" name="name" class="form-control" required />
         </div>
-
         <div class="form-group">
             <label class="label" for="mobileno">Mobile_No</label>
-            <input type="text" name="mobileno" class="form-control" required="required" />
-
+            <input type="text" name="mobileno" class="form-control" required />
         </div>
-
         <div class="form-group">
             <label for="city" class="label">City</label>
             <select id="city" name="city" class="form-control" required>
-        <option value=""> Select City..<option>
-          {% for cities in city %}
-          <option value="{{cities.id}}">{{ cities.name }}</option>
-          {%endfor%}
-      </select>
+                <option value=""> Select City..</option>
+                {% for cities in city %}
+                    <option value="{{cities.id}}">{{ cities.name }}</option>
+                {% endfor %}
+            </select>
         </div>
-
         <div class="form-group">
             <label class="label" for="username">User Name</label>
-            <input type="text" name="username" class="form-control" required="required" />
-
+            <input type="text" name="username" class="form-control" required />
         </div>
-
         <div class="form-group">
             <label class="label" for="password">password</label>
-            <input type="password" name="password" class="form-control" required="required" />
-
+            <input type="password" name="password" class="form-control" required />
         </div>
-        <button type="submit" class="btn btn-lg btn-primary b1"> ADD</button>
-
+        <input type="submit" class="btn btn-lg btn-primary b1" value="ADD">
         <br>
         <br>
         <div>
             {% for message in messages %}
-            <h1 class="h3">{{message}}</h1>
-            {%endfor%}
+                <h1 class="h3">{{message}}</h1>
+            {% endfor %}
         </div>
-
     </form>
-
 </div><br /><br />
 <div class="container">
     <div class="col-lg-12">
@@ -63,10 +52,7 @@
                     <th>City</th>
                     <th>User Name</th>
                     <!-- <th>Password</th> -->
-
                     <th class="text-center">Action</th>
-
-
                 </tr>
             </thead>
             <tbody>
@@ -76,16 +62,14 @@
                     <td>{{ m.email }}</td>
                     <td>{{ m.city }}</td>
                     <td>{{ m.username }}</td>
-
                     <!-- <td>{{ m.password }}</td> -->
-
-
                     <input type="hidden" name="{{ m.id }}" value="">
                     <td>
-                        <center><a class="btn btn-sm btn-warning" onclick="edit_{{ m.id }}()" data-toggle="modal" data-target="#myModal">
-               Edit</a>
-                            <a class="btn btn-sm btn-danger" href="delete_manager/{{ m.id }}">
-		 Delete</a></center>
+                        <a class="btn btn-sm btn-warning" 
+                            onclick="edit_{{ m.id }}()" data-toggle="modal" data-target="#myModal">
+                            Edit
+                        </a>
+                        <a class="btn btn-sm btn-danger" href="delete_manager/{{ m.id }}">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -93,8 +77,6 @@
         </table>
     </div>
 </div>
-
-<div class="container">
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
@@ -111,37 +93,39 @@
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="name" class="label">Change Manager Name</label>
-                            <input id="name" type="text" name="name" class="form-control" required="required" />
+                            <input id="name" type="text" name="name" class="form-control" required />
                         </div>
 
                         <div class="form-group">
                             <label for="name" class="label">Mobile_No</label>
-                            <input id="mobileno" type="text" name="mobileno" class="form-control" required="required" />
+                            <input id="mobileno" type="text" name="mobileno" class="form-control" required />
                         </div>
 
                         <!-- <div class="form-group">
                   <label for="name" class="label">Specialist</label>
-                  <input id="service" type="text" name="service"  class="form-control" required="required"/>
+                  <input id="service" type="text" name="service"  class="form-control" required/>
               </div> -->
                         <div class="form-group">
                             <label for="city" class="label">City</label>
                             <select id="city" name="city" class="form-control" required>
-                  <option value=""> Select City..<option>
-                    {% for cities in city %}
-                    <option value="{{cities.id}}">{{ cities.name }}</option>
-                    {%endfor%}
-                </select>
+                                <option value=""> Select City..
+                                <option>
+                                    {% for cities in city %}
+                                <option value="{{cities.id}}">{{ cities.name }}</option>
+                                {%endfor%}
+                            </select>
                         </div>
 
                         <div class="form-group">
                             <label class="label" for="username">User Name</label>
-                            <input type="text" id="username" name="username" class="form-control" required="required" />
+                            <input type="text" id="username" name="username" class="form-control" required />
 
                         </div>
 
                         <div class="form-group">
                             <label class="label" for="password">password</label>
-                            <input type="password" id="password" name="password" class="form-control" required="required" />
+                            <input type="password" id="password" name="password" class="form-control"
+                                required />
 
                         </div>
 
@@ -158,10 +142,6 @@
 
         </div>
     </div>
-
-</div>
-
-<div class="container">
 
     <!-- Modal -->
     <div class="modal fade" id="myModals" role="dialog">
@@ -194,37 +174,21 @@
 
         </div>
     </div>
-
-</div>
 {% if message %}
-<span id="message" style="display: none;">{{message}}</span> {% endif %}
+    <span id="message" style="display: none;">{{message}}</span> 
+{% endif %}
+
 <script>
-    { %
-        for m in manager %
-    }
-
-    function edit_ {
-        {
-            m.id
-        }
-    }() {
-        console.log("{{ m.id }}")
-        $("#name").val("{{ m.first_name }}")
-        $("#mobileno").val("{{ m.email }}")
-        $("#city").val("{{ m.city }}")
-        $("#username").val("{{ m.username }}")
+    {% for m in manager %}
+        function edit_ {{ m.id }} () {
+            $("#name").val("{{ m.first_name }}")
+            $("#mobileno").val("{{ m.email }}")
+            $("#city").val("{{ m.city }}")
+            $("#username").val("{{ m.username }}")
             // $("#password").val("{{ m.password }}")
-
-
-
-
-        $("#update_form").attr("action", "update_manager/{{ m.id}}")
-    }
-
-
-
-    { % endfor %
-    }
+            $("#update_form").attr("action", "update_manager/{{ m.id}}")
+        }
+    { % endfor %}
 </script>
 
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -286,11 +250,11 @@
             icon: "success",
             closeOnClickOutside: false,
             closeOnEsc: false,
-        }).then(function() {
+        }).then(function () {
             // window.location = "{{redirect_url}}";
             window.location.href = "/dashboard/addmanager";
         });
     }
 </script>
 
-{%endblock%}
+{% endblock %}

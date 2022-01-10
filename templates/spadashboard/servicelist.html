@@ -1,244 +1,203 @@
-
 {% extends 'spadashboard/index.html' %}
 {% load static %}
 {% block heading %}
+
+
 <div class="page-title-wrapper">
-
-<div class="page-title-heading">  
-    <div class="page-title-icon">
-        <i class="fa fa-plus-circle icon-gradient bg-mean-fruit">
-        </i>
-    </div>
-    <div>
-       Manage Service
-        <div class="page-title-subheading">You can manage your service list here.
-        </div>
-    </div>
+	<div class="page-title-heading">
+		<div class="page-title-icon">
+			<i class="fa fa-plus-circle icon-gradient bg-mean-fruit">
+			</i>
+		</div>
+		<div>
+			Manage Service
+			<div class="page-title-subheading">You can manage your service list here.</div>
+		</div>
+	</div>
+	<div class="page-title-actions">
+		<button id="btnaddservice" type="button" class="btn btn-info">
+			<span class="btn-icon-wrapper">
+				<i class="fa fa-plus-circle fa-fw"></i>
+			</span>
+			Add Service
+		</button>
+	</div>
 </div>
-<div class="page-title-actions">
-   
-        <button id="btnaddservice" type="button" class="btn btn-info">
-            <span class="btn-icon-wrapper">
-                <i class="fa fa-plus-circle fa-fw"></i>
-            </span>
-            Add Service
-        </button> 
 
-</div> 
-                           
-</div>
 {% endblock %}
 {% block home %}
 
-
-
-
-
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function(){
-        $("#servicelistsection").hide();
-      $("#btnaddservice").click(function(){
-        $("#servicelistsection").toggle();
-      });
-    });
+	$(document).ready(function () {
+		$("#servicelistsection").hide();
+		$("#btnaddservice").click(function () {
+			$("#servicelistsection").toggle();
+		});
+	});
 </script>
 
 <!--add service-->
 <div class="container-fluid p-5 mb-3 rounded bg-white" id="servicelistsection">
-    <div class="row">
-        <div class="col-md-12 text-center"><h4>Service List<hr class="hr1"></h4></div>
-    </div>
-    <form id="add_form"  action="{% url 'addservice' %}" method="POST">
-        {% csrf_token %}
-        <div class="row">
-        <div class="col-md-8 form-group">
-            <label for="city" class="label">Service Name</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-            <input type="text" name="name" class="form-control"  required="required"/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        </div>
-    
-        <div class="col-md-4 pt-2"></br>
-            <button type="submit" class="btn btn-lg btn-block font-weight-bold btn-info"> Add Service</button>
-        </div>
-    </div>
-    </form>
-       
-
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<h4>Service List
+				<hr class="hr1">
+			</h4>
+		</div>
+	</div>
+	<form method="POST">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-md-8 form-group">
+				<label for="city" class="label">Service Name</label>
+				<input type="text" name="name" class="form-control" required="required" />
+			</div>
+			<div class="col-md-4 pt-2"></br>
+				<button type="submit" class="btn btn-lg btn-block font-weight-bold btn-info"> Add Service</button>
+			</div>
+		</div>
+	</form>
 </div>
-
-
-
-
-
-
-
-
 <!--service details-->
 <div class="container-fluid p-3 mb-3 rounded bg-white" id="servicelistsection">
-    <div class="row">
-        <div class="col-md-12 text-center"><h4>Service List</h4><hr/></div>
-        <div class="col-12">
-            <table class="table table-bordered" id="dtBasicExample">
-                <thead class="alert-light">
-                    <tr>
-                        <th class="text-center">NAME</th>
-            
-            
-                        <th class="text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  {% for serviced in service %}
-                    <tr>
-                        <td class="text-center">{{ serviced.name }}</td>
-            
-            
-            
-                        <input type="hidden" name="{{ serviced.id }}" value="">
-                        <td><center><a class="btn btn-sm btn-warning" onclick="modify_{{ serviced.id }}()" data-toggle="modal" data-target="#myModal">
-                         Edit</a> <a class="btn btn-sm btn-danger" onclick="delete_{{ serviced.id }}()"  data-toggle="modal" data-target="#myModals">
-                             Delete</a></center></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<h4>Service List</h4>
+			<hr />
+		</div>
+		<div class="col-12">
+			<table class="table table-bordered" id="dtBasicExample">
+				<thead class="alert-light">
+					<tr>
+						<th class="text-center">NAME</th>
+						<th class="text-center">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for serviced in service %}
+					<tr>
+						<td class="text-center">{{ serviced.name }}</td>
+						<input type="hidden" name="{{ serviced.id }}" value="">
+						<td>
+							<a class="btn btn-sm btn-warning font-weight-bold" 
+								onclick="modify_{{ serviced.id }}()" data-toggle="modal" data-target="#myModal">
+								Edit
+							</a> 
+							<a class="btn btn-sm btn-danger text-white font-weight-bold" 
+								onclick="delete_{{ serviced.id }}()" data-toggle="modal" data-target="#myModals">
+								Delete
+							</a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="container">
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"></button>
+						<h4 class="modal-title text-center">Update Service</h4>
+					</div>
+					<div class="modal-body">
+						<form id="modify_form" method="POST">
+							{% csrf_token %}
+							<div class="form-group">
+								<label for="name" class="label">Change Service</label>
+								<input id="service_name" type="text" name="name" class="form-control" required/>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-sm btn-success">Update</button>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<div class="container">
+		<!-- Modal -->
+		<div class="modal fade" id="myModals" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"></button>
+						<h4 class="modal-title text-center">Delete Client Details</h4>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure want to delete service - <strong id="del_service"></strong></p>
+						<a id="s_delete" class="btn btn-danger">Delete</a>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <div class="container">
+	<script>
+		{% for serviced in service %}
+			function modify_{{ serviced.id }} (){
+				$("#service_name").val("{{ serviced.name }}")
+				$("#modify_form").attr("action", "{% url 'update_service' serviced.id %}")
+			}
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-          <div class="modal-dialog">
-      
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"></button>
-                <h4 class="modal-title text-center">EDIT SERVICES</h4>
-              </div>
-              <div class="modal-body">
-                <form id="modify_form" method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="name" class="label">Change Service</label>
-                        <input id="service_name" type="text" name="name" class="form-control"  required="required"/>
-                    </div>
-      
-      
-      
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-sm btn-success">Update</button>
-                    </div>
-                </form>
-      
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-      
-          </div>
-        </div>
-      
-      </div>
-      
-      <div class="container">
-      
-        <!-- Modal -->
-        <div class="modal fade" id="myModals" role="dialog">
-          <div class="modal-dialog">
-      
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"></button>
-                <h4 class="modal-title text-center">Delete Client Details</h4>
-              </div>
-              <div class="modal-body">
-                <p>Are you sure want to delete city</p>
-              
-      
-                <a id="s_delete" class="btn btn-danger">Delete</a>
-                
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-      
-          </div>
-        </div>
-      </div>
-      <script>
-        {% for serviced in service %}
-      
-        function delete_{{ serviced.id }}(){
-      
-      // href="deletes/{{ serviced.id }}"
-      
-          $('#s_delete').attr('href',"deletes/{{ serviced.id }}")
-      
-      }
-      
-        function modify_{{ serviced.id }}()
-        {
-          console.log("{{ serviced.id }}")
-          $("#service_name").val("{{ serviced.name }}")
-          $("#service_duration").val("{{ serviced.duration }}")
-          $("#service_price").val("{{ serviced.price }}")
-      
-          $("#modify_form").attr("action","modify/{{ serviced.id}}")
-        }
-      
-      
-        {% endfor %}
-      </script>
+			function delete_{{ serviced.id }} (){
+				// href="deletes/{{ serviced.id }}"
+				$('#del_service').text('{{serviced.name}}')
+				$('#s_delete').attr('href', "{% url 'delete_service' serviced.id %}")
+			}
+		{% endfor %}
+	</script>
+	<script>
+		$('#dtBasicExample').dataTable({
+			dom: 'Bfrtip',
+			buttons: [
+				{
+					extend: 'excelHtml5',
+					title: 'GUEST LIST',
+					text: 'Export to excel',
+					className: 'btn btn-success',
+					footer: true,
+					exportOptions: {
+						columns: ':not(.notexport)'
+					}
 
+					//Columns to export
+					//exportOptions: {
+					//     columns: [0, 1, 2, 3,4,5,6]
+					// }
+				},
+				{
+					extend: 'pdfHtml5',
+					title: 'GUEST LIST',
+					text: 'Export to PDF',
+					className: 'btn btn-primary ml-1',
+					footer: true,
+					exportOptions: {
+						columns: ':not(.notexport)'
+					}
+					//Columns to export
+					//exportOptions: {
+					//     columns: [0, 1, 2, 3, 4, 5, 6]
+					//  }
+				}
+			],
+		})
 
-      <script>
-        $('#dtBasicExample').dataTable({
-      
-                     dom: 'Bfrtip',
-                     buttons: [
-                         {
-                             extend: 'excelHtml5',
-                             title: 'GUEST LIST',
-                             text:'Export to excel',
-                             className: 'btn btn-success',
-                             footer:true,
-                             exportOptions: {
-                             columns: ':not(.notexport)'
-                               }
-      
-                             //Columns to export
-                             //exportOptions: {
-                            //     columns: [0, 1, 2, 3,4,5,6]
-                            // }
-                         },
-                         {
-                             extend: 'pdfHtml5',
-                             title: 'GUEST LIST',
-                             text: 'Export to PDF',
-                             className: 'btn btn-primary ml-1',
-                             footer:true,
-                             exportOptions: {
-                             columns: ':not(.notexport)'
-                               }
-                             //Columns to export
-                             //exportOptions: {
-                            //     columns: [0, 1, 2, 3, 4, 5, 6]
-                           //  }
-                         }
-                     ],})
-      
-               
-      
-      
-      </script>
+	</script>
 </div>
 
 {% endblock %}

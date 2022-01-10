@@ -1,7 +1,9 @@
 from django.urls import path
 from dashboard import views
 
-urlpatterns = [
+
+urlpatterns = (
+
     path('',views.dashboard,name='dashboard'),
     path('admin_login/',views.admin_login,name='admin_login'), 
     path('admin_logout/',views.admin_logout,name='admin_logout'),
@@ -18,12 +20,9 @@ urlpatterns = [
     path('gifts/deletgift/<int:id>',views.deletgift,name='deletgift'),
     path('carriers/jobdelete/<int:id>',views.jobdelete,name='jobdelete'),
 
-    # path('price/',views.price,name='price'),
-
     path('carriers/',views.carriers,name='carriers'),
     path('addcity/update/<int:id>',views.update,name='update'),
     path('clientupdate/<int:id>',views.clientupdate,name="updateguest"),
-    # path('dashboard_login/',views.dashboard_login,name='dashboard_login'),
 
     path('appointment',views.appointment,name='adminappointment'),
     path('confirm/<int:id>',views.confirm_appointment,name='confirm_appointment'),
@@ -32,14 +31,11 @@ urlpatterns = [
     path('addservice/',views.addservice,name='addservice'),
     path('addservice/modify/<int:id>',views.modify,name='modify'),
     path('addservice/deletes/<int:id>',views.deletes,name='deletes'),
-    # path('dashboard_login/',views.dashboard_login,name='dashboard_login'),  
     path('guest/',views.guest,name='guest'),
-    # path('guest_list/',views.guest_list,name='guest_list'),
     path('guest/gdel/<int:id>',views.gdel,name='gdel'),
     path('franch/',views.franch,name='franch'),
 
     path('franch/deletefranch/<int:id>',views.deletefranch,name='deletefranch'),
-    # path('report/',views.html_to_pdf_view,name='report'),
     path('test/',views.report,name='test'),
     path('timein/',views.timein,name='timein'),
     path('timeout/',views.timeout,name='timeout'),
@@ -47,6 +43,7 @@ urlpatterns = [
     path('attendence/delete_atten/<int:id>',views.delete_atten,name='delete_atten'),
     path('expenses/',views.expenses,name='expenses'),
     path('paymentmod/',views.paymentmod,name='paymentmod'),
+
     path('paymentmodchange/<int:id>',views.paymentmodchange,name='paymentmodchange'),
     path('paymentmod/deletepaymentmod/<int:id>',views.deletepaymentmod,name='deletepaymentmod'),
     path('adduration/',views.adduration,name='adduration'),
@@ -57,16 +54,11 @@ urlpatterns = [
     path('exdetail/delete_expense/<int:id>',views.delete_expense,name='delete_expense'),
     path('update_guest/<int:id>',views.update_guest,name="update_guest"),
 
-
-
-
-
-
-
-
-
-
-
+    # path('price/',views.price,name='price'),
+    # path('dashboard_login/',views.dashboard_login,name='dashboard_login'),
+    # path('dashboard_login/',views.dashboard_login,name='dashboard_login'),  
+    # path('guest_list/',views.guest_list,name='guest_list'),
+    # path('report/',views.html_to_pdf_view,name='report'),
     # path('edit/<int:city_id>',views.edit,name='edit')
 
-]
+)

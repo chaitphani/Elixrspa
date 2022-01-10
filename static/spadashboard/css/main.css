@@ -5287,7 +5287,7 @@ a.close.disabled {
 .modal-dialog {
     position: relative;
     width: auto;
-    margin: 0.5rem;
+    margin: 7.75rem auto;
     pointer-events: none;
 }
 .modal.fade .modal-dialog {
@@ -5324,7 +5324,7 @@ a.close.disabled {
     border-radius: 0.3rem;
     outline: 0;
 }
-.modal-backdrop {
+/* .modal-backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -5338,7 +5338,7 @@ a.close.disabled {
 }
 .modal-backdrop.show {
     opacity: 0.5;
-}
+} */
 .modal-header {
     display: flex;
     align-items: flex-start;
@@ -5386,7 +5386,7 @@ a.close.disabled {
 @media (min-width: 576px) {
     .modal-dialog {
         max-width: 500px;
-        margin: 1.75rem auto;
+        margin: 7.75rem auto;
     }
     .modal-dialog-centered {
         min-height: calc(100% - (1.75rem * 2));
@@ -9658,13 +9658,13 @@ button,
     flex: 1;
 }
 .app-theme-white.app-container {
-    background: #f1f4f6;
+    background: rgb(235 236 239);
 }
 .app-theme-white .app-sidebar {
     background: #fff;
 }
 .app-theme-white .app-page-title {
-    background: rgba(255, 255, 255, 0.45);
+    background: rgb(235 236 239);
 }
 .app-theme-white .app-footer .app-footer__inner,
 .app-theme-white .app-header {
@@ -9717,6 +9717,9 @@ button,
     position: relative;
     display: flex;
     align-items: center;
+    border-radius:5px;
+    background: rgb(219 224 230);
+    padding:5px;
 }
 .app-page-title .page-title-heading,
 .app-page-title .page-title-subheading {

@@ -1,21 +1,13 @@
 from django.shortcuts import render,redirect
-
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.contrib.auth.models import auth
-
-from .models import Register
-from .models import Gift
-from .models import Citys
-from .models import Services
-from .models import Appointment
-from .models import Carriers
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.mail import EmailMessage
-from django.conf import settings
-from .models import Franchisee
-# from twilio.rest import Client
+# from django.core.mail import EmailMessage
+# from django.conf import settings
+
+from .models import *
 
 
 def table(request):
@@ -28,7 +20,7 @@ def table(request):
     context = {'data':data}
     return render(request,'table.html',context)
 
-# Create your views here.
+
 def home(request):
     return render(request,'beautyapp/hom1.html')
 
@@ -37,7 +29,6 @@ def memberplan(request):
 
 def eservice(request):
     service=Services.objects.all()
-
     return render(request,'beautyapp/eservice.html',{'service':service})
 
 def about(request):
@@ -62,8 +53,10 @@ def mens(request):
 def contact(request):
     return render(request,'beautyapp/contact1.html')
 
+
 # @login_required(login_url='/beautyapp/login')
 def careers(request):
+
     if request.method == 'POST':
         name = request.POST['name']
         address = request.POST['address']
@@ -74,23 +67,15 @@ def careers(request):
         lastsalary = request.POST['lastsalary']
         fileupload = request.FILES['fileupload']
         profile_pic = request.FILES['pc']
-
-        print(fileupload,' ----- ',type(fileupload))
-        print(profile_pic,' ----- ',type(profile_pic))
-
-
-
         careers=Carriers(name=name,address=address,date=date,email=email,mobileno=mobileno,totalexp=totalexp,lastsalary=lastsalary,fileupload=fileupload,profile_pic=profile_pic)
         careers.save()
-        messages.info(request,'  ')
         return redirect(home)
-
-
-
     return render(request,'beautyapp/careers.html')
+
 
 @login_required(login_url='/beautyapp/login')
 def appointment(request):
+
     if request.method == 'POST':
         name=request.POST['name']
         mobileno=request.POST['mobileno']
@@ -103,7 +88,6 @@ def appointment(request):
         #               to ="+918356016968",
         #                )
         email=request.POST['email']
-
         city=request.POST['city']
         date=request.POST['pdate']
         time=request.POST['ptime']
@@ -114,11 +98,7 @@ def appointment(request):
         # qs.save()
         appointment=Appointment(name=name,mobileno=mobileno,email=email,city=qs,date=date,time=time,services=se)
         appointment.save()
-        messages.success(request,'  ')
         return redirect(home)
-
-        # return render(request,'beautyapp/appointment.html')
-
     else:
         context_data = {
             'appointment':'appointment',
@@ -128,7 +108,6 @@ def appointment(request):
         return render(request,'beautyapp/appointment.html', context_data)
 
 
-
 def logout(request):
     auth.logout(request)
     return redirect(home)
@@ -136,6 +115,7 @@ def logout(request):
 
 @login_required(login_url='/beautyapp/login')
 def buygift(request):
+
     if request.method == 'POST':
         name=request.POST['name']
         email=request.POST['email']
@@ -144,7 +124,6 @@ def buygift(request):
         price=request.POST['price']
         message=request.POST['message']
         gift=Gift(name=name,email=email,mobile=mobile,address=address,price=price,message=message)
-        messages.warning(request,'  ')
         gift.save()
         return redirect(home)
     else:
@@ -152,6 +131,7 @@ def buygift(request):
 
 
 def login(request):
+
     if request.method=='POST':
         register=auth.authenticate(username=request.POST['username'],password=request.POST['password'])
         if register is not None:
@@ -165,6 +145,7 @@ def login(request):
 
 
 def register(request):
+
     if request.method == 'POST':
         first_name=request.POST['first_name']
         last_name=request.POST['last_name']
@@ -185,10 +166,7 @@ def register(request):
                 # emails = EmailMessage("Request is raised", ' welocome in beuty spa ',settings.EMAIL_HOST_USER , [email])
                 # emails.send()
                 user.save()
-                print('user created')
-                messages.success(request,' ')
                 return redirect(login)
-
         else:
             messages.info(request,'password do not match')
             return redirect('register')
@@ -198,6 +176,7 @@ def register(request):
 
 
 def franchisee(request):
+
     if request.method == 'POST':
         name=request.POST['name']
         email=request.POST['email']
@@ -205,12 +184,11 @@ def franchisee(request):
         location=request.POST['location']
         subject=request.POST['subject']
         french=Franchisee(name=name,email=email,mobileno=mobileno,location=location,subject=subject)
-        messages.success(request,' ')
         french.save()
         return redirect(home)
     else:
         return render(request,'beautyapp/franchisee.html')
 
+
 # def show_genres(request):
 #     return render(request, "beautyapp/test.html", {'genres': Genre.objects.all()})
-
