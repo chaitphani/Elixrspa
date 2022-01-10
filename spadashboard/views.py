@@ -49,7 +49,6 @@ def clientlist(request):
         if repeated_client:
             data_1 = {'repeated':'repeated', 'rep_guests':repeated_client}
             return render(request,'spadashboard/clientlist.html', data_1)
-        # else:
         return redirect('clientlist')
 
     # if request.user.is_superuser:
@@ -76,7 +75,7 @@ def clientlist(request):
 
 
 def client_edit(request, id):
-
+    
     client_obj  = Guest.objects.get(id=id)
     client_obj.comments = request.POST.get('cmt')
     client_obj.save()
