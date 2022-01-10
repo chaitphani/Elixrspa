@@ -75,6 +75,20 @@ def clientlist(request):
     return render(request,'spadashboard/clientlist.html', data)
 
 
+def client_edit(request, id):
+
+    client_obj  = Guest.objects.get(id=id)
+    client_obj.comments = request.POST.get('cmt')
+    client_obj.save()
+    return redirect('clientlist')
+
+
+def client_delete(request, id):
+    client_obj = Guest.objects.get(id=id)
+    client_obj.delete()
+    return redirect('clientlist')
+    
+
 def expense_list(request):
 
     if request.method == 'POST':

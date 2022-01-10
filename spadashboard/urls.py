@@ -19,7 +19,9 @@ urlpatterns = (
     path('expense/<int:id>/delete', views.delete_expense, name='delete_expense'),
 
     path('client',views.clientlist,name='clientlist'),
-    
+    path('client/<int:id>/update', views.client_edit, name='edit_client'),
+    path('client/<int:id>/delete', views.client_delete, name='delete_client'),
+
     path('franchisee',views.franchiseelist,name='franchiseelist'),
     path('franchisee/<int:id>/delete', views.franchise_delete, name='delete_franchise'),
 
