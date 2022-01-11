@@ -5,8 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from dashboard.views import addstaff, timeout
 
-from rest_framework.views import APIView
-from rest_framework import serializers
 import datetime
 
 
@@ -399,3 +397,11 @@ def daily_report(request):
         'guests':Guest.objects.all()
     }
     return render(request,'spadashboard/daily_report.html', data)
+
+
+def branch_master(request):
+    return render(request,'spadashboard/branch_master.html')
+def group_master(request):
+    return render(request,'spadashboard/group_master.html')
+def account_master(request):
+    return render(request,'spadashboard/account_master.html')

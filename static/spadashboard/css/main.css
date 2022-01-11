@@ -8,6 +8,22 @@
  =========================================================
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  */
+
+/* custom scrollbar */
+ body::-webkit-scrollbar {
+    width: 1em;
+  }
+   
+  body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+  body::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
+/* custom scrollbar */
+
  .border-primary {
     border-color: #3f6ad8;
 }
@@ -9484,6 +9500,7 @@ button,
 .fixed-sidebar .app-main .app-main__outer {
     z-index: 9;
     padding-left: 280px;
+    overflow:hidden;
 }
 .fixed-sidebar.fixed-header .app-sidebar .app-header__logo {
     display: none;

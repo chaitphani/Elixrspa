@@ -9,6 +9,9 @@ urlpatterns = (
 
     path('appointment',views.appointment,name='appointment'),
     path('daily-report',views.daily_report,name='daily_report'),
+    path('branch-master',views.branch_master,name='branch_master'),
+    path('group-master',views.group_master,name='group_master'),
+    path('account-master',views.account_master,name='account_master'),
     
     path('payment_mode',views.payment_mode,name='payment_mode'),
     path('payment_mode/<int:id>/delete', views.payment_mode_delete, name='delete_payment_mode'),
