@@ -87,7 +87,8 @@
         <hr />
     </div>
     <div class="row table-responsive">
-        <table class="table table-bordered" id="dtBasicExample">
+        <div class="col-12">
+        <table class="table table-bordered" id="example">
             <thead class="alert-light">
                 <tr class="text-center">
                    <!-- <th>Name</th>-->
@@ -116,6 +117,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 
@@ -276,5 +278,17 @@
     }
 </script>
 
-
+<script>
+    $(document).ready( function () {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                // 'copyHtml5',
+                // 'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
+    });
+</script>
 {% endblock %}

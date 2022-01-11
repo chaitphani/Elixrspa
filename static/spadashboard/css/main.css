@@ -3345,6 +3345,7 @@ input[type="button"].btn-block {
 .btn-group > .btn-group:not(:last-child) > .btn {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    color:#000;
 }
 .btn-group > .btn:not(:first-child),
 .btn-group > .btn-group:not(:first-child) > .btn {
@@ -9345,20 +9346,20 @@ button,
     border-radius: 15px;
 }
 .vertical-nav-menu ul > li > a {
-    color: #6c757d;
+    color: white;
     height: 2rem;
     line-height: 2rem;
     padding: 0 1.5rem 0;
 }
 .vertical-nav-menu ul > li > a:hover {
-    color: #3f6ad8;
+    color: #000;
 }
 .vertical-nav-menu ul > li > a .metismenu-icon {
     display: none;
 }
 .vertical-nav-menu ul > li > a.mm-active {
-    color: #3f6ad8;
-    background: #e0f3ff;
+    color: #000;
+    background: #fff;
     font-weight: bold;
 }
 .app-sidebar.sidebar-text-light {
@@ -18738,7 +18739,7 @@ legend {
     transition-duration: 0.15s;
     transition-timing-function: linear;
     font: inherit;
-    color: inherit;
+    color: #fff;
     text-transform: none;
     background-color: transparent;
     border: 0;
@@ -20415,6 +20416,7 @@ a.fc-more:hover {
 }
 .ui-theme-settings {
     position: fixed;
+    display:none;
     z-index: 155;
     right: -30px;
     top: 0;

@@ -8,6 +8,20 @@ from django.contrib import messages
 def home(request):
     return render(request,'spadashboard/home.html')
 
+
+def gift(request):
+    return render(request,'spadashboard/gift.html')
+def carriers(request):
+    return render(request,'spadashboard/carriers.html')
+def appointment(request):
+    return render(request,'spadashboard/appointment.html')
+def payment_mode(request):
+    return render(request,'spadashboard/payment_mode.html')
+def add_duration(request):
+    return render(request,'spadashboard/add_duration.html')
+def daily_report(request):
+    return render(request,'spadashboard/daily_report.html')
+
 def attendancelist(request):
     return render(request,'spadashboard/attendancelist.html')
 
@@ -49,8 +63,8 @@ def clientlist(request):
         if repeated_client:
             data_1 = {'repeated':'repeated', 'rep_guests':repeated_client}
             return render(request,'spadashboard/clientlist.html', data_1)
-        else:
-            return redirect('clientlist')
+        # else:
+        return redirect('clientlist')
 
     # if request.user.is_superuser:
     # staff_members = Addstaff.objects.all()
@@ -74,6 +88,20 @@ def clientlist(request):
     }
     return render(request,'spadashboard/clientlist.html', data)
 
+
+def client_edit(request, id):
+
+    client_obj  = Guest.objects.get(id=id)
+    client_obj.comments = request.POST.get('cmt')
+    client_obj.save()
+    return redirect('clientlist')
+
+
+def client_delete(request, id):
+    client_obj = Guest.objects.get(id=id)
+    client_obj.delete()
+    return redirect('clientlist')
+    
 
 def expense_list(request):
 
@@ -224,6 +252,7 @@ def stafflist(request):
 
 def useractivity(request):
     return render(request,'spadashboard/useractivity.html')
+
 
 
 # @login_required(login_url='/beautyapp/login/')

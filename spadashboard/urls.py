@@ -7,6 +7,13 @@ urlpatterns = (
     path('',views.home,name='homek'),
     path('attendancelist',views.attendancelist,name='attendancelist'),
 
+    path('gift',views.gift,name='gift'),
+    path('carriers',views.carriers,name='carriers'),
+    path('appointment',views.appointment,name='appointment'),
+    path('payment_mode',views.payment_mode,name='payment_mode'),
+    path('add-duration',views.add_duration,name='add_duration'),
+    path('daily-report',views.daily_report,name='daily_report'),
+    
     path('city',views.citylist,name='citylist'),
     path('city/<int:id>/update', views.city_edit, name='update_city'),
 
@@ -19,7 +26,9 @@ urlpatterns = (
     path('expense/<int:id>/delete', views.delete_expense, name='delete_expense'),
 
     path('client',views.clientlist,name='clientlist'),
-    
+    path('client/<int:id>/update', views.client_edit, name='edit_client'),
+    path('client/<int:id>/delete', views.client_delete, name='delete_client'),
+
     path('franchisee',views.franchiseelist,name='franchiseelist'),
     path('franchisee/<int:id>/delete', views.franchise_delete, name='delete_franchise'),
 

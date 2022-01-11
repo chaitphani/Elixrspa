@@ -44,11 +44,11 @@ def dashboard(request):
             guests = Guest.objects.filter(city=city,date__range=(to_date,f_date))
 
     else:
-        if request.user.is_superuser:
-            guests = Guest.objects.all()
-        else:
-            city = request.user.city
-            guests = Guest.objects.filter(city=city)
+        # if request.user.is_superuser:
+        guests = Guest.objects.all()
+        # else:
+        #     city = request.user.city
+        #     guests = Guest.objects.filter(city=city)
     return render(request,'dashboard/guest_list.html', {'guests':guests})
 
 
@@ -589,3 +589,4 @@ def deleteduration(request,id):
     a = Addduration.objects.get(id=id)
     a.delete()
     return redirect(adduration)
+

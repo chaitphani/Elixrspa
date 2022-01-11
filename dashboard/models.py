@@ -12,6 +12,9 @@ class Addstaff(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
+    class Meta: 
+        verbose_name = "Staff"
+        verbose_name_plural = "Staff"
 
 class Addprice(models.Model):
     price = models.FloatField()
@@ -19,6 +22,9 @@ class Addprice(models.Model):
     def __str__(self):
         return '{}'.format(self.price)
 
+    class Meta: 
+        verbose_name = "Price"
+        verbose_name_plural = "Prices"
 
 class Addduration(models.Model):
     duration = models.CharField(max_length=250)
@@ -26,6 +32,9 @@ class Addduration(models.Model):
     def __str__(self):
         return '{}'.format(self.duration)
 
+    class Meta: 
+        verbose_name = "Duration"
+        verbose_name_plural = "Duration"
 
 class Paymentmod(models.Model):
     name = models.CharField(max_length=250)
@@ -33,6 +42,9 @@ class Paymentmod(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
+    class Meta: 
+        verbose_name = "PaymentMode"
+        verbose_name_plural = "PaymentModes"
 
 class Guest(models.Model):
 
@@ -70,6 +82,9 @@ class Attendence(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
+    class Meta: 
+        verbose_name = "Attendence"
+        verbose_name_plural = "Attendence"
 
 class Expenses(models.Model):
 
@@ -83,3 +98,7 @@ class Expenses(models.Model):
 
     def __str__(self):
         return '{}'.format(self.bill_no)
+
+    class Meta: 
+        verbose_name = "Expense"
+        verbose_name_plural = "Expenses"
