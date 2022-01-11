@@ -31,5 +31,4 @@ urlpatterns = (
 
     path('staff',views.stafflist,name='stafflist'),
     path('useractivity',views.useractivity,name='useractivity'),
-
 )

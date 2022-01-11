@@ -194,9 +194,13 @@
                         <td class="text-center">{{guest.payment}}</td>
                         <td class="text-center">{{guest.comments}}</td>
                         <td class="notexport"> 
-                            <a class="btn btn-sm btn-primary text-white font-weight-bold"
-                                onclick="check_out_{{guest.id}}()" data-toggle="modal" data-target="#myModalss">Out
-                            </a>
+                            {% if guest.comments == None or guest.comments == '' %}
+                                <a class="btn btn-sm btn-primary text-white font-weight-bold"
+                                    onclick="check_out_{{guest.id}}()" data-toggle="modal" data-target="#myModalss">Out
+                                </a>
+                            {% else %}
+                                <button class="btn btn-sm btn-primary text-white font-weight-bold" disabled>Out</button>
+                            {% endif %}
                         </td>
                         <td>
                             <a class="btn btn-sm btn-danger text-white font-weight-bold" onclick="delete_{{ guest.id }}()"
@@ -357,10 +361,7 @@
 </div>
 
 <script>
-    // console.log('------value------', $('#cmt'), document.getElementById('cmt'))
-    // console.log('------value------', $('#hiden_id').val(), document.getElementById('hiden_id'))
     {% for guest in guests %}
-        // console.log('------guest-----', {{guest.id}})
         function check_out_{{ guest.id }} () {
             $("#cmt").val("{{ guest.cmt }}")
             $('#hiden_id').val('{{ guest.id }}')
@@ -454,7 +455,6 @@
 
 </script>
 
-
 <script>
     $(window).load(function () {
         date = document.getElementById("date")
@@ -463,22 +463,24 @@
     });
 </script>
 
-<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.1/css/dataTables.dateTime.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
-<script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.1/css/dataTables.dateTime.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+
 <script>
     var minDate, maxDate;
- 
- // Custom filtering function which will search data in column four between two values
+     // Custom filtering function which will search data in column four between two values
     $.fn.dataTable.ext.search.push(
         function( settings, data, dataIndex ) {
             var min = minDate.val();
             var max = maxDate.val();
-            var date = new Date( data[1] );
-    
+            var date = new Date( data[0] );
             if (
                 ( min === null && max === null ) ||
                 ( min === null && date <= max ) ||
@@ -494,19 +496,31 @@
     $(document).ready( function () {
         // Create date inputs
         minDate = new DateTime($('#min'), {
-            format: 'MMMM Do YYYY'
+            format: 'DD-MM-YYYY'
         });
         maxDate = new DateTime($('#max'), {
-            format: 'MMMM Do YYYY'
+            format: 'DD-MM-YYYY'
         });        
 
         var table = $('#example').DataTable({
             "order": [[ 0, "desc" ]],
             dom: 'Bfrtip',
             buttons: [
-                'csvHtml5',
-                'pdfHtml5'
-            ]
+                {
+                extend: 'pdf',
+                orientation: 'landscape',
+                title: 'client_list-' + new Date().getDate()+'-'+(new Date().getMonth()+1)+'-'+new Date().getFullYear(),
+                exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                    }
+                },
+                {
+                extend: 'csv',
+                exportOptions: {
+                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                    }
+                }
+            ],
         });
 
         // Refilter the table

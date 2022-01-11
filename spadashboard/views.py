@@ -3,13 +3,54 @@ from beautyapp.models import *
 from dashboard.models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from dashboard.views import addstaff
+
+from rest_framework.views import APIView
+from rest_framework import serializers
+import datetime
 
 
 def home(request):
     return render(request,'spadashboard/home.html')
 
-def attendancelist(request):
-    return render(request,'spadashboard/attendancelist.html')
+
+def attendancelist(request):  
+    data = {
+        'attendance':Attendence.objects.all(),
+        'staffs':Addstaff.objects.all(),
+    }
+    return render(request,'spadashboard/attendancelist.html', data)
+
+
+def in_attendace(request):
+
+    today = datetime.date.today()
+    staff_obj = Addstaff.objects.get(id=request.POST.get('name'))
+    exist_staff_today = Attendence.objects.filter(name=staff_obj, date__day=today.day, date__month=today.month, date__year=today.year)
+    if not len(exist_staff_today) > 0:
+        if request.method == 'POST':
+            attendace = Attendence.objects.create(name=staff_obj, time_in=request.POST.get('time_in'))
+            return redirect('attendancelist')
+    else:
+        messages.error(request, 'check-in found for the staff...')
+    return redirect('attendancelist')
+
+
+def out_attendace(request):
+
+    today = datetime.date.today()
+    staff_obj = Addstaff.objects.get(id=request.POST.get('name'))
+    attendace_obj_today = Attendence.objects.filter(name=staff_obj, date__day=today.day, date__month=today.month, date__year=today.year)
+    
+    if request.method == 'POST':
+        if len(attendace_obj_today) > 0:
+            attendace_obj = attendace_obj_today.first()
+            attendace_obj.time_out = request.POST.get('time_out')
+            attendace_obj.save()
+            return redirect('attendancelist')
+        else:
+            messages.info(request, 'check-in not found for the staff...')            
+    return redirect('attendancelist')
 
 
 def citylist(request):
@@ -250,3 +291,5 @@ def useractivity(request):
 #     context_data = {
 #         'dn': Addduration.objects.all()
 #     }
+
+

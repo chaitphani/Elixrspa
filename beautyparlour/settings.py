@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 
     'beautyapp',
     'dashboard',
-    'spadashboard'
+    'spadashboard',
 
 ]
 
@@ -132,6 +132,7 @@ DATE_FORMAT = "Y-m-d"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 #----------------
+
 STATICFILES_FINDERS = (
 'django.contrib.staticfiles.finders.FileSystemFinder',
 'django.contrib.staticfiles.finders.AppDirectoriesFinder'
