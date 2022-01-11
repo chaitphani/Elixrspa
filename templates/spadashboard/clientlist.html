@@ -125,10 +125,10 @@
         </div>
     </div>
 </div>
-
 <!--Client details here-->
 
 <div class="container p-3 rounded bg-white" id="clientlisttable">
+
     <div class="row">
         <div class="col-md-12 text-center">
             <h4>Client Details</h4>
@@ -185,11 +185,11 @@
                             <td>{{guest.comments}}</td>
                             <td> 
                                 {% if guest.comments == None or guest.comments == '' %}
-                                <a class="btn btn-sm btn-primary text-white font-weight-bold"
-                                    onclick="check_out_{{guest.id}}()" data-toggle="modal" data-target="#myModalss">Out
-                                </a>
+                                    <a class="btn btn-sm btn-primary text-white font-weight-bold"
+                                        onclick="check_out_{{guest.id}}()" data-toggle="modal" data-target="#myModalss">Out
+                                    </a>
                                 {% else %}
-                                <button class="btn btn-primary btn-sm" disabled>Out</button>
+                                    <button class="btn btn-primary btn-sm" disabled>Out</button>
                                 {% endif %}
                             </td>
                             <td>
@@ -206,13 +206,12 @@
     </div>
 
     <!--edit client details Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
+    <!-- <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
-            <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"></button>
-                    <h4 class="modal-title text-center">EDIT CLIENTS DETAIL</h4>
+                    <h4 class="modal-title text-center">Edit Client Details</h4>
                 </div>
                 <div class="modal-body">
                     <form id="update_form" method="POST">
@@ -252,17 +251,17 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- end of edit client details Modal -->
 
     <!--Delete client details Modal -->
-    <div class="modal fade" id="myModals" role="dialog">
+    <div class="modal fade" id="repeatedClient" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <button type="button" class="close" data-dismiss="modal"></button>
                     <h4 class="modal-title">Delete Client Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <table class="table table-bordered table-responsive" style="color: black">
@@ -275,7 +274,6 @@
                                 <th>Payment</th>
                             </tr>
                         </thead>
-    
                         <tbody>
                             {% for rep in rep_guests %}
                             <tr>
@@ -302,52 +300,46 @@
     <div class="modal fade" id="myModalss" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
-            <div class="modal-content">
+            <div class="modal-content p-3">
                 <div class="modal-header text-center">
-                    <button type="button" class="close" data-dismiss="modal"></button>
                     <h4 class="modal-title">Client</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <form id="updates_form" method="POST">
                         {% csrf_token %}
                         <label id="delay">Why Delay</label>
-                        <textarea name="cmt" rows="8" cols="80" class="form-control" id="cmt"></textarea>
+                        <textarea name="cmt" rows="3" cols="40" class="form-control" placeholder="write here..." id="cmt"></textarea>
                         <input type="hidden" id="hiden_id" name='id_user'>
                         <br>
-                        <div class="row form-group">
-                            <div class="col-6"><button type="submit" class="btn btn-lg btn-block btn-success">Submit</button></div>
-                            <div class="col-6 text-right"><button type="button" class="btn btn-lg btn-danger" data-dismiss="modal">Close</button></div>
-                        </div>
+                        <button type="submit" class="btn btn-lg btn-block btn-success w-100">Submit</button>
                     </form>
                 </div>
-                
             </div>
         </div>
     </div>
     <!--end of Delay option Modal -->
 
-    <!--delete client details-->
+    <!--working delete client details-->
     <div class="modal fade" id="delete_modal" role="dialog">
         <div class="modal-dialog">
-
             <!-- Modal content-->
-            <div class="modal-content">
+            <div class="modal-content p-3">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"></button>
                     <h4 class="modal-title text-center">Delete Client Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure want to delete city</p>
-                    <a id="s_delete" class="btn btn-danger">Delete</a>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <p>Are you sure to delete Client</p>
+                    <div class="text-right">
+                        <a id="s_delete" class="btn btn-danger">Delete</a>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
     <!--end of delete client details-->
+
 </div>
 
 <script>
@@ -371,8 +363,10 @@
             mm = Math.abs(mm);
             time_now = get24tomin(t_24_now);
             time_out = get24tomin(t_24_out);
-            min_diff = eval(time_now) - eval(time_out);
-            $("#delay").html("<label>Why delay by  " + min_diff + " Minutes</label>");
+            min_diff = eval(time_out) - eval(time_now);
+
+            $("#delay").html("<h5>Why delay by <span class='text-danger font-weight-bold'>" + min_diff + "</span> Minutes.</h5>");
+            
             if (time_now <= time_out) {
                 $(".myModalss").removeAttr('id');
             } else {
@@ -449,10 +443,10 @@
     $(window).load(function () {
         date = document.getElementById("date")
         date.value = new Date().toISOString().substr(0, 10)
-
     });
 </script>
 
+<!-- Data tables for tables start -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.1/css/dataTables.dateTime.min.css">
@@ -518,6 +512,18 @@
             table.draw();
         });  
 
+    });
+</script>
+<!-- Data tables for tables ends -->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    $(window).on('load', function () {
+        {% if repeated == 'repeated' %}
+            console.log('----inside if cond of repeted------')
+            $("#repeatedClient").modal("show");
+            console.log('--aftr modal call-------')
+        {% endif %}
     });
 </script>
 {% endblock %}

@@ -40,5 +40,8 @@ urlpatterns = (
     path('manager/<int:id>/delete', views.manager_delete, name='delete_manager'),
 
     path('staff',views.stafflist,name='stafflist'),
+    path('staff/<int:id>/update', views.staff_edit, name='update_staff'),
+    path('staff/<int:id>/delete', views.staff_delete, name="delete_staff"),
+    
     path('useractivity',views.useractivity,name='useractivity'),
 )

@@ -75,6 +75,17 @@ def city_edit(request, id):
 def clientlist(request):
 
     if request.method == 'POST':
+
+        repeated_client = Guest.objects.filter(mobile=request.POST.get('mobileno'))
+        print('---repeated client-----', repeated_client)
+        if repeated_client:
+            print('---if repeated client-----')
+            data_1 = {'repeated':'repeated', 'rep_guests':repeated_client}
+            print('---data_1-------', data_1['repeated'])
+            print('---data_1-------', data_1['rep_guests'])
+            
+            return render(request,'spadashboard/clientlist.html', data_1)
+
         service_obj = Services.objects.get(pk=request.POST['service'])
         staff_obj = Addstaff.objects.get(pk=request.POST['serviceby'])
         pay_mode_obj = Paymentmod.objects.get(pk=request.POST['paym'])
@@ -83,11 +94,6 @@ def clientlist(request):
 
         new_guest = Guest.objects.create(date=request.POST.get('date'), gname=request.POST.get('name'), mobile=request.POST.get('mobileno'), city=city_obj, services=service_obj, treatment_by=staff_obj, duration=duration_obj,time_in=request.POST.get('timein'), time_out=request.POST.get('timeout'), price=request.POST.get('price'), payment=pay_mode_obj)
         new_guest.save()
-        
-        repeated_client = Guest.objects.filter(mobile=request.POST.get('mobileno'))
-        if repeated_client:
-            data_1 = {'repeated':'repeated', 'rep_guests':repeated_client}
-            return render(request,'spadashboard/clientlist.html', data_1)
         return redirect('clientlist')
 
     # if request.user.is_superuser:
@@ -272,6 +278,24 @@ def stafflist(request):
         'city':Citys.objects.all(),
     }
     return render(request,'spadashboard/stafflist.html', data)
+
+
+def staff_edit(request, id):
+
+    staff = Addstaff.objects.get(id=id)
+    staff.name = request.POST['name']
+    staff.mobileno = request.POST['mobileno']
+    city_obj = Citys.objects.get(id=request.POST['city'])
+    staff.city = city_obj
+    staff.save()
+    return redirect('stafflist')
+
+
+def staff_delete(request, id):
+    
+    staff = Addstaff.objects.get(id=id)
+    staff.delete()
+    return redirect("stafflist")
 
 
 def useractivity(request):
