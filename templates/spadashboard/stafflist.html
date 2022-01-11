@@ -97,86 +97,80 @@
 						<td>{{ staf.city }}</td>
 						<input type="hidden" name="{{ staf.id }}" value="">
 						<td>
-							<a class="btn btn-sm btn-warning" 
+							<a class="btn btn-warning text-white font-weight-bold" 
 								onclick="edit_{{ staf.id }}()" data-toggle="modal" data-target="#myModal">
 								Edit
 							</a>
-					<!--    {% if request.user.is_superuser %}
-                      		<a class="btn btn-sm btn-danger" delete_{{ staf.id }}  data-toggle="modal" data-target="#myModals">
-              				Delete</a>{%endif%}</center></td>-->
+							<a class="btn btn-danger text-white font-weight-bold" onclick="delete_{{ staf.id }}" data-toggle="modal" data-target="#myModals">Delete
+							</a>
+						</td>
 					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
-
-		<div class="container">
-			<!-- Modal -->
-			<div class="modal fade" id="myModal" role="dialog">
-				<div class="modal-dialog">
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"></button>
-							<h4 class="modal-title text-center">EDIT STAFF DETAILS</h4>
-						</div>
-						<div class="modal-body">
-							<form id="update_form" method="POST">
-								{% csrf_token %}
-								<div class="form-group">
-									<label for="name" class="label">Change Name</label>
-									<input id="name" type="text" name="name" class="form-control" required="required" />
-								</div>
-								<div class="form-group">
-									<label for="name" class="label">Mobile_No</label>
-									<input id="mobileno" type="text" name="mobileno" class="form-control"
-										required="required" />
-								</div>
-								<div class="form-group">
-									<label for="name" class="label">City</label>
-									<select name="city" id="city" class="form-control">
-									{% for cities in city %}
-										<option value="{{cities.id}}">{{cities.name}}</option>
-									{% endfor %}
-									</select>
-								</div>								
-								<div class="form-group">
-									<button type="submit" class="btn btn-sm btn-success">Update</button>
-								</div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-						</div>
+		<!-- update details -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content p-3">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Staff Details</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<form id="update_form" method="POST">
+							{% csrf_token %}
+							<div class="form-group">
+								<label for="name" class="label">Change Name</label>
+								<input id="name" type="text" name="name" class="form-control" required="required" />
+							</div>
+							<div class="form-group">
+								<label for="name" class="label">Mobile_No</label>
+								<input id="mobileno" type="text" name="mobileno" class="form-control"
+									required="required" />
+							</div>
+							<div class="form-group">
+								<label for="name" class="label">City</label>
+								<select name="city" id="city" class="form-control">
+								{% for cities in city %}
+									<option value="{{cities.id}}">{{cities.name}}</option>
+								{% endfor %}
+								</select>
+							</div>								
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary w-100">Update</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
+
 		<!-- delete-->
-		<div class="container">
-			<!-- Modal -->
-			<div class="modal fade" id="myModals" role="dialog">
-				<div class="modal-dialog">
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"></button>
-							<h4 class="modal-title text-center">Delete Client Details</h4>
-						</div>
-						<div class="modal-body">
-							<p>Are you sure want to delete city</p>
-							<a id="s_delete" class="btn btn-danger">Delete</a>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		<div class="modal fade" id="myModals" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content p-3">
+					<div class="modal-header">
+						<h4 class="modal-title text-center">Delete staff Details</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<h6>Are you sure to delete staff</h6><hr/>
+						<div class="col-12 text-right mt-3">
+							<a id="s_delete" class="btn btn-danger text-white font-weight-bold">Delete</a>
 						</div>
 					</div>
+					<!-- <div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div> -->
 				</div>
 			</div>
 		</div>
 		<!-- end of delete -->
-		<script>
 
+		<script>
 			{% for staf in staff %}
 				function edit_{{ staf.id }} (){
 					$("#name").val("{{ staf.name }}")
@@ -184,10 +178,10 @@
 					$("#city").val("{{ staf.city.id }}")
 					$("#city").attr("selected")
 
-					$("#update_form").attr("action", "{% url 'updates' staf.id %}")
+					$("#update_form").attr("action", "{% url 'update_staff' staf.id %}")
 				}
 				function delete_{{ staf.id }} (){
-					$('#s_delete').attr('href', "delete_staff/{{ staf.id }}")
+					$('#s_delete').attr('href', "{% url 'delete_staff' staf.id %}")
 				}
 			{% endfor %}
 		</script>
