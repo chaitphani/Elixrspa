@@ -165,6 +165,7 @@ def update(request, id):
 def clientupdate(request, id):
 
     if request.method == 'POST':
+        
         g  = Guest.objects.get(id=id)
         g.time_in = request.POST['time_in']
         g.time_out= request.POST['time_out']
