@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label>City</label>
-                        <select name="city" class="form-control" id="" required>
+                        <select name="city" id="cityId" style="width: 100%;" required>
                             <option value="">Select City</option>
                             {% for city in cities %}
                                 <option value="{{city.id}}">{{city.name}}</option>
@@ -71,16 +71,16 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label> Treatment Service</label>
-                        <select name="service" class="form-control" required>
+                        <select name="service" id="treatementService" style="width: 100%;" required>
                             <option value=""> Select Service..</option>
-                                {% for service in services %}
-                            <option value="{{service.id}}">{{ service.name }}</option>
+                            {% for service in services %}
+                                <option value="{{service.id}}">{{ service.name }}</option>
                             {%endfor%}
                         </select>
                     </div>
                     <div class="col-md-4 form-group">
-                        <label> Treatment By-</label>
-                        <select name="serviceby" class="form-control" required>
+                        <label> Treatment By</label>
+                        <select name="serviceby" id="treatmentBy" style="width: 100%;" required>
                             <option value=""> Select Staff..</option>
                             {% for staff in staffs %}
                                 <option value="{{staff.id}}">{{ staff.name }}</option>
@@ -89,7 +89,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label>Duration(In-Minute)</label>
-                        <select id="duration" name="duration" onchange="myFunction($('#timein.val'), this)" class="form-control" required>
+                        <select id="duration" name="duration" onchange="myFunction($('#timein.val'), this)" required style="width: 100%;">
                             <option value="">Select Duration..</option>
                             {% for d in duration %}
                                 <option value="{{d.duration}}">{{ d.duration }}</option>
@@ -111,7 +111,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label>Payment Mode</label>
-                        <select id="pm" name="paym" class="form-control" required>
+                        <select id="pm" name="paym" style="width: 100%;" required>
                             <option value=""> Select Payment mode</option>
                             {% for p in paym %}
                                 <option value="{{p.id}}">{{ p.name }}</option>
@@ -522,6 +522,37 @@
             $("#repeatedClient").modal("show");
             console.log('--aftr modal call-------')
         {% endif %}
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#treatementService').select2({
+            theme: "classic"
+        });
+    });
+
+    $(document).ready(function() {
+        $('#cityId').select2({
+            theme: "classic"
+        });
+    });
+    
+    $(document).ready(function() {
+        $('#treatmentBy').select2({
+            theme: "classic"
+        });
+    });
+
+    $(document).ready(function() {
+        $('#duration').select2({
+            theme: "classic"
+        });
+    });
+
+    $(document).ready(function() {
+        $('#pm').select2({
+            theme: "classic"
+        });
     });
 </script>
 {% endblock %}

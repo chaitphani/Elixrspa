@@ -1,3 +1,4 @@
+from django.db.models.query import EmptyQuerySet
 from django.shortcuts import render, redirect
 from beautyapp.models import *
 from dashboard.models import *
@@ -400,8 +401,50 @@ def daily_report(request):
 
 
 def branch_master(request):
-    return render(request,'spadashboard/branch_master.html')
+
+    if request.method == 'POST':
+        new_branch_master = BranchMaster.objects.create(name=request.POST.get('name'))
+        new_branch_master.code = 'BM0-'+str(new_branch_master.id)
+        new_branch_master.save()
+        return redirect('branch_master')
+
+    data = {
+        'branch_master':BranchMaster.objects.all()
+    }
+    return render(request,'spadashboard/branch_master.html', data)
+
+
 def group_master(request):
-    return render(request,'spadashboard/group_master.html')
+
+    if request.method == 'POST':
+        new_group_master = GroupMaster.objects.create(name=request.POST.get('name'))
+        new_group_master.code = 'GM0-'+str(new_group_master.id)
+        new_group_master.save()
+        return redirect('group_master')
+
+    data = {
+        'group_master':GroupMaster.objects.all()
+    }
+    return render(request,'spadashboard/group_master.html', data)
+
+
 def account_master(request):
-    return render(request,'spadashboard/account_master.html')
+
+    if request.method == 'POST':
+        city_obj = Citys.objects.get(id=request.POST.get('city'))
+        branch_master_obj = BranchMaster.objects.get(id=request.POST.get('branch_master'))
+        group_master_obj = GroupMaster.objects.get(id=request.POST.get('group_master'))
+
+        new_account_master = AccountMaster.objects.create(name=request.POST.get('name'), address_1=request.POST.get('address_1'), address_2=request.POST.get('address_2'), address_3=request.POST.get('address_3'), state=request.POST.get('state'), pincode=request.POST.get('pincode'), mobile_number=request.POST.get('mobile_number'), city=city_obj, branch_master=branch_master_obj, group_master=group_master_obj)
+        
+        new_account_master.code = 'AM0-'+str(new_account_master.id)
+        new_account_master.save()
+        return redirect('account_master')
+
+    data = {
+        'branch_master':BranchMaster.objects.all(),
+        'group_master':GroupMaster.objects.all(),
+        'cities':Citys.objects.all(),
+        'account_master':AccountMaster.objects.all(),
+    }
+    return render(request,'spadashboard/account_master.html', data)

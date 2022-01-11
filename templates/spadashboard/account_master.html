@@ -43,70 +43,70 @@
 			<hr />
 		</div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <select class="form-control" required>
-                <option value="">--Select Branch Master--</option>
-                <option value="">Branch1</option>
-            </select>
-        </div>
-        <div class="col-md-6">
-            <select class="form-control" required>
-                <option value="">--Select Group Master--</option>
-                <option value="">Group1</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="row mt-2">
-        <div class="col-md-12">
-            <input type="text" placeholder="Account Name" class="form-control" required>
-        </div>
-    </div>
-
-    <div class="row mt-2">
-        <div class="col-md-12">
-            <input type="text" placeholder="Address - 1" class="form-control" required>
-        </div>
-    </div>
-    <div class="row mt-2">
-        <div class="col-md-12">
-            <input type="text" placeholder="Address - 2" class="form-control" required>
-        </div>
-    </div>
-    <div class="row mt-2">
-        <div class="col-md-12">
-            <input type="text" placeholder="Address - 3" class="form-control" required>
-        </div>
-    </div>
-
-
-        <div class="row mt-2">
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
             <div class="col-md-6">
-                <select class="form-control" required>
-                    <option value="">--Select City--</option>
-                    <option value="">city1</option>
+                <select style="width:100%" name="branch_master" id="branchMaster" required>
+                    <option value="">--Select Branch Master--</option>
+                    {% for master in branch_master %}
+                        <option value="{{master.id}}">{{master.name}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="col-md-6">
-                <input type="number" placeholder="Pin Code" class="form-control" required>
+                <select style="width:100%" name="group_master" id="groupMaster" required>
+                    <option value="">--Select Group Master--</option>
+                    {% for master in group_master %}
+                        <option value="{{master.id}}">{{master.name}}</option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
-
         <div class="row mt-2">
             <div class="col-md-6">
-                <input type="text" placeholder="State" class="form-control" required>
+                <input type="text" name="name" placeholder="Account Name" class="form-control" required>
             </div>
             <div class="col-md-6">
-                <input type="number" placeholder="Mobile Number" class="form-control" required>
+                <input type="text" name="address_1" placeholder="Address - 1" class="form-control" required>
             </div>
         </div>
-<hr/>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <input type="text" name="address_2" placeholder="Address - 2" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+                <input type="text" name="address_3" placeholder="Address - 3" class="form-control" required>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <select style="width:100%" name="city" id="cityId" required>
+                    <option value="">--Select City--</option>
+                    {% for city in cities %}
+                        <option value="{{city.id}}">{{city.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <input type="text" name="pincode" placeholder="Pin Code" class="form-control" required>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <input type="text" name="state" placeholder="State" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+                <input type="text" name="mobile_number" placeholder="Mobile Number" class="form-control" required>
+            </div>
+        </div>
+        <hr/>
         <div class="row mt-2">
             <div class="col-md-12 text-center">
                 <input type="submit" value="Create Account" class="btn btn-success font-weight-bold btn-lg">
             </div>
-	    </div>
+        </div>
+    </form>
 </div>
 
 <!--Account List -->
@@ -133,23 +133,43 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>00</td>
-                <td>Acc name</td>
-                <td>000</td>
-                <td>Address 1</td>
-                <td>Address 2</td>
-                <td>Address 3</td>
-                <td>City</td>
-                <td>500004</td>
-                <td>State</td>
-                <td>9556544484485</td>
-            </tr>
+            {% for master in account_master %}
+                <tr>
+                    <td>{{master.code}}</td>
+                    <td>{{master.name}}</td>
+                    <td>{{master.group_master.code}}</td>
+                    <td>{{master.address_1}}</td>
+                    <td>{{master.address_2}}</td>
+                    <td>{{master.address_3}}</td>
+                    <td>{{master.city.name}}</td>
+                    <td>{{master.pincode}}</td>
+                    <td>{{master.state}}</td>
+                    <td>{{master.mobile_number}}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
             </div>
 	</div>
 </div>
 
+<script>
+    $(document).ready(function() {
+        $('#branchMaster').select2({
+            theme: "classic"
+        });
+    });
 
+    $(document).ready(function() {
+        $('#groupMaster').select2({
+            theme: "classic"
+        });
+    }); 
+
+    $(document).ready(function() {
+        $('#cityId').select2({
+            theme: "classic"
+        });
+    }); 
+</script>
 {% endblock %}

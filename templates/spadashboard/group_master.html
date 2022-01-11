@@ -43,15 +43,17 @@
 			<hr />
 		</div>
 	</div>
-    
-    <div class="row">
-        <div class="col-md-8">
-            <input type="text" placeholder="Group Name" class="form-control" required>
-        </div>
-        <div class="col-md-4">
-            <input type="button" class="btn btn-success btn-lg font-weight-bold" value="Add Group">
-        </div>
-    </div>
+	<form method="post">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-md-8">
+				<input type="text" name="name" placeholder="Group Name" class="form-control" required/>
+			</div>
+			<div class="col-md-4">
+				<input type="submit" class="btn btn-success btn-lg font-weight-bold" value="Add Group">
+			</div>
+		</div>
+	</form>
 </div>
 
 <!--Branch City -->
@@ -61,22 +63,24 @@
 			<h4>Group List</h4>
 			<hr />
 		</div>
-        <div class="col-md-12 table-responsive">
-            <table class="table table-striped table-condensed">
-        <thead class="bg-light">
-            <tr>
-                <th>Group Code#</th>
-                <th>Group name</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>000</td>
-                <td>group 1</td>
-            </tr>
-        </tbody>
-    </table>
-            </div>
+		<div class="col-md-12 table-responsive">
+			<table class="table table-striped table-condensed">
+				<thead class="bg-light">
+					<tr>
+						<th>Group Code#</th>
+						<th>Group name</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for master in group_master %}
+					<tr>
+						<td>{{master.code}}</td>
+						<td>{{master.name}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 

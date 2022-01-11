@@ -21,3 +21,7 @@ admin.site.register(Addstaff)
 admin.site.register(Franchisee)
 admin.site.register(Addduration)
 admin.site.register(Paymentmod)
+
+admin.site.register(BranchMaster)
+admin.site.register(GroupMaster)
+admin.site.register(AccountMaster)
