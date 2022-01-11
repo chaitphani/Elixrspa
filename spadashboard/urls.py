@@ -7,6 +7,13 @@ urlpatterns = (
     path('',views.home,name='homek'),
     path('attendancelist',views.attendancelist,name='attendancelist'),
 
+    path('gift',views.gift,name='gift'),
+    path('carriers',views.carriers,name='carriers'),
+    path('appointment',views.appointment,name='appointment'),
+    path('payment_mode',views.payment_mode,name='payment_mode'),
+    path('add-duration',views.add_duration,name='add_duration'),
+    path('daily-report',views.daily_report,name='daily_report'),
+    
     path('city',views.citylist,name='citylist'),
     path('city/<int:id>/update', views.city_edit, name='update_city'),
 

@@ -293,3 +293,15 @@ def useractivity(request):
 #     }
 
 
+def gift(request):
+    return render(request,'spadashboard/gift.html')
+def carriers(request):
+    return render(request,'spadashboard/carriers.html')
+def appointment(request):
+    return render(request,'spadashboard/appointment.html')
+def payment_mode(request):
+    return render(request,'spadashboard/payment_mode.html')
+def add_duration(request):
+    return render(request,'spadashboard/add_duration.html')
+def daily_report(request):
+    return render(request,'spadashboard/daily_report.html')
