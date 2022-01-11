@@ -16,7 +16,7 @@ urlpatterns = (
     path('gallery/',views.gallery,name='gallery'),
 
     path('espackage/',views.espackage,name='espackage'),
-    path('careers/',views.careers,name='careers'),
+    path('careers/add',views.careers,name='careers_add'),
     path('mens/',views.mens,name='mens'),
     path('footrefl/',views.footrefl,name='footrefl'),
     path('memberplan',views.memberplan,name='memberplan'),

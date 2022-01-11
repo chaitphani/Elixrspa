@@ -3,21 +3,33 @@
 {% block Gift %}
 
 <div class="container rcn">
-	<div class="row">
-		<h3 class="text-center h3"> BUY A GIFT VOUCHER <i class="fa fa-gift" aria-hidden="true"></i>
-		</h3>
-	</div>
+	<h3 class="text-center h3"> BUY A GIFT VOUCHER <i class="fa fa-gift fa-lg" aria-hidden="true"></i></h3>
 	<hr class="servicehd1">
 	<form action="{% url 'buygift' %}" method="post">
 		{% csrf_token %}
-		<input type="text" name="name" placeholder="Your Name" class="form-control" required><br>
-		<input type="email" name="email" placeholder="Email" class="form-control" required><br>
-		<input type="text" name="mobile" placeholder="Mobile" class="form-control" required><br>
-		<input type="text" name="address" placeholder="Address" class="form-control" required><br>
-		<input type="text" name="price" placeholder=" Gift Voucher Value " class="form-control" required><br>
-		<input type="textarea" name="message" placeholder="Message" class="form-control"><br>
-
-		<input type="submit" name="submit" class="btn btn-success">
+		<div class="row">
+			<div class="col-md-6">
+				<input type="text" name="name" placeholder="Your Name*" class="form-control" required><br>
+			</div>
+			<div class="col-md-6">
+				<input type="email" name="email" placeholder="Email*" class="form-control" required><br>
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="mobile" placeholder="Mobile*" class="form-control" required><br>
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="address" placeholder="Address*" class="form-control" required><br>
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="price" placeholder=" Gift Voucher Value* " class="form-control" required><br>
+			</div>
+			<div class="col-md-6">
+				<textarea type="textarea" name="message" rows="1" placeholder="Message*" class="form-control" required></textarea><br>
+			</div>
+			<div class="col-12 text-center">
+				<input type="submit" name="submit" class="btn btn-primary w-100" value="Send Gift">
+			</div>
+		</div>
 	</form>
 	<div>
 		{% for message in messages %}

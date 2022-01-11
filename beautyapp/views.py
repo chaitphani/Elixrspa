@@ -54,21 +54,22 @@ def contact(request):
     return render(request,'beautyapp/contact1.html')
 
 
-# @login_required(login_url='/beautyapp/login')
 def careers(request):
 
     if request.method == 'POST':
+
         name = request.POST['name']
         address = request.POST['address']
-        date = request.POST['date']
         email = request.POST['email']
         mobileno = request.POST['mobileno']
         totalexp = request.POST['totalexp']
         lastsalary = request.POST['lastsalary']
         fileupload = request.FILES['fileupload']
         profile_pic = request.FILES['pc']
-        careers=Carriers(name=name,address=address,date=date,email=email,mobileno=mobileno,totalexp=totalexp,lastsalary=lastsalary,fileupload=fileupload,profile_pic=profile_pic)
+
+        careers=Carriers.objects.create(name=name, address=address, email=email, mobileno=mobileno, totalexp=totalexp,lastsalary=lastsalary, fileupload=fileupload, profile_pic=profile_pic)
         careers.save()
+
         return redirect(home)
     return render(request,'beautyapp/careers.html')
 

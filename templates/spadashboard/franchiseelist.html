@@ -35,6 +35,7 @@
 			<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0">
 				<thead class="alert-light">
 					<tr class="text-center">
+						<th>Date</th>
 						<th class="th-sm">Name</th>
 						<th class="th-sm">Email</th>
 						<th class="th-sm">Mobile_NO</th>
@@ -45,14 +46,18 @@
 				</thead>
 				<tbody>
 					{% for franchise in franchises %}
-					<tr>
+					<tr class="text-center">
+						<td>{{franchise.date|date:'d-M-Y'}}</td>
 						<td>{{franchise.name}}</td>
 						<td>{{franchise.email}}</td>
 						<td>{{franchise.mobileno}}</td>
 						<td>{{franchise.location}}</td>
-						<td>{{franchise.subject}}</td>
-						<td class="text-center"> <a class="btn btn-sm btn-danger"
-								href="{% url 'delete_franchise' franchise.id %}">Delete</a></td>
+						<td>{% if franchise.subject %}{{franchise.subject}}{% else %}-{% endif %}</td>
+						<td>
+							<a class="btn btn-sm btn-danger text-white font-weight-bold" onclick="delete_{{ franchise.id }}()"
+								data-toggle="modal" data-target="#delete_modal">Delete
+							</a>
+						</td>
 					</tr>
 					{% endfor %}
 				</tbody>
@@ -60,5 +65,28 @@
 		</div>
 	</div>
 </div>
-
+<div class="modal fade" id="delete_modal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content p-3">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Delete Franchisee Details</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure to delete franchisee details</p>
+                <div class="text-right">
+                    <a id="s_delete" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    {% for franchise in franchises %}
+        function delete_{{ franchise.id }} () {
+            $('#s_delete').attr('href', "{% url 'delete_franchise' franchise.id %}")
+        }
+    {% endfor %}
+</script>
 {% endblock %}

@@ -1,5 +1,8 @@
+from datetime import date, datetime
+from os import truncate
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models.fields import DateTimeField
 
 
 class Register(models.Model):
@@ -49,11 +52,13 @@ class Gift(models.Model):
 
     name=models.CharField(max_length=50)
     email=models.CharField(max_length=50)
-    mobile=models.IntegerField()
+    mobile=models.CharField(max_length=13)
     address=models.CharField(max_length=200)
-    message=models.CharField(max_length=500)
-    price=models.IntegerField()
+    message=models.TextField()
+    price=models.FloatField()
 
+    date = DateTimeField(auto_now_add=True)
+    
     def __str__(self):
         return '{}'.format(self.name)
 
@@ -76,15 +81,15 @@ class Appointment(models.Model):
 
 class Carriers(models.Model):
 
-    name=models.CharField(max_length=100)
-    address=models.CharField(max_length=200)
-    date=models.DateField()
-    email=models.CharField(max_length=100)
-    mobileno = models.IntegerField()
-    totalexp=models.CharField(max_length=100)
-    lastsalary=models.IntegerField()
-    fileupload=models.FileField(upload_to='resume/pdfs/')
-    profile_pic=models.ImageField(upload_to='Images/img/')
+    name=models.CharField(max_length=50)
+    address=models.CharField(max_length=200, null=True, blank=True)
+    date=models.DateTimeField(auto_now_add=True)
+    email=models.EmailField(unique=True)
+    mobileno = models.CharField(max_length=13)
+    totalexp=models.FloatField()
+    lastsalary=models.FloatField(null=True, blank=True)
+    fileupload=models.FileField(upload_to='media/careers/resume')
+    profile_pic=models.ImageField(upload_to='media/careers/profile_pics')
 
     def __str__(self):
         return '{}'.format(self.name)
@@ -95,12 +100,13 @@ class Carriers(models.Model):
 
 class Franchisee(models.Model):
 
-    name = models.CharField(max_length=100)
-    email = models.CharField(max_length=200)
-    mobileno = models.CharField(max_length=15)
+    name = models.CharField(max_length=30)
+    email = models.CharField(max_length=30)
+    mobileno = models.CharField(max_length=13)
     location=models.CharField(max_length=100)
-    subject = models.CharField(max_length=500)
-
+    subject = models.TextField(null=True, blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+    
     def __str__(self):
         return '{}'.format(self.name)
 

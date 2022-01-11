@@ -7,13 +7,21 @@ urlpatterns = (
     path('',views.home,name='homek'),
     path('attendancelist',views.attendancelist,name='attendancelist'),
 
-    path('gift',views.gift,name='gift'),
-    path('carriers',views.carriers,name='carriers'),
     path('appointment',views.appointment,name='appointment'),
-    path('payment_mode',views.payment_mode,name='payment_mode'),
-    path('add-duration',views.add_duration,name='add_duration'),
     path('daily-report',views.daily_report,name='daily_report'),
     
+    path('payment_mode',views.payment_mode,name='payment_mode'),
+    path('payment_mode/<int:id>/delete', views.payment_mode_delete, name='delete_payment_mode'),
+
+    path('duration',views.duration,name='duration'),
+    path('duration/<int:id>/delete', views.duration_delete, name='delete_duration'),
+
+    path('careers',views.careers,name='careers'),
+    path('career/<int:id>/delete', views.careere_delete, name="delete_career"),
+
+    path('gift',views.gift,name='gift'),
+    path('gift/<int:id>/delete', views.gift_delete, name='delete_gift'),
+
     path('city',views.citylist,name='citylist'),
     path('city/<int:id>/update', views.city_edit, name='update_city'),
 
@@ -41,4 +49,7 @@ urlpatterns = (
     path('staff/<int:id>/delete', views.staff_delete, name="delete_staff"),
     
     path('useractivity',views.useractivity,name='useractivity'),
+
+    path('attendace/in', views.in_attendace, name='attendance_in'),
+    path('attendace/out', views.out_attendace, name='attendance_out'),
 )

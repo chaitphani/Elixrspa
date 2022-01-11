@@ -7,27 +7,44 @@
 		<h3 class="text-center h3">CAREERS &nbsp<i class="fa fa-briefcase"></i></h3>
 	</div>
 	<hr class="servicehd1">
-	<form action="{% url 'careers' %}" method="post" enctype="multipart/form-data">
+	<form action="{% url 'careers_add' %}" method="post" enctype="multipart/form-data">
 		{% csrf_token %}
-		<input type="text" name="name" placeholder="Name" class="form-control" required><br>
-		<input type="text" name="address" placeholder="Address" class="form-control" required><br>
-		<input type="date" name="date" placeholder="Date Of Birth" class="form-control" required><br>
-		<input type="email" name="email" placeholder="Email" class="form-control" required><br>
-		<input type="text" name="mobileno" placeholder="Enter Mobile No " class="form-control" required><br>
-		<input type="text" name="totalexp" placeholder="Toatal Experience" class="form-control" required><br>
-		<input type="text" name="lastsalary" placeholder="Last Salary Drawn" class="form-control" required><br>
-		<!-- <input type="file" name="fileupload" class="form-control" required><br> -->
-
-		<div class="form-group">
-			<label for="exampleInputEmail1" style="color:white">Upload Resume*</label>
-			<input type="file" name="fileupload" class="form-control" required>
+		<div class="row">
+			<div class="col-md-6">
+				<input type="text" name="name" placeholder="Name*" class="form-control" required><br>
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="address" placeholder="Address" class="form-control"><br>
+			</div>
+			<div class="col-md-6">
+				<input type="email" name="email" placeholder="Email*" class="form-control" required><br>
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="mobileno" placeholder="Enter Mobile No*" class="form-control" required><br>
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="totalexp" placeholder="Toatal Experience*" class="form-control" required><br>
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="lastsalary" placeholder="Last Salary Drawn" class="form-control"><br>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="exampleInputEmail1" style="color:white">Upload Resume*</label>
+					<input type="file" name="fileupload" class="form-control" required>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="exampleInputEmail1" style="color:white">Upload Profile_Pic*</label>
+					<input type="file" name="pc" class="form-control" required>
+				</div>
+			</div>
 		</div>
-
-		<div class="form-group">
-			<label for="exampleInputEmail1" style="color:white">Upload Profile_Pic</label>
-			<input type="file" name="pc" class="form-control">
+		<!-- <input type="date" name="date" placeholder="Date Of Birth" class="form-control" required><br> -->
+		<div class="text-center col-12">
+			<input type="submit" name="submit" class="btn btn-success btn-lg" value="Submit Application">
 		</div>
-		<input type="submit" name="submit" class="btn btn-success">
 	</form>
 	<div>
 		{% for message in messages %}

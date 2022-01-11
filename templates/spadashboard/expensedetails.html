@@ -113,10 +113,16 @@
 				<td class="text-center">{{expense.particular}}</td>
 				<td class="text-center">{{expense.bill_no}}</td>
 				<td class="text-center">{{expense.amount}}</td>
-				<td class="text-center"><a href="{{expense.reciept.url}}" style="color:#1cc88a" target="_blank"><b>reciept</b></a></td>
+				<td class="text-center">
+					<a href="{{expense.reciept.url}}" target="_blank"><i class="fa fa-lg fa-file-pdf-o" 				aria-hidden="true"></i>
+					</a>
+				</td>
 				<td class="text-center">{{expense.city}}</td>
-				<td class="text-center"><a class="btn btn-sm btn-success" onclick="edit_{{ expense.id }}()" href="#"
-						data-toggle="modal" data-target="#myModal">Edit</a></td>
+				<td class="text-center">
+					<a class="btn btn-primary" 
+						onclick="edit_{{ expense.id }}()" href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil fa-lg"></i>
+					</a>
+				</td>
 			</tr>
 			{% endfor %}
 		</tbody>

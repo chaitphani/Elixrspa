@@ -177,9 +177,9 @@
                                     </a>
                                  </li>
                                  <li>
-                                    <a href="{% url 'add_duration' %}">
+                                    <a href="{% url 'duration' %}">
                                     <i class="metismenu-icon fa fa-user fa-fw fa-lg"></i>
-                                    Add Duration
+                                    Manage Duration
                                     </a>
                                  </li>
                                  <li>
@@ -204,9 +204,9 @@
                            </a>
                         </li>
                         <li>
-                           <a href="{% url 'carriers' %}">
+                           <a href="{% url 'careers' %}">
                            <i class="metismenu-icon fa fa-dashboard fa-fw fa-lg"></i>
-                           Manage Carriers
+                           Manage Careers
                            </a>
                         </li>
                         <li>
@@ -288,5 +288,10 @@
       <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
       <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
       <!--datatables cdn-->
+      <script>
+         function dismissFunction() {
+            document.getElementById("msg_display").style.display = "none";
+         }
+      </script>      
    </body>
 </html>

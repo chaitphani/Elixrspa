@@ -13,85 +13,81 @@
 		</div>
 	</div>
 	<div class="page-title-actions">
-		<button id="btnaddattendance" type="button" class="btn btn-success" data-toggle="modal" data-target="#checkinModal">
+		<button id="btnaddattendance" type="button" class="btn btn-success" data-toggle="modal"
+			data-target="#checkinModal">
 			<span class="btn-icon-wrapper">
 				<i class="fa fa-clock fa-fw"></i>
 				Check-In
 			</span>
 		</button>
-		<button id="btnaddattendance" type="button" class="btn btn-danger" data-toggle="modal" data-target="#checkoutModal">
+		<button id="btnaddattendance" type="button" class="btn btn-danger" data-toggle="modal"
+			data-target="#checkoutModal">
 			<span class="btn-icon-wrapper">
 				<i class="fa fa-clock fa-fw"></i>
 				Check-Out
-		</button>  
-		
-		
+		</button>
 
+		<!--check-in Modal -->
+		<div class="modal fade" id="checkinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Check-In here</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form action="{% url 'attendance_in' %}" method="POST">
+							{% csrf_token %}
+							<!-- <label> Staff Name</label> -->
+							<select name="name" class="form-control" required>
+								<option value="">Staff select</option>
+								{% for staff in staffs %}
+								<option value="{{staff.id}}">{{staff.name}}</option>
+								{% endfor %}
+							</select><br>
+							<!-- <label>Time In</label> -->
+							<input type="time" name="time_in" class="form-control" required />
+							<br>
+							<input type="submit" value="CHECK IN" class="btn btn-success w-100" />
+						</form>
+					</div>
 
-
-<!--check-in Modal -->
-<div class="modal fade" id="checkinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h5 class="modal-title" id="exampleModalLabel">Check-In here</h5>
-		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		  </button>
+				</div>
+			</div>
 		</div>
-		<div class="modal-body">
-			<form action="" method="POST">
-				{% csrf_token %}
-				<!-- <label> Staff Name</label> -->
-				<select name="name" class="form-control" required>
-					<option value="">Staff select</option>
-					{% for staff in staffs %}
-						<option value="{{staff.id}}">{{staff.name}}</option>
-					{% endfor %}
-				</select><br>
-				<!-- <label>Time In</label> -->
-				<input type="time" name="time_in" class="form-control" required/>
-				<br>
-				<input type="submit" value="CHECK IN" class="btn btn-success w-100" />
-			</form>
-		</div>
-		
-	  </div>
-	</div>
-  </div>
 
-<!--checkout Modal -->
-<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h5 class="modal-title" id="exampleModalLabel">Check-Out here</h5>
-		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		  </button>
+		<!--checkout Modal -->
+		<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Check-Out here</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form action="{% url 'attendance_out' %}" method="POST">
+							{% csrf_token %}
+							<!-- <label>Staff Name</label> -->
+							<select name="name" class="form-control" required>
+								<option value="">Staff select</option>
+								{% for staff in staffs %}
+								<option value="{{staff.id}}">{{staff.name}}</option>
+								{% endfor %}
+							</select><br>
+							<!-- <label>Time Out</label> -->
+							<input type='time' name="time_out" class="form-control" required /><br>
+							<input type="submit" value="CHECK-OUT" class="btn btn-danger w-100">
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="modal-body">
-			<form action="" method="POST">
-				{% csrf_token %}
-				<!-- <label>Staff Name</label> -->
-				<select name="name" class="form-control" required>
-					<option value="">Staff select</option>
-					{% for staff in staffs %}
-						<option value="{{staff.id}}">{{staff.name}}</option>
-					{% endfor %}
-				</select><br>
-				<!-- <label>Time Out</label> -->
-				<input type='time' name="time_out" class="form-control" required/><br>
-				<input type="submit" value="CHECK-OUT" class="btn btn-danger w-100">
-			</form>
-		</div>
-		
-	  </div>
-	</div>
-  </div>
-
-
-                    		
 	</div>
 </div>
 
@@ -102,6 +98,19 @@
 
 <!--Attendance-->
 <div class="container-fluid p-3 mb-3 rounded bg-white">
+	{% if messages %}
+	<ul class="messages list-unstyled" id="msg_display">
+		{% for message in messages %}
+			<li {% if message.tags %} class="{{ message.tags }} font-weight-bold p-3 rounded" {% endif %}>
+				{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+				<button type="button" class="close mr-3 mb-2 text-danger font-weight-bold"
+					onclick="dismissFunction()">&times;
+				</button>
+				<span class="ml-3">{{ message }}</span>
+			</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
 	<div class="row">
 		<div class="col-md-12 text-center">
 			<h4>Attendance List</h4>
@@ -124,16 +133,16 @@
 		</thead>
 		<tbody>
 			{% for att in attendance %}
-				<tr>
-					<td class="text-center">{{att.date|date:'Y/m/d' }}</td>
-					<td class="text-center">{{att.name}}</td>
-					<td class="text-center">{{att.time_in}}</td>
-					<td class="text-center">{% if att.time_out %}{{att.time_out}}{% else %}-{% endif %}</td>
-					<td class="text-center">{% if att.remarks %}{{att.remarks}}{% else %}-{% endif %}</td>
-					<!-- {% if request.user.is_superuser %}
+			<tr>
+				<td class="text-center">{{att.date|date:'Y/m/d' }}</td>
+				<td class="text-center">{{att.name}}</td>
+				<td class="text-center">{{att.time_in}}</td>
+				<td class="text-center">{% if att.time_out %}{{att.time_out}}{% else %}-{% endif %}</td>
+				<td class="text-center">{% if att.remarks %}{{att.remarks}}{% else %}-{% endif %}</td>
+				<!-- {% if request.user.is_superuser %}
 					<td>  <a class="btn btn-sm btn-danger" href="delete_atten/{{a.id}}" data-toggle="modal" data-target="#myModals">Delete</a></td>
 					{%endif%}-->
-				</tr>
+			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
@@ -166,10 +175,10 @@
 
 <script>
 	var today_date = new Date();
-	var year = today_date.getFullYear();	
+	var year = today_date.getFullYear();
 	var day = today_date.getDate();
 	var month_today = today_date.toLocaleString('default', { month: 'short' });
-	var display_date = month_today + ' ' + ('0'+day).slice(-2) + ", " + year + '.'
+	var display_date = month_today + ' ' + ('0' + day).slice(-2) + ", " + year + '.'
 	document.getElementById("today_date_attendace").innerHTML = display_date;
 </script>
 {% endblock %}

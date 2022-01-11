@@ -3,7 +3,7 @@ from beautyapp.models import *
 from dashboard.models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from dashboard.views import addstaff
+from dashboard.views import addstaff, timeout
 
 from rest_framework.views import APIView
 from rest_framework import serializers
@@ -27,12 +27,15 @@ def in_attendace(request):
     today = datetime.date.today()
     staff_obj = Addstaff.objects.get(id=request.POST.get('name'))
     exist_staff_today = Attendence.objects.filter(name=staff_obj, date__day=today.day, date__month=today.month, date__year=today.year)
+
     if not len(exist_staff_today) > 0:
         if request.method == 'POST':
             attendace = Attendence.objects.create(name=staff_obj, time_in=request.POST.get('time_in'))
+            attendace.save()
+            messages.success(request, 'Check-in success @' + attendace.time_in)
             return redirect('attendancelist')
     else:
-        messages.error(request, 'check-in found for the staff...')
+        messages.error(request, 'Today"s check-in found for this staff...')
     return redirect('attendancelist')
 
 
@@ -45,11 +48,15 @@ def out_attendace(request):
     if request.method == 'POST':
         if len(attendace_obj_today) > 0:
             attendace_obj = attendace_obj_today.first()
-            attendace_obj.time_out = request.POST.get('time_out')
-            attendace_obj.save()
-            return redirect('attendancelist')
+            if not attendace_obj.time_out:
+                attendace_obj.time_out = request.POST.get('time_out')
+                attendace_obj.save()
+                messages.success(request, 'Check-out success @' + attendace_obj.time_out)
+                return redirect('attendancelist')
+            else:
+                messages.info(request, 'Today"s check-out found for this staff...')            
         else:
-            messages.info(request, 'check-in not found for the staff...')            
+            messages.info(request, 'Today"s check-in not found for this staff...')            
     return redirect('attendancelist')
 
 
@@ -78,15 +85,15 @@ def clientlist(request):
 
     if request.method == 'POST':
 
-        repeated_client = Guest.objects.filter(mobile=request.POST.get('mobileno'))
-        print('---repeated client-----', repeated_client)
-        if repeated_client:
-            print('---if repeated client-----')
-            data_1 = {'repeated':'repeated', 'rep_guests':repeated_client}
-            print('---data_1-------', data_1['repeated'])
-            print('---data_1-------', data_1['rep_guests'])
+        # repeated_client = Guest.objects.filter(mobile=request.POST.get('mobileno'))
+        # print('---repeated client-----', repeated_client)
+        # if repeated_client:
+        #     print('---if repeated client-----')
+        #     data_1 = {'repeated':'repeated', 'rep_guests':repeated_client}
+        #     print('---data_1-------', data_1['repeated'])
+        #     print('---data_1-------', data_1['rep_guests'])
             
-            return render(request,'spadashboard/clientlist.html', data_1)
+        #     return render(request,'spadashboard/clientlist.html', data_1)
 
         service_obj = Services.objects.get(pk=request.POST['service'])
         staff_obj = Addstaff.objects.get(pk=request.POST['serviceby'])
@@ -304,6 +311,19 @@ def useractivity(request):
     return render(request,'spadashboard/useractivity.html')
 
 
+def careers(request):
+    data = {
+        'careers':Carriers.objects.all()
+    }
+    return render(request,'spadashboard/carriers.html', data)
+
+
+def careere_delete(request, id):
+    career_obj = Carriers.objects.get(id=id)
+    career_obj.delete()
+    return redirect('careers')
+
+
 # @login_required(login_url='/beautyapp/login/')
 # def durationlist(request):
 #     if request.method == 'POST':
@@ -318,14 +338,64 @@ def useractivity(request):
 
 
 def gift(request):
-    return render(request,'spadashboard/gift.html')
-def carriers(request):
-    return render(request,'spadashboard/carriers.html')
+    data = {
+        'gifts':Gift.objects.all()
+    }
+    return render(request,'spadashboard/gift.html', data)
+
+
+def gift_delete(request, id):
+    g=Gift.objects.get(id=id)
+    g.delete()
+    return redirect('gift')    
+
+
+def duration(request):
+
+    if request.method == 'POST':
+        new_duration = Addduration.objects.create(duration = request.POST.get('duration'))
+        new_duration.save()
+        return redirect('duration')
+
+    data = {
+        'durations':Addduration.objects.all()
+    }
+    return render(request,'spadashboard/add_duration.html', data)
+
+
+def duration_delete(request, id):
+
+    duration_obj = Addduration.objects.get(id=id)
+    duration_obj.delete()
+    return redirect('duration')
+
+
+def payment_mode(request):
+
+    if request.method == 'POST':
+        new_payment_mode = Paymentmod.objects.create(name=request.POST.get('name'))
+        new_payment_mode.save()
+        return redirect('payment_mode')
+
+    data = {
+        'payment_modes':Paymentmod.objects.all()
+    }
+    return render(request,'spadashboard/payment_mode.html', data)
+
+
+def payment_mode_delete(request, id):
+
+    payment_mode_obj = Paymentmod.objects.get(id=id)
+    payment_mode_obj.delete()
+    return redirect('payment_mode')
+
+    
 def appointment(request):
     return render(request,'spadashboard/appointment.html')
-def payment_mode(request):
-    return render(request,'spadashboard/payment_mode.html')
-def add_duration(request):
-    return render(request,'spadashboard/add_duration.html')
+
+
 def daily_report(request):
-    return render(request,'spadashboard/daily_report.html')
+    data = {
+        'guests':Guest.objects.all()
+    }
+    return render(request,'spadashboard/daily_report.html', data)

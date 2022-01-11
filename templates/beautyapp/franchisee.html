@@ -9,12 +9,24 @@
 	<hr class="servicehd1">
 	<form action="{% url 'franchisee' %}" method="post">
 		{% csrf_token %}
-		<input type="text" name="name" placeholder="Enter Your Name" class="form-control" required><br>
-		<input type="email" name="email" placeholder="Email" class="form-control" required><br>
-		<input type="text" name="mobileno" placeholder="Mobile No" class="form-control" required><br>
-		<input type="text" name="location" placeholder="Location" class="form-control" required><br>
-		<textarea name="subject" rows="8" cols="80" placeholder="Subject" class="form-control"></textarea>
-		<input type="submit" name="submit" class="btn btn-success" style="margin-bottom: -10px;">
+		<div class="row">
+			<div class="col-md-6">
+				<input type="text" name="name" placeholder="Enter Your Name*" class="form-control" required><br>
+			</div>
+			<div class="col-md-6">
+				<input type="email" name="email" placeholder="Email*" class="form-control" required><br>
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="mobileno" placeholder="Mobile No*" class="form-control" required><br>
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="location" placeholder="Location*" class="form-control" required><br>
+			</div>
+		</div>
+		<textarea name="subject" rows="3" cols="10" placeholder="Subject" class="form-control"></textarea><br>
+		<div class="text-center col-12">
+			<input type="submit" name="submit" class="btn btn-success btn-lg" value="Apply for Franchisee">
+		</div>
 	</form>
 </div>
 

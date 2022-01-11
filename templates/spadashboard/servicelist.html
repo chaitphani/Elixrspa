@@ -80,13 +80,13 @@
 						<td class="text-center">{{ serviced.name }}</td>
 						<input type="hidden" name="{{ serviced.id }}" value="">
 						<td>
-							<a class="btn btn-sm btn-warning font-weight-bold" 
+							<a class="btn btn-primary font-weight-bold text-white" 
 								onclick="modify_{{ serviced.id }}()" data-toggle="modal" data-target="#myModal">
-								Edit
-							</a> 
-							<a class="btn btn-sm btn-danger text-white font-weight-bold" 
+								<i class="fa fa-lg fa-pencil"></i>
+							</a> &nbsp;
+							<a class="btn btn-danger text-white font-weight-bold" 
 								onclick="delete_{{ serviced.id }}()" data-toggle="modal" data-target="#myModals">
-								Delete
+								<i class="fa fa-lg fa-trash"></i>
 							</a>
 						</td>
 					</tr>

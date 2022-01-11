@@ -1,87 +1,122 @@
-{% extends 'spadashboard/index.html' %}
-{% load static %}
-{% block heading %}
+{% extends 'spadashboard/index.html' %} {% load static %} {% block heading %}
 <div class="page-title-wrapper">
-
-<div class="page-title-heading">  
-    <div class="page-title-icon">
-        <i class="fa fa-gift icon-gradient bg-mean-fruit">
-        </i>
-    </div>
-    <div>
-        Gifts
-        <div class="page-title-subheading">Here you can see all gift appointments.
+    <div class="page-title-heading">
+        <div class="page-title-icon">
+            <i class="fa fa-gift icon-gradient bg-mean-fruit"> </i>
+        </div>
+        <div>
+            Gifts
+            <div class="page-title-subheading">
+                Here you can see all gift appointments.
+            </div>
         </div>
     </div>
-</div>
-<div class="page-title-actions">
-    <button type="button" data-toggle="tooltip" title="Example Tooltip" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark">
-        <i class="fa fa-star"></i>
-    </button>
-    <div class="d-inline-block dropdown">
-        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
-            <span class="btn-icon-wrapper pr-2 opacity-7">
-                <i class="fa fa-bell fa-w-20"></i>
-            </span>
-            Notifications
+    <div class="page-title-actions">
+        <button type="button" data-toggle="tooltip" title="Example Tooltip" data-placement="bottom"
+            class="btn-shadow mr-3 btn btn-dark">
+            <i class="fa fa-star"></i>
         </button>
-        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a href="javascript:void(0);" class="nav-link">
-                        <i class="nav-link-icon lnr-inbox"></i>
-                        <span>
-                            Inbox
-                        </span>
-                        <div class="ml-auto badge badge-pill badge-secondary">86</div>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="javascript:void(0);" class="nav-link">
-                        <i class="nav-link-icon lnr-book"></i>
-                        <span>
-                            Book
-                        </span>
-                        <div class="ml-auto badge badge-pill badge-danger">5</div>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="javascript:void(0);" class="nav-link">
-                        <i class="nav-link-icon lnr-picture"></i>
-                        <span>
-                            Picture
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a disabled href="javascript:void(0);" class="nav-link disabled">
-                        <i class="nav-link-icon lnr-file-empty"></i>
-                        <span>
-                            File Disabled
-                        </span>
-                    </a>
-                </li>
-            </ul>
+        <div class="d-inline-block dropdown">
+            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                class="btn-shadow dropdown-toggle btn btn-info">
+                <span class="btn-icon-wrapper pr-2 opacity-7">
+                    <i class="fa fa-bell fa-w-20"></i>
+                </span>
+                Notifications
+            </button>
+            <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="javascript:void(0);" class="nav-link">
+                            <i class="nav-link-icon lnr-inbox"></i>
+                            <span> Inbox </span>
+                            <div class="ml-auto badge badge-pill badge-secondary">86</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0);" class="nav-link">
+                            <i class="nav-link-icon lnr-book"></i>
+                            <span> Book </span>
+                            <div class="ml-auto badge badge-pill badge-danger">5</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0);" class="nav-link">
+                            <i class="nav-link-icon lnr-picture"></i>
+                            <span> Picture </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a disabled href="javascript:void(0);" class="nav-link disabled">
+                            <i class="nav-link-icon lnr-file-empty"></i>
+                            <span> File Disabled </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div> 
-                           
 </div>
-{% endblock %}
-
-{% block home %}
-
+{% endblock %} {% block home %}
 
 <div class="container-fluid p-3 mb-3 rounded bg-white" id="citylistsection">
-	<div class="row">
-		<div class="col-md-12 text-center">
-			<h4>Gift List</h4>
-			<hr />
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h4>Gift List</h4>
+            <hr />
+            <div class="col-12 table table-responsive">
+                <table class="table table-bordered" id="dtBasicExample">
+                    <thead class="alert-light">
+                        <tr>
+                            <th>NAME</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for gift in gifts %}
+                        <tr>
+                            <td>{{ gift.name }}</td>
+                            <td>
+                                <!-- <a class="btn btn-primary font-weight-bold text-white" 
+                                    onclick="edit_{{ gift.id }}()" data-toggle="modal"
+                                    data-target="#myModal"><i class="fa fa-lg fa-pencil"></i>
+                                </a> -->
+                                <!-- <a class="btn btn-sm btn-danger" href="delete/{{ gift.id }}">Delete</a> -->
 
+                                <a class="btn btn-sm btn-danger text-white font-weight-bold" 
+                                    onclick="delete_{{ gift.id }}()" data-toggle="modal" data-target="#delete_modal"><i class="fa fa-lg fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-
+<div class="modal fade" id="delete_modal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content p-3">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Delete Client Details</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure to delete profile</p>
+                <div class="text-right">
+                    <a id="s_delete" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    {% for gift in gifts %}
+        function delete_{{ gift.id }} () {
+            $('#s_delete').attr('href', "{% url 'delete_gift' gift.id %}")
+        }
+    {% endfor %}
+</script>
 {% endblock %}

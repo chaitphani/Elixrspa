@@ -107,11 +107,11 @@
                         <td>{{ manager.city }}</td>
                         <input type="hidden" name="{{ manager.id }}">
                         <td>
-                            <a class="btn btn-sm btn-warning" 
+                            <a class="btn btn-primary text-white" 
                                 onclick="edit_{{ manager.id }}()" data-toggle="modal" data-target="#myModal">
-                                Edit
+                                <i class="fa fa-lg fa-pencil"></i>
                             </a>
-                            <a class="btn btn-sm btn-danger" href="{% url 'delete_manager' manager.id %}">Delete</a>
+                            <a class="btn btn-danger" href="{% url 'delete_manager' manager.id %}"><i class="fa fa-lg fa-trash"></i></a>
                         </td>
                     </tr>
                 {% endfor %}

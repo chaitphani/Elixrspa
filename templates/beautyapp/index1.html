@@ -623,7 +623,7 @@
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{%url 'contact'%}">CONTACT</a></li>
                     <li class="nav-item"><a class="nav-link" href="{%url 'appointment'%}">BOOK APPOINTMENT</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{%url 'careers'%}">CAREERS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'careers_add'%}">CAREERS</a></li>
                     <li class="nav-item"><a class="nav-link" href="{%url 'franchisee'%}">FRANCHISEE</a></li>
                     {% if user.is_authenticated %}
                         <li class=" nav-item"><a class="nav-link" style="color:green"> HELLO {{user.first_name}}</a></li>

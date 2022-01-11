@@ -78,8 +78,9 @@
 						<td>{{ city.name }}</td>
 						<input type="hidden" name="{{ city.id }}" value="">
 						<td>
-							<a class="btn btn-sm btn-warning btn-lg font-weight-bold w-25" onclick="edit_{{ city.id }}()" data-toggle="modal"
-								data-target="#myModal">Edit
+							<a class="btn btn-primary font-weight-bold text-white" 
+								onclick="edit_{{ city.id }}()" data-toggle="modal"
+								data-target="#myModal"><i class="fa fa-lg fa-pencil"></i>
 							</a>
 							<!-- <a class="btn btn-sm btn-danger"  href="delete/{{ city.id }}">
 								Delete</a>-->

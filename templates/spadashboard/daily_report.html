@@ -1,165 +1,150 @@
 {% extends 'spadashboard/index.html' %}
 {% load static %}
 {% block heading %}
+
 <div class="page-title-wrapper">
-
-<div class="page-title-heading">  
-    <div class="page-title-icon">
-        <i class="fa fa-list-alt icon-gradient bg-mean-fruit">
-        </i>
-    </div>
-    <div>
-        Daily Sales Report
-        <div class="page-title-subheading">Here you can see your daily sales report.
+    <div class="page-title-heading">
+        <div class="page-title-icon">
+            <i class="fa fa-list-alt icon-gradient bg-mean-fruit">
+            </i>
+        </div>
+        <div>
+            Daily Sales Report
+            <div class="page-title-subheading">Here you can see your daily sales report.
+            </div>
         </div>
     </div>
-</div>
-<div class="page-title-actions">
-    <button type="button" data-toggle="tooltip" title="Example Tooltip" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark">
-        <i class="fa fa-star"></i>
-    </button>
-    <div class="d-inline-block dropdown">
-        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
-            <span class="btn-icon-wrapper pr-2 opacity-7">
-                <i class="fa fa-bell fa-w-20"></i>
-            </span>
-            Notifications
+    <div class="page-title-actions">
+        <button type="button" data-toggle="tooltip" title="Example Tooltip" data-placement="bottom"
+            class="btn-shadow mr-3 btn btn-dark">
+            <i class="fa fa-star"></i>
         </button>
-        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a href="javascript:void(0);" class="nav-link">
-                        <i class="nav-link-icon lnr-inbox"></i>
-                        <span>
-                            Inbox
-                        </span>
-                        <div class="ml-auto badge badge-pill badge-secondary">86</div>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="javascript:void(0);" class="nav-link">
-                        <i class="nav-link-icon lnr-book"></i>
-                        <span>
-                            Book
-                        </span>
-                        <div class="ml-auto badge badge-pill badge-danger">5</div>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="javascript:void(0);" class="nav-link">
-                        <i class="nav-link-icon lnr-picture"></i>
-                        <span>
-                            Picture
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a disabled href="javascript:void(0);" class="nav-link disabled">
-                        <i class="nav-link-icon lnr-file-empty"></i>
-                        <span>
-                            File Disabled
-                        </span>
-                    </a>
-                </li>
-            </ul>
+        <div class="d-inline-block dropdown">
+            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                class="btn-shadow dropdown-toggle btn btn-info">
+                <span class="btn-icon-wrapper pr-2 opacity-7">
+                    <i class="fa fa-bell fa-w-20"></i>
+                </span>
+                Notifications
+            </button>
+            <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="javascript:void(0);" class="nav-link">
+                            <i class="nav-link-icon lnr-inbox"></i>
+                            <span>
+                                Inbox
+                            </span>
+                            <div class="ml-auto badge badge-pill badge-secondary">86</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0);" class="nav-link">
+                            <i class="nav-link-icon lnr-book"></i>
+                            <span>
+                                Book
+                            </span>
+                            <div class="ml-auto badge badge-pill badge-danger">5</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0);" class="nav-link">
+                            <i class="nav-link-icon lnr-picture"></i>
+                            <span>
+                                Picture
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a disabled href="javascript:void(0);" class="nav-link disabled">
+                            <i class="nav-link-icon lnr-file-empty"></i>
+                            <span>
+                                File Disabled
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div> 
-                           
 </div>
-{% endblock %}
 
+{% endblock %}
 {% block home %}
 
-
 <div class="container-fluid p-3 mb-3 rounded bg-white" id="citylistsection">
-	<div class="row">
-		<div class="col-md-12 text-center">
-			<h4>Daily Sales Report List</h4>
-			<hr />
-		</div>
-	</div>
-
-
     <div class="row">
-		<div class="col-md-12 table-responsive">
+        <div class="col-md-12 text-center">
+            <h4>Daily Sales Report List</h4>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 table-responsive">
             <table class="table table-bordered">
                 <thead>
-                <tr>
-                    <th rowspan="2">Date</th>
-                    <th rowspan="2">Branch</th>
-                    <th rowspan="2">SI No</th>
-                    <th rowspan="2">Name</th>
-                    <th rowspan="2">Status</th>
-                    <th rowspan="2">Phone Number</th>
-                    <th rowspan="2">Therapy</th>
-                    <th rowspan="2">Therapist</th>
-                    <th rowspan="2">Duration</br>(In Min)</th>
-                    <th rowspan="2">
-                        <table>
-                            <tr class="text-center">
-                                <th colspan="3">Amount</th>
-                            </tr>
-                            <tr class="text-center">
-                                <th>Cash</th>
-                                <th>Debit-Card</th>
-                                <th>Bharat QR</th>
-                            </tr>
-                        </table>
-                    </th>
-                    <th rowspan="2">Bank</th>
-                    <th rowspan="2">Charges</th>
-                    <th rowspan="2">Date</th>
-                    <th rowspan="2">Time-In</th>
-                    <th rowspan="2">Time-Out</th>
-                    <th rowspan="2">Remarks</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td rowspan="2">Date</td>
-                    <td rowspan="2">Branch</td>
-                    <td rowspan="2">SI No</td>
-                    <td rowspan="2">Name</td>
-                    <td rowspan="2">Status</td>
-                    <td rowspan="2">Phone Number</td>
-                    <td rowspan="2">Therapy</td>
-                    <td rowspan="2">Therapist</td>
-                    <td rowspan="2">Duration</br>(In Min)</td>
-                    <td rowspan="2">
-                        <table>
-                            <tr class="text-center">
-                                <td>Cash</td>
-                                <td>Debit-Card</td>
-                                <td>Bharat QR</td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td rowspan="2">Bank</td>
-                    <td rowspan="2">Charges</td>
-                    <td rowspan="2">Date</td>
-                    <td rowspan="2">Time-In</td>
-                    <td rowspan="2">Time-Out</td>
-                    <td rowspan="2">Remarks</td>
-                </tr>
-            </tbody>
+                    <tr>
+                        <th rowspan="2">Date</th>
+                        <th rowspan="2">Branch</th>
+                        <th rowspan="2">SI No</th>
+                        <th rowspan="2">Name</th>
+                        <th rowspan="2">Status</th>
+                        <th rowspan="2">Phone Number</th>
+                        <th rowspan="2">Therapy</th>
+                        <th rowspan="2">Therapist</th>
+                        <th rowspan="2">Duration</br>(In Min)</th>
+                        <th rowspan="2">
+                            <table>
+                                <tr class="text-center">
+                                    <th colspan="3">Amount</th>
+                                </tr>
+                                <tr class="text-center">
+                                    <th>Cash</th>
+                                    <th>Debit-Card</th>
+                                    <th>Bharat QR</th>
+                                </tr>
+                            </table>
+                        </th>
+                        <th rowspan="2">Bank</th>
+                        <th rowspan="2">Date</th>
+                        <th rowspan="2">Time-In</th>
+                        <th rowspan="2">Time-Out</th>
+                        <th rowspan="2">Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for guest in guests %}
+                        <tr>
+                            <td rowspan="2">{{guest.date|date:'d-M-Y'}}</td>
+                            <td rowspan="2">branch-----</td>
+                            <td rowspan="2">{{guest.id}}</td>
+                            <td rowspan="2">{{guest.gname}}</td>
+                            <td rowspan="2">status-----</td>
+                            <td rowspan="2">{{guest.mobile}}</td>
+                            <td rowspan="2">{{guest.services.name}}</td>
+                            <td rowspan="2">{{guest.treatment_by.name}}</td>
+                            <td rowspan="2">{{guest.duration.duration}}</br>(In Min)</td>
+                            <td rowspan="2">
+                                <table>
+                                    <!-- to add price -->
+                                    <tr class="text-center">
+                                        <td>Cash---</td>
+                                        <td>Debit-Card-----</td>
+                                        <td>Bharat QR-----</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td rowspan="2">Bank------</td>
+                            <td rowspan="2">{{guest.date|date:'d-M-Y'}}</td>
+                            <td rowspan="2">{% if guest.time_in %}{{guest.time_in}}{% else %}-{% endif %}</td>
+                            <td rowspan="2">{% if guest.time_out %}{{guest.time_out}}{% else %}-{% endif %}</td>
+                            <td rowspan="2">{% if guest.comments %}{{guest.comments}}{% else %}-{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 {% endblock %}
