@@ -1,22 +1,21 @@
-from django.db.models.query import EmptyQuerySet
 from django.shortcuts import render, redirect
 from beautyapp.models import *
 from dashboard.models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from dashboard.views import addstaff, timeout
+from django.contrib.auth.models import auth
 
 import datetime
 
 
-def home(request):
+def dashboard(request):
     return render(request,'spadashboard/home.html')
 
 
 def attendancelist(request):  
     data = {
         'attendance':Attendence.objects.all(),
-        'staffs':Addstaff.objects.all(),
+        'staffs':AccountMaster.objects.filter(group_master__name='staff'),
     }
     return render(request,'spadashboard/attendancelist.html', data)
 
@@ -24,12 +23,12 @@ def attendancelist(request):
 def in_attendace(request):
 
     today = datetime.date.today()
-    staff_obj = Addstaff.objects.get(id=request.POST.get('name'))
-    exist_staff_today = Attendence.objects.filter(name=staff_obj, date__day=today.day, date__month=today.month, date__year=today.year)
+    staff_obj = AccountMaster.objects.get(id=request.POST.get('account_master'))
+    exist_staff_today = Attendence.objects.filter(date__day=today.day, date__month=today.month, date__year=today.year)
 
     if not len(exist_staff_today) > 0:
         if request.method == 'POST':
-            attendace = Attendence.objects.create(name=staff_obj, time_in=request.POST.get('time_in'))
+            attendace = Attendence.objects.create(time_in=request.POST.get('time_in'), account_master=staff_obj)
             attendace.save()
             messages.success(request, 'Check-in success @' + attendace.time_in)
             return redirect('attendancelist')
@@ -41,8 +40,8 @@ def in_attendace(request):
 def out_attendace(request):
 
     today = datetime.date.today()
-    staff_obj = Addstaff.objects.get(id=request.POST.get('name'))
-    attendace_obj_today = Attendence.objects.filter(name=staff_obj, date__day=today.day, date__month=today.month, date__year=today.year)
+    staff_obj = AccountMaster.objects.get(id=request.POST.get('account_master'))
+    attendace_obj_today = Attendence.objects.filter(account_master=staff_obj, date__day=today.day, date__month=today.month, date__year=today.year)
     
     if request.method == 'POST':
         if len(attendace_obj_today) > 0:
@@ -84,25 +83,31 @@ def clientlist(request):
 
     if request.method == 'POST':
 
-        # repeated_client = Guest.objects.filter(mobile=request.POST.get('mobileno'))
-        # print('---repeated client-----', repeated_client)
-        # if repeated_client:
-        #     print('---if repeated client-----')
-        #     data_1 = {'repeated':'repeated', 'rep_guests':repeated_client}
-        #     print('---data_1-------', data_1['repeated'])
-        #     print('---data_1-------', data_1['rep_guests'])
-            
-        #     return render(request,'spadashboard/clientlist.html', data_1)
+        service_obj = Services.objects.get(id=request.POST['service'])
+        duration_obj = Addduration.objects.get(id=request.POST.get('duration'))
+        pay_mode_obj = Paymentmod.objects.get(id=request.POST['paym'])
+        client_member = AccountMaster.objects.get(id=request.POST['client_member'], group_master__name='client')
+        therapist = AccountMaster.objects.get(id=request.POST['therapist'], group_master__name='staff')
 
-        service_obj = Services.objects.get(pk=request.POST['service'])
-        staff_obj = Addstaff.objects.get(pk=request.POST['serviceby'])
-        pay_mode_obj = Paymentmod.objects.get(pk=request.POST['paym'])
-        duration_obj = Addduration.objects.get(duration=request.POST.get('duration'))
-        city_obj = Citys.objects.get(id=request.POST['city'])
+        date = request.POST.get('date')
+        in_time = request.POST.get('timein')
+        out_time = request.POST.get('timeout')
+        price = request.POST.get('price')
 
-        new_guest = Guest.objects.create(date=request.POST.get('date'), gname=request.POST.get('name'), mobile=request.POST.get('mobileno'), city=city_obj, services=service_obj, treatment_by=staff_obj, duration=duration_obj,time_in=request.POST.get('timein'), time_out=request.POST.get('timeout'), price=request.POST.get('price'), payment=pay_mode_obj)
+        new_guest = Guest.objects.create(date=date, time_in=in_time, time_out=out_time, price=price, services=service_obj, duration=duration_obj, payment=pay_mode_obj, client_member=client_member, therapist=therapist)
+        
         new_guest.save()
         return redirect('clientlist')
+
+        # repeated_client = Guest.objects.filter(mobile=mobile)
+        # if repeated_client:
+
+        #     old_guest = Guest.objects.create(date=date, gname=name, mobile='Repeat', city=city_obj, services=service_obj, treatment_by=staff_obj, duration=duration_obj,time_in=in_time, time_out=out_time, price=price, payment=pay_mode_obj, user_existence='Old', account_master=account_master)
+        #     old_guest.save()
+
+        #     data_1 = {'repeated':'repeated', 'rep_guests':repeated_client}
+        #     return render(request,'spadashboard/clientlist.html', data_1)
+        # else:
 
     # if request.user.is_superuser:
     # staff_members = Addstaff.objects.all()
@@ -115,13 +120,13 @@ def clientlist(request):
         # guests = Guest.objects.filter(city=request.user.city)
 
     data = {
-        'cities':Citys.objects.all(),
         'payment_modes':Paymentmod.objects.all(),
         'durations':Addduration.objects.all(),
         'services':Services.objects.all(),
-        'staffs':Addstaff.objects.all(),
         'duration':Addduration.objects.all(),
         "paym": Paymentmod.objects.all(),
+        'clients':AccountMaster.objects.filter(group_member__name='client'),
+        'staffs':AccountMaster.objects.filter(group_member__name='staff'),
         'guests':Guest.objects.all(),
     }
     return render(request,'spadashboard/clientlist.html', data)
@@ -144,14 +149,16 @@ def client_delete(request, id):
 def expense_list(request):
 
     if request.method == 'POST':
-        city = Citys.objects.get(id=request.POST['city'])
-        expense_obj = Expenses(date=request.POST['date'], particular=request.POST['particular'], bill_no=request.POST['bill_no'], amount=request.POST['amount'], reciept=request.FILES.get('rc'), city=city)
+        group_master = GroupMaster.objects.get(id=request.POST['group_master'])
+
+        expense_obj = Expenses(date=request.POST['date'], particular=request.POST['particular'], bill_no=request.POST['bill_no'], amount=request.POST['amount'], reciept=request.FILES.get('rc'), group_master=group_master)
+
         expense_obj.save()
         return redirect('expense_list')
 
     data = {
         'expenses':Expenses.objects.all(),
-        'city': Citys.objects.all()
+        'city': GroupMaster.objects.filter(name='expense')
     }
     return render(request,'spadashboard/expensedetails.html', data)
 
@@ -163,6 +170,7 @@ def expense_edit(request, id):
     eexpense_obj.particular = request.POST['particular']
     eexpense_obj.bill_no = request.POST['bill_no']
     eexpense_obj.amount = request.POST['amount']
+    # eexpense_obj.group_master = request.POST['amount']
     eexpense_obj.save()
     return redirect('expense_list')
 
@@ -196,7 +204,7 @@ def managerlist(request):
     
     if request.method == 'POST':
         email = request.POST['email']
-        city = Citys.objects.get(id=request.POST['city'])
+        group_master = GroupMaster.objects.get(id=request.POST['group_master'])
         username=request.POST['username']
 
         if User.objects.filter(username=username).exists():
@@ -206,13 +214,13 @@ def managerlist(request):
             messages.info(request,'mobile number is taken')
             return redirect('managerlist')
         else:
-            user=User.objects.create_user(username=username, email=email, password=request.POST['password'], city=city, is_staff=True)
+            user=User.objects.create_user(username=username, email=email, password=request.POST['password'], group_master=group_master, is_staff=True)
             user.save()
             return redirect('managerlist')
 
     data = {
         'managers':User.objects.filter(is_superuser=False),
-        'city':Citys.objects.all(),
+        'city':GroupMaster.objects.filter(name='manager'),
     }                
     return render(request,'spadashboard/managerlist.html', data)
 
@@ -220,12 +228,12 @@ def managerlist(request):
 def manager_edit(request, id):
 
     manager_obj = User.objects.get(id=id)
-    city=Citys.objects.get(id=request.POST.get('city'))
+    group_member = GroupMaster.objects.get(id=request.POST.get('group_member'))
 
     # manager_obj.first_name = request.POST['name']
     manager_obj.email = request.POST['email']
 
-    manager_obj.city = city
+    manager_obj.group_member = group_member
     manager_obj.username = request.POST['username']
     manager_obj.set_password(str(request.POST['password']))
     manager_obj.save()
@@ -233,7 +241,7 @@ def manager_edit(request, id):
 
 
 def manager_delete(request, id):
-    manager = User.objects.get(id=id)
+    manager = User.objects.get(id=id, group_master__name='manager')
     manager.delete()
     return redirect('managerlist')
 
@@ -395,7 +403,7 @@ def appointment(request):
 
 def daily_report(request):
     data = {
-        'guests':Guest.objects.all()
+        'guests':Guest.objects.filter(client_member__name='client')
     }
     return render(request,'spadashboard/daily_report.html', data)
 
@@ -404,7 +412,7 @@ def branch_master(request):
 
     if request.method == 'POST':
         new_branch_master = BranchMaster.objects.create(name=request.POST.get('name'))
-        new_branch_master.code = 'BM0-'+str(new_branch_master.id)
+        new_branch_master.code = '10000-'+str(new_branch_master.id)
         new_branch_master.save()
         return redirect('branch_master')
 
@@ -417,8 +425,9 @@ def branch_master(request):
 def group_master(request):
 
     if request.method == 'POST':
-        new_group_master = GroupMaster.objects.create(name=request.POST.get('name'))
-        new_group_master.code = 'GM0-'+str(new_group_master.id)
+        city = Citys.objects.get(id=request.POST.get('city'))
+        new_group_master = GroupMaster.objects.create(name=request.POST.get('name'), city=city)
+        new_group_master.code = '20000-'+str(new_group_master.id)
         new_group_master.save()
         return redirect('group_master')
 
@@ -431,13 +440,24 @@ def group_master(request):
 def account_master(request):
 
     if request.method == 'POST':
-        city_obj = Citys.objects.get(id=request.POST.get('city'))
+
+        name = request.POST.get('name')
+        mobile_number = request.POST.get('mobile_number')
+        address_1 = request.POST.get('address_1')
+        address_2 = request.POST.get('address_2')
+        address_3 = request.POST.get('address_3')
+        state = request.POST.get('state')
+        pincode = request.POST.get('pincode')
+
         branch_master_obj = BranchMaster.objects.get(id=request.POST.get('branch_master'))
         group_master_obj = GroupMaster.objects.get(id=request.POST.get('group_master'))
 
-        new_account_master = AccountMaster.objects.create(name=request.POST.get('name'), address_1=request.POST.get('address_1'), address_2=request.POST.get('address_2'), address_3=request.POST.get('address_3'), state=request.POST.get('state'), pincode=request.POST.get('pincode'), mobile_number=request.POST.get('mobile_number'), city=city_obj, branch_master=branch_master_obj, group_master=group_master_obj)
-        
-        new_account_master.code = 'AM0-'+str(new_account_master.id)
+        if AccountMaster.objects.filter(mobile_number=mobile_number, group_master_obj__name='client').exists():
+            new_account_master = AccountMaster.objects.create(name=name, address_1=address_1, address_2=address_2, address_3=address_3, state=state, pincode=pincode, mobile_number='Repeat', branch_master=branch_master_obj, group_master=group_master_obj, user_existence='old')
+        else:
+            new_account_master = AccountMaster.objects.create(name=name, address_1=address_1, address_2=address_2, address_3=address_3, state=state, pincode=pincode, mobile_number=mobile_number, branch_master=branch_master_obj, group_master=group_master_obj, user_existence='New')
+
+        new_account_master.code = '30000-'+str(new_account_master.id)
         new_account_master.save()
         return redirect('account_master')
 

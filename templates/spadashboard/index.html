@@ -88,8 +88,8 @@
                                  <!--<h6 tabindex="-1" class="dropdown-header">Header</h6>
                                        <button type="button" tabindex="0" class="dropdown-item">Actions</button>
                                        <div tabindex="-1" class="dropdown-divider"></div>-->
-                                 <button type="button" tabindex="0" class="dropdown-item">Are you sure to
-                                    Sign-out?</button>
+                                 <a type="button" tabindex="0" class="dropdown-item" href="{% url 'logout' %}">Are you sure to
+                                    Sign-out?</a>
                               </div>
                            </div>
                         </div>
@@ -152,7 +152,7 @@
                   <ul class="vertical-nav-menu">
 
                      <li>
-                        <a href="{% url 'homek' %}">
+                        <a href="{% url 'dashboard' %}">
                            <i class="metismenu-icon fa fa-dashboard fa-fw fa-lg"></i>
                            Manage Dashboard
                         </a>
@@ -168,7 +168,7 @@
                            <li>
                               <a href="{% url 'clientlist' %}">
                                  <i class="metismenu-icon fa fa-user-plus fa-fw fa-lg"></i>
-                                 Manage Client
+                                 Manage Sales
                               </a>
                            </li>
                            <li>
@@ -198,7 +198,7 @@
                            <li>
                               <a href="{% url 'servicelist' %}">
                                  <i class="metismenu-icon fa fa-plus-circle fa-fw fa-lg"></i>
-                                 Manage Services
+                                 Manage Therapy
                               </a>
                            </li>
                         </ul>
