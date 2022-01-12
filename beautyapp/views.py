@@ -8,6 +8,7 @@ from django.contrib import messages
 # from django.conf import settings
 
 from .models import *
+from dashboard.models import *
 
 
 def table(request):
@@ -49,10 +50,8 @@ def espackage(request):
 def mens(request):
     return render(request,'beautyapp/mens.html')
 
-
 def contact(request):
     return render(request,'beautyapp/contact1.html')
-
 
 def careers(request):
 
@@ -78,8 +77,6 @@ def careers(request):
 def appointment(request):
 
     if request.method == 'POST':
-        name=request.POST['name']
-        mobileno=request.POST['mobileno']
         # account_sid = 'AC9e59c0f3c67ba050e8de9220fabef012'
         # auth_token = '8296009e858fd9c21ba0c5462a95b2d0'
         # client = Client(account_sid, auth_token)
@@ -88,18 +85,13 @@ def appointment(request):
         #               body ='hello sandy',
         #               to ="+918356016968",
         #                )
-        email=request.POST['email']
-        city=request.POST['city']
-        date=request.POST['pdate']
-        time=request.POST['ptime']
-        services=request.POST['services']
-        se=Services.objects.get(id=services)
-        # se.save()
-        qs = Citys.objects.get(id=city)
-        # qs.save()
-        appointment=Appointment(name=name,mobileno=mobileno,email=email,city=qs,date=date,time=time,services=se)
+        service_obj = Services.objects.get(id=request.POST['services'])
+        city_obj = Citys.objects.get(id=request.POST['city'])
+        appointment=Appointment(name=request.POST['name'], mobileno=request.POST['mobileno'], email=request.POST['email'], city=city_obj,date=request.POST['pdate'], time=request.POST['ptime'], services=service_obj)
+
         appointment.save()
         return redirect(home)
+
     else:
         context_data = {
             'appointment':'appointment',
@@ -111,22 +103,17 @@ def appointment(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect(home)
+    return redirect('home')
 
 
 @login_required(login_url='/beautyapp/login')
 def buygift(request):
 
     if request.method == 'POST':
-        name=request.POST['name']
-        email=request.POST['email']
-        mobile=request.POST['mobile']
-        address=request.POST['address']
-        price=request.POST['price']
-        message=request.POST['message']
-        gift=Gift(name=name,email=email,mobile=mobile,address=address,price=price,message=message)
+        gift=Gift(name=request.POST['name'], email=request.POST['email'], mobile=request.POST['mobile'], address=request.POST['address'],price=request.POST['price'], message=request.POST['message'])
+
         gift.save()
-        return redirect(home)
+        return redirect('home')
     else:
         return render(request,'beautyapp/gift.html')
 
@@ -134,13 +121,13 @@ def buygift(request):
 def login(request):
 
     if request.method=='POST':
-        register=auth.authenticate(username=request.POST['username'],password=request.POST['password'])
+        register = auth.authenticate(username=request.POST['username'],password=request.POST['password'])
         if register is not None:
-            auth.login(request,register)
-            return redirect(home)
+            auth.login(request, register)
+            return redirect('dashboard')
         else:
             messages.info(request,'invalid credentials')
-            return redirect(login)
+            return redirect('login')
     else:
         return render(request,'beautyapp/login.html')
 
@@ -148,32 +135,28 @@ def login(request):
 def register(request):
 
     if request.method == 'POST':
-        first_name=request.POST['first_name']
-        last_name=request.POST['last_name']
+
         username=request.POST['username']
         email=request.POST['email']
         password1=request.POST['password1']
         password2=request.POST['password2']
 
-        if password1==password2 :
-            if User.objects.filter(username=username).exists():
-                messages.info(request,'username taken')
-                return redirect('register')
-            elif Register.objects.filter(email=email).exists():
-                messages.info(request,'email is taken')
-                return redirect('register')
-            else:
-                user=User.objects.create_user(first_name=first_name,last_name=last_name,username=username,password=password1,email=email)
-                # emails = EmailMessage("Request is raised", ' welocome in beuty spa ',settings.EMAIL_HOST_USER , [email])
-                # emails.send()
-                user.save()
-                return redirect(login)
+        if User.objects.filter(username=username).exists():
+            messages.info(request,'username taken')
+            return redirect('register')
+
+        if Register.objects.filter(email=email).exists():
+            messages.info(request,'email is taken')
+            return redirect('register')
+
+        if password1 == password2 :
+            user=User.objects.create_user(first_name=request.POST['first_name'], last_name=request.POST['last_name'], username=username,password=password1, email=email)
+            user.save()
+            return redirect('login')
         else:
             messages.info(request,'password do not match')
             return redirect('register')
-        return redirect(home)
-    else:
-        return render(request,'beautyapp/register.html')
+    return render(request,'beautyapp/register.html')
 
 
 def franchisee(request):

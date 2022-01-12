@@ -9,7 +9,7 @@
             </i>
         </div>
         <div>
-            Manage Client
+            Manage Daily Service
             <div class="page-title-subheading">You can manage your clients here.
             </div>
         </div>
@@ -19,7 +19,7 @@
             <span class="btn-icon-wrapper">
                 <i class="fa fa-user-plus fa-fw"></i>
             </span>
-            Add Client
+            Add Sales
         </button>
     </div>
 </div>
@@ -41,7 +41,7 @@
 <div class="container-fluid p-5 mb-3 rounded bg-white" id="addclientsection">
     <div class="row">
         <div class="col-md-12 text-center">
-            <h4>Add Client Details</h4>
+            <h4>Add Sales Details</h4>
             <hr>
         </div>
         <div class="container gcn">
@@ -53,35 +53,27 @@
                         <input id="date" type="date" name="date" class="form-control" readonly />
                     </div>
                     <div class="col-md-4 form-group">
-                        <label>Client Name</label>
-                        <input type="text" name="name" class="form-control" required />
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <label>Mobile No</label>
-                        <input type="text" name="mobileno" class="form-control" required />
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <label>City</label>
-                        <select name="city" id="cityId" style="width: 100%;" required>
-                            <option value="">Select City</option>
-                            {% for city in cities %}
-                                <option value="{{city.id}}">{{city.name}}</option>
+                        <label>Account Master</label>
+                        <select id="account_master" name="account_master" style="width: 100%;" required>
+                            <option value=""> Select Account Master...</option>
+                            {% for master in account_master %}
+                                <option value="{{master.id}}">{{ master.name }}</option>
                             {% endfor %}
                         </select>
-                    </div>
+                    </div>                       
                     <div class="col-md-4 form-group">
-                        <label> Treatment Service</label>
+                        <label>Therapy</label>
                         <select name="service" id="treatementService" style="width: 100%;" required>
-                            <option value=""> Select Service..</option>
+                            <option value=""> Select Therapy..</option>
                             {% for service in services %}
                                 <option value="{{service.id}}">{{ service.name }}</option>
                             {%endfor%}
                         </select>
                     </div>
                     <div class="col-md-4 form-group">
-                        <label> Treatment By</label>
+                        <label>Therapist</label>
                         <select name="serviceby" id="treatmentBy" style="width: 100%;" required>
-                            <option value=""> Select Staff..</option>
+                            <option value=""> Select Therapist..</option>
                             {% for staff in staffs %}
                                 <option value="{{staff.id}}">{{ staff.name }}</option>
                             {%endfor%}
@@ -117,7 +109,7 @@
                                 <option value="{{p.id}}">{{ p.name }}</option>
                             {% endfor %}
                         </select>
-                    </div>
+                    </div>                 
                 </div>
                 <input type="submit" class="btn btn-primary w-100 font-weight-bold" value="Add New Client">
             </form>
@@ -170,7 +162,8 @@
                             <td>{{guest.payment}}</td>
                             <td>{{guest.comments}}</td>
                             <td> 
-                                {% if guest.comments == None or guest.comments == '' %}
+                                <p>{{guest.comments}}</p>
+                                {% if guest.comments == None or guest.comments == '' or guest.comments == 'NA' %}
                                     <a class="btn btn-sm btn-primary text-white font-weight-bold"
                                         onclick="check_out_{{guest.id}}()" data-toggle="modal" data-target="#myModalss">Out
                                     </a>
@@ -468,6 +461,23 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function() {
+        $('#duration').select2({
+            theme: "classic"
+        });
+    });
+    
+    $(document).ready(function() {
+        $('#pm').select2({
+            theme: "classic"
+        });
+    });
 
-
+    $(document).ready(function() {
+        $('#account_master').select2({
+            theme: "classic"
+        });
+    });    
+</script>
 {% endblock %}

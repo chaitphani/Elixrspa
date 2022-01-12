@@ -4,10 +4,10 @@ from spadashboard import views
 
 urlpatterns = (
 
-    path('',views.home,name='homek'),
+    path('',views.dashboard,name='dashboard'),
     path('attendancelist',views.attendancelist,name='attendancelist'),
 
-    path('appointment',views.appointment,name='appointment'),
+    path('appointment/list',views.appointment,name='list_appointment'),
     path('daily-report',views.daily_report,name='daily_report'),
     path('branch-master',views.branch_master,name='branch_master'),
     path('group-master',views.group_master,name='group_master'),
