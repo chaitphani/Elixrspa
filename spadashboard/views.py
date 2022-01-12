@@ -78,6 +78,12 @@ def city_edit(request, id):
     return redirect('citylist')
 
 
+def city_delete(request, id):
+    city_obj = Citys.objects.get(id=id)
+    city_obj.delte()
+    return redirect('citylist')
+
+
 @login_required(login_url='/beautyapp/login/')
 def clientlist(request):
 
@@ -422,6 +428,21 @@ def branch_master(request):
     return render(request,'spadashboard/branch_master.html', data)
 
 
+def branch_master_edit(request, id):
+    
+    branch_master_obj = BranchMaster.objects.get(id=id)
+    branch_master_obj.name = request.POST.get('name')
+    branch_master_obj.save()
+    return redirect('branch_master')
+
+
+def branch_master_delete(request, id):
+
+    branch_master_obj = BranchMaster.objects.get(id=id)
+    branch_master_obj.delete()
+    return redirect('branch_master')
+
+
 def group_master(request):
 
     if request.method == 'POST':
@@ -436,15 +457,24 @@ def group_master(request):
     }
     return render(request,'spadashboard/group_master.html', data)
 
-def item_master(request):
-    return render(request,'spadashboard/item_master.html')
 
-def add_commission(request):
-    return render(request,'spadashboard/add_commission.html')
-def membership_plan(request):
-    return render(request,'spadashboard/membership_plan.html')
-def membership_list(request):
-    return render(request,'spadashboard/membership_list.html')
+def group_master_edit(request, id):
+
+    group_master_obj = GroupMaster.objects.get(id=id)
+    city_obj = Citys.objects.get(id=request.POST.get('city'))
+
+    group_master_obj.name = request.POST.get('name')
+    group_master_obj.city = city_obj
+    group_master_obj.save()
+    return redirect('group_master')
+
+
+def group_master_delete(request, id):
+
+    group_master_obj = GroupMaster.objects.get(id=id)
+    group_master_obj.delete()
+    return redirect('group_master')    
+
 
 def account_master(request):
     if request.method == 'POST':
@@ -477,3 +507,38 @@ def account_master(request):
     }
     return render(request,'spadashboard/account_master.html', data)
 
+
+def account_master_edit(request, id):   
+
+    account_master_obj = AccountMaster.objects.get(id=id)
+    branch_master_obj = BranchMaster.objects.get(id=request.POST.get('branch_master'))
+    group_master_obj = BranchMaster.objects.get(id=request.POST.get('group_master'))
+
+    account_master_obj.name = request.POST.get('name')
+    account_master_obj.address_1 = request.POST.get('address_1')
+    account_master_obj.address_2 = request.POST.get('address_2')
+    account_master_obj.address_3 = request.POST.get('address_3')
+    account_master_obj.state = request.POST.get('state')
+    account_master_obj.pincode = request.POST.get('pincode')
+    account_master_obj.mobile_number = request.POST.get('mobile_number')
+    account_master_obj.branch_master = branch_master_obj
+    account_master_obj.group_master = group_master_obj
+    account_master_obj.save()
+    return redirect('account_master')
+
+
+def account_master_delete(request, id):
+
+    account_master_obj = AccountMaster.objects.get(id=id)
+    account_master_obj.delete()
+    return redirect('account_master')
+    
+
+def item_master(request):
+    return render(request,'spadashboard/item_master.html')
+def add_commission(request):
+    return render(request,'spadashboard/add_commission.html')
+def membership_plan(request):
+    return render(request,'spadashboard/membership_plan.html')
+def membership_list(request):
+    return render(request,'spadashboard/membership_list.html')
