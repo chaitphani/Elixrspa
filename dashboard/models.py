@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.base import Model
 from beautyapp.models import Citys, Services
 
 
@@ -102,3 +103,43 @@ class Expenses(models.Model):
     class Meta: 
         verbose_name = "Expense"
         verbose_name_plural = "Expenses"
+
+
+class BranchMaster(models.Model):
+
+    code = models.CharField(max_length=10, null=True, blank=True)
+    name = models.CharField(max_length=20)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{}'.format(self.name)
+
+    
+class GroupMaster(models.Model):
+
+    code = models.CharField(max_length=10, null=True, blank=True)
+    name = models.CharField(max_length=30)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{}'.format(self.name)
+
+
+class AccountMaster(models.Model):
+
+    code = models.CharField(max_length=10, null=True,blank=True)
+    name = models.CharField(max_length=20)
+    address_1 = models.CharField(max_length=120)
+    address_2 = models.CharField(max_length=120, null=True, blank=True)
+    address_3 = models.CharField(max_length=120, null=True, blank=True)
+    state = models.CharField(max_length=30)
+    pincode = models.CharField(max_length=6)
+    mobile_number = models.CharField(max_length=13)
+
+    city = models.ForeignKey(Citys, on_delete=models.SET_NULL, null=True)
+    branch_master = models.ForeignKey(BranchMaster, on_delete=models.SET_NULL, null=True)
+    group_master = models.ForeignKey(GroupMaster, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return '{}'.format(self.name)
+        

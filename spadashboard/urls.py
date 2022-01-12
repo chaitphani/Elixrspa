@@ -5,7 +5,6 @@ from spadashboard import views
 urlpatterns = (
 
     path('',views.home,name='homek'),
-    path('login',views.login,name='login'),
     path('attendancelist',views.attendancelist,name='attendancelist'),
 
     path('appointment',views.appointment,name='appointment'),

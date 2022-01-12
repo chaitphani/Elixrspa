@@ -63,7 +63,7 @@
             </div>            
             <div class="col-md-6 form-group">
                 <label for="city" class="label">City</label>
-                <select name="city" class="form-control" required>
+                <select name="city" id="cityId" style="width: 100%;" required>
                     <option value=""> Select City..</option>
                     {% for cities in city %}
                         <option value="{{cities.id}}">{{ cities.name }}</option>
@@ -266,6 +266,13 @@
                 'csvHtml5',
                 'pdfHtml5'
             ]
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#cityId').select2({
+            theme: "classic"
         });
     });
 </script>

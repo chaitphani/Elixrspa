@@ -48,40 +48,37 @@
 		{% csrf_token %}
 		<div class="row">
 			<div class="col-md-4 form-group">
-				<label class="label" for="date">Date</label>
+				<label>Date</label>
 				<input id="date" type="date" name="date" class="form-control" required="required" />
 			</div>
 			<div class="col-md-4 form-group">
-				<label class="label" for="particular">Particular</label>
+				<label>Particular</label>
 				<input type="text" name="particular" class="form-control" required="required" />
 			</div>
 			<div class="col-md-4 form-group">
-				<label class="label" for="bill_no">Bill_No</label>
+				<label>Bill_No</label>
 				<input type="text" name="bill_no" class="form-control" />
 			</div>
 			<div class="col-md-4 form-group">
-				<label class="label" for="amount">Amount</label>
+				<label>Amount</label>
 				<input type="text" name="amount" class="form-control" required="required" />
 			</div>
 			<div class="col-md-4 form-group">
-				<label class="label" for="reciept">Reciept</label>
+				<label>Reciept</label>
 				<input type="file" name="rc" class="form-control" value="" required="false">
 			</div>
 			<div class="col-md-4 form-group">
-				<label for="city" class="label">City</label>
-				<select id="city" name="city" class="form-control" required>
-					<option selected disabled> Select City..
-					<option>
-						{% for cities in city %}
-					<option value="{{cities.id}}">{{ cities.name }}</option>
-					{%endfor%}
+				<label>City</label>
+				<select id="city" name="city" style="width: 100%;" required>
+					<option selected disabled> Select City..</option>
+					{% for cities in city %}
+						<option value="{{cities.id}}">{{ cities.name }}</option>
+					{% endfor %}
 				</select>
 			</div>
 			<div class="offset-md-8 col-md-4">
 				<button type="submit" class="btn btn-lg btn-info btn-block font-weight-bold">Add Expensess</button>
 			</div>
-			<br>
-			<br>
 		</div>
 	</form>
 </div>
@@ -94,6 +91,7 @@
 			<hr />
 		</div>
 	</div>
+
 	<table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0">
 		<thead class="alert-light">
 			<tr>
@@ -114,61 +112,63 @@
 				<td class="text-center">{{expense.bill_no}}</td>
 				<td class="text-center">{{expense.amount}}</td>
 				<td class="text-center">
-					<a href="{{expense.reciept.url}}" target="_blank"><i class="fa fa-lg fa-file-pdf-o" 				aria-hidden="true"></i>
+					<a href="{{expense.reciept.url}}" target="_blank"><i class="fa fa-lg fa-file-pdf-o"
+							aria-hidden="true"></i>
 					</a>
 				</td>
 				<td class="text-center">{{expense.city}}</td>
 				<td class="text-center">
-					<a class="btn btn-primary" 
-						onclick="edit_{{ expense.id }}()" href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil fa-lg"></i>
+					<a class="btn btn-primary" onclick="edit_{{ expense.id }}()" href="#" data-toggle="modal"
+						data-target="#myModal"><i class="fa fa-pencil fa-lg"></i>
 					</a>
 				</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
-	<div class="container">
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" role="dialog">
-			<div class="modal-dialog">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"></button>
-						<h4 class="modal-title text-center">EDIT EXPENSES DETAILS</h4>
-					</div>
-					<div class="modal-body">
-						<form id="update_form" method="POST">
-							{% csrf_token %}
-							<div class="form-group">
-								<label for="name" class="label">Change Date</label>
-								<input id="date" type="date" name="date" class="form-control" required="required" />
-							</div>
-							<div class="form-group">
-								<label for="particular" class="label">Particular</label>
-								<input type="text" name="particular" class="form-control" id="particular"
-									required="required" />
-							</div>
-							<div class="form-group">
-								<label for="bill_no" class="label">Bill_No</label>
-								<input type="text" name="bill_no" class="form-control" id="bill_no"
-									required="required" />
-							</div>
-							<div class="form-group">
-								<label class="label" for="amount">Amount</label>
-								<input type="text" name="amount" class="form-control" id="amount" required="required" />
-							</div>
-							<div class="form-group">
-								<label class="label" for="reciept">Reciept</label>
-								<input type="file" name="rc" class="form-control" id="reciept" required="required">
-							</div>
-							<div class="form-group">
-								<label class="label" for="reciept">City</label>
-								<input type="text" name="city" class="form-control" id="city" value="{{user.city}}"
-									required="required" readonly>
-							</div>
 
-							<!-- <div class="form-group">
+</div>
+<div class="container">
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"></button>
+					<h4 class="modal-title text-center">EDIT EXPENSES DETAILS</h4>
+				</div>
+				<div class="modal-body">
+					<form id="update_form" method="POST">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="name" class="label">Change Date</label>
+							<input id="date" type="date" name="date" class="form-control" required="required" />
+						</div>
+						<div class="form-group">
+							<label for="particular" class="label">Particular</label>
+							<input type="text" name="particular" class="form-control" id="particular"
+								required="required" />
+						</div>
+						<div class="form-group">
+							<label for="bill_no" class="label">Bill_No</label>
+							<input type="text" name="bill_no" class="form-control" id="bill_no" required="required" />
+						</div>
+						<div class="form-group">
+							<label class="label" for="amount">Amount</label>
+							<input type="text" name="amount" class="form-control" id="amount" required="required" />
+						</div>
+						<div class="form-group">
+							<label class="label" for="reciept">Reciept</label>
+							<input type="file" name="rc" class="form-control" id="reciept" required="required">
+						</div>
+						<div class="form-group">
+							<label class="label" for="reciept">City</label>
+							<input type="text" name="city" class="form-control" id="city" value="{{user.city}}"
+								required="required" readonly>
+						</div>
+
+						<!-- <div class="form-group">
                           <label for="city" class="label">City</label>
                       <select id="city" name="city" class="form-control" required>
                           <option selected disabled> Select City..<option>
@@ -177,103 +177,112 @@
                             {%endfor%}
                         </select>
                       </div> -->
-							<div class="form-group">
-								<button type="submit" class="btn btn-sm btn-success">Update</button>
-							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-					</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-sm btn-success">Update</button>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="container">
-		<!-- Modal -->
-		<div class="modal fade" id="myModals" role="dialog">
-			<div class="modal-dialog">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"></button>
-						<h4 class="modal-title text-center">Delete Client Details</h4>
-					</div>
-					<div class="modal-body">
-						<p>Are you sure want to delete city</p>
-						<a id="s_delete" class="btn btn-danger">Delete</a>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script>
-		{% for expense in expenses %}
-			function delete_{{ expense.id }} (){
-				$('#s_delete').attr('href', "{% url 'delete_expense' expense.id %}")
-			}
-			function edit_{{ expense.id }} (){
-				$("#date").val("{{ expense.date }}")
-				$("#particular").val("{{ expense.particular }}")
-				$("#bill_no").val("{{ expense.bill_no }}")
-				$("#amount").val("{{ expense.amount }}")
-				$("#update_form").attr("action", "{% url 'update_expense' expense.id %}")
-			}
-		{% endfor %}
-	</script>
-	<script>
-		$('#dtBasicExample').dataTable({
-			dom: 'Bfrtip',
-			buttons: [
-				{
-					extend: 'excelHtml5',
-					title: 'GUEST LIST',
-					text: 'Export to excel',
-					className: 'btn btn-success',
-					footer: true,
-					exportOptions: {
-						columns: ':not(.notexport)'
-					}
-
-					//Columns to export
-					//exportOptions: {
-					//     columns: [0, 1, 2, 3,4,5,6]
-					// }
-				},
-				{
-					extend: 'pdfHtml5',
-					title: 'GUEST LIST',
-					text: 'Export to PDF',
-					className: 'btn btn-primary ml-1',
-					footer: true,
-					exportOptions: {
-						columns: ':not(.notexport)'
-					}
-					//Columns to export
-					//exportOptions: {
-					//     columns: [0, 1, 2, 3, 4, 5, 6]
-					//  }
-				}
-			],
-			"fnFooterCallback": function (nRow, aasData, iStart, iEnd, aiDisplay) {
-
-				var columnas = [3,]; //the columns you wish to add
-				for (var j in columnas) {
-					var columnaActual = columnas[j];
-					var total = 0;
-					for (var i = iStart; i < iEnd; i++) {
-						total = total + parseFloat(aasData[aiDisplay[i]][columnaActual]);
-					}
-					$($(nRow).children().get(columnaActual)).html(total);
-
-				} // end
-
-			} // end footercallbac
-		});
-	</script>
 </div>
 
+<div class="container">
+	<!-- Modal -->
+	<div class="modal fade" id="myModals" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"></button>
+					<h4 class="modal-title text-center">Delete Client Details</h4>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure want to delete city</p>
+					<a id="s_delete" class="btn btn-danger">Delete</a>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	{% for expense in expenses %}
+	function delete_{ { expense.id } } (){
+		$('#s_delete').attr('href', "{% url 'delete_expense' expense.id %}")
+	}
+	function edit_{ { expense.id } } (){
+		$("#date").val("{{ expense.date }}")
+		$("#particular").val("{{ expense.particular }}")
+		$("#bill_no").val("{{ expense.bill_no }}")
+		$("#amount").val("{{ expense.amount }}")
+		$("#update_form").attr("action", "{% url 'update_expense' expense.id %}")
+	}
+	{% endfor %}
+</script>
+
+<script>
+	$('#dtBasicExample').dataTable({
+		dom: 'Bfrtip',
+		buttons: [
+			{
+				extend: 'excelHtml5',
+				title: 'GUEST LIST',
+				text: 'Export to excel',
+				className: 'btn btn-success',
+				footer: true,
+				exportOptions: {
+					columns: ':not(.notexport)'
+				}
+
+				//Columns to export
+				//exportOptions: {
+				//     columns: [0, 1, 2, 3,4,5,6]
+				// }
+			},
+			{
+				extend: 'pdfHtml5',
+				title: 'GUEST LIST',
+				text: 'Export to PDF',
+				className: 'btn btn-primary ml-1',
+				footer: true,
+				exportOptions: {
+					columns: ':not(.notexport)'
+				}
+				//Columns to export
+				//exportOptions: {
+				//     columns: [0, 1, 2, 3, 4, 5, 6]
+				//  }
+			}
+		],
+		"fnFooterCallback": function (nRow, aasData, iStart, iEnd, aiDisplay) {
+
+			var columnas = [3,]; //the columns you wish to add
+			for (var j in columnas) {
+				var columnaActual = columnas[j];
+				var total = 0;
+				for (var i = iStart; i < iEnd; i++) {
+					total = total + parseFloat(aasData[aiDisplay[i]][columnaActual]);
+				}
+				$($(nRow).children().get(columnaActual)).html(total);
+
+			} // end
+
+		} // end footercallbac
+	});
+</script>
+
+<script>
+	$(document).ready(function () {
+		$('#city').select2({
+			theme: "classic"
+		});
+	});
+</script>
 {% endblock %}
