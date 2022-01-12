@@ -65,7 +65,7 @@
 			<hr />
 		</div>
 		<div class="col-md-12">
-			<table class="table table-bordered" id="dtBasicExample">
+			<table class="table text-center table-bordered" id="dtBasicExample">
 				<thead class="alert-light">
 					<tr>
 						<th>NAME</th>
@@ -77,13 +77,13 @@
 					<tr>
 						<td>{{ city.name }}</td>
 						<input type="hidden" name="{{ city.id }}" value="">
-						<td>
+						<td class="btn-group">
 							<a class="btn btn-primary font-weight-bold text-white" 
 								onclick="edit_{{ city.id }}()" data-toggle="modal"
-								data-target="#myModal"><i class="fa fa-lg fa-pencil"></i>
+								data-target="#myModal"><i class="fa fa-fw fa-pencil"></i>&nbsp;Edit
 							</a>
-							<!-- <a class="btn btn-sm btn-danger"  href="delete/{{ city.id }}">
-								Delete</a>-->
+							<a class="btn btn-sm btn-danger" href="delete/{{ city.id }}">
+								<i class="fa fa-fw fa-trash"></i>&nbsp;Delete</a>
 						</td>
 					</tr>
 					{% endfor %}
