@@ -1,0 +1,119 @@
+{% extends 'spadashboard/index.html' %}
+{% load static %}
+{% block heading %}
+
+<div class="page-title-wrapper">
+    <div class="page-title-heading">
+        <div class="page-title-icon">
+            <i class="fa fa-american-sign-language-interpreting icon-gradient bg-mean-fruit"></i>
+        </div>
+        <div>
+            Membership Plan
+            <div class="page-title-subheading">
+                Here you can manage Membership Plan.
+            </div>
+        </div>
+    </div>
+    <div class="page-title-actions">
+        <button type="button" id="btnaddmembership" class="btn btn-info">
+            <i class="fa fa-american-sign-language-interpreting"></i>&nbsp; Add New Membership Plan
+        </button>
+
+    </div>
+</div>
+{% endblock %}
+{% block home %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#membershiplistsection").hide();
+        $("#btnaddmembership").click(function () {
+            $("#membershiplistsection").toggle();
+        });
+    });
+</script>
+
+<div class="container-fluid p-3 mb-3 rounded bg-white" id="membershiplistsection">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+        <div class="col-md-12 text-center">
+            <h4>Add New Membership Plan</h4>
+            <hr />
+        </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <input type="text" name="membership_name" class="form-control" placeholder="Enter membership plan name here">
+            </div>
+            <div class="col-md-6">
+                <select name="service_name" id="" class="form-control">
+                    <option value="">--Select Service--</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <input type="text" name="total _service" class="form-control" placeholder="Enter total service here">
+            </div>
+            <div class="col-md-6">
+                <select name="group_master" id="" class="form-control">
+                    <option value="">--Select Group Master--</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <input type="number" name="service_amount" class="form-control" placeholder="Enter service amount here">
+            </div>
+
+            <div class="col-md-6 text-center">
+                <input type="submit" class="btn btn-info btn-block btn-lg" value="Add Membership Plan">
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container-fluid p-3 mb-3 rounded bg-white">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h4>Membership Plan List</h4>
+            <hr />
+            <div class="col-12 table table-responsive">
+            <table class="table text-center table-bordered table-striped">
+                <thead class="bg-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Membership Name</th>
+                        <th>Service Name</th>
+                        <th>Total Service</th>
+                        <th>Group Master</th>
+                        <th>Service amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-success">Edit</button>
+                                <button class="btn btn-danger">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

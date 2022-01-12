@@ -75,8 +75,11 @@
                 <h1 class="h3">{{message}}</h1>
                 {%endfor%}
             </div>
+            <div class="offset-md-8 col-md-4">
+                <input type="submit" class="btn btn-primary font-weight-bold btn-block" value="Add New Manager">
+            </div>
         </div>
-        <input type="submit" class="btn btn-primary font-weight-bold w-100" value="Add New Manager">
+        
     </form>
 </div>
 
@@ -91,7 +94,6 @@
         <table class="table table-bordered" id="example">
             <thead class="alert-light">
                 <tr class="text-center">
-                   <!-- <th>Name</th>-->
                    <th>User Name</th>
                     <th>Email</th>
                     <th>City</th>
@@ -101,7 +103,6 @@
             <tbody>
                 {% for manager in managers %}
                     <tr>
-                        <!--<td>{{ manager.first_name }}</td>-->
                         <td>{{ manager.username }}</td>
                         <td>{{ manager.email }}</td>
                         <td>{{ manager.city }}</td>
@@ -237,43 +238,6 @@
 <script src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
 
 
-
-
-
-
-<script>
-    $('#dtBasicExample').dataTable({
-        dom: 'Bfrtip',
-        buttons: [{
-            extend: 'excelHtml5',
-            title: 'GUEST LIST',
-            text: 'Export to excel',
-            className: 'btn btn-success',
-            footer: true,
-            exportOptions: {
-                columns: ':not(.notexport)'
-            }
-
-            //Columns to export
-            //exportOptions: {
-            //     columns: [0, 1, 2, 3,4,5,6]
-            // }
-        }, {
-            extend: 'pdfHtml5',
-            title: 'GUEST LIST',
-            text: 'Export to PDF',
-            className: 'btn btn-primary ml-1',
-            footer: true,
-            exportOptions: {
-                columns: ':not(.notexport)'
-            }
-            //Columns to export
-            //exportOptions: {
-            //     columns: [0, 1, 2, 3, 4, 5, 6]
-            //  }
-        }],
-    })
-</script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>

@@ -1,0 +1,115 @@
+{% extends 'spadashboard/index.html' %}
+{% load static %}
+{% block heading %}
+
+<div class="page-title-wrapper">
+    <div class="page-title-heading">
+        <div class="page-title-icon">
+            <i class="fa fa-percent icon-gradient bg-mean-fruit"></i>
+        </div>
+        <div>
+            Add Commission
+            <div class="page-title-subheading">
+                Here you can manage all Commissions.
+            </div>
+        </div>
+    </div>
+    <div class="page-title-actions">
+        <button type="button" id="btnadditem" class="btn btn-info">
+            <i class="fa fa-percent"></i>&nbsp; Add New Commission
+        </button>
+
+    </div>
+</div>
+{% endblock %}
+{% block home %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#itemlistsection").hide();
+        $("#btnadditem").click(function () {
+            $("#itemlistsection").toggle();
+        });
+    });
+</script>
+
+<div class="container-fluid p-3 mb-3 rounded bg-white" id="itemlistsection">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+        <div class="col-md-12 text-center">
+            <h4>Add New Commission</h4>
+            <hr />
+        </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <input type="text" name="commission_name" class="form-control" placeholder="Enter Commission Name here">
+            </div>
+            <div class="col-md-6">
+                <input type="text" name="target_amount" class="form-control" placeholder="Enter target amount here">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <input type="text" name="condition" class="form-control" placeholder="Enter condition here">
+            </div>
+            <div class="col-md-6">
+                <input type="text" name="role" class="form-control" placeholder="Enter role here">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <input type="text" name="account_master" class="form-control" placeholder="Enter account master here">
+            </div>
+
+            <div class="col-md-6 text-center">
+                <input type="submit" class="btn btn-info btn-block btn-lg" value="Add Commission">
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container-fluid p-3 mb-3 rounded bg-white">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h4>Commission List</h4>
+            <hr />
+            <div class="col-12 table table-responsive">
+            <table class="table text-center table-bordered table-striped">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Code</th>
+                        <th>Commission Name</th>
+                        <th>Target Amount</th>
+                        <th>Condition</th>
+                        <th>Role</th>
+                        <th>Account Master</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-success">Edit</button>
+                                <button class="btn btn-danger">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -405,3 +405,15 @@ def group_master(request):
     return render(request,'spadashboard/group_master.html')
 def account_master(request):
     return render(request,'spadashboard/account_master.html')
+def item_master(request):
+    return render(request,'spadashboard/item_master.html')
+
+def login(request):
+    return render(request,'spadashboard/login.html')
+
+def add_commission(request):
+    return render(request,'spadashboard/add_commission.html')
+def membership_plan(request):
+    return render(request,'spadashboard/membership_plan.html')
+def membership_list(request):
+    return render(request,'spadashboard/membership_list.html')

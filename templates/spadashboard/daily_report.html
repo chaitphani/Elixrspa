@@ -76,112 +76,106 @@
     <div class="row">
         <div class="col-md-12 text-center">
             <h4>Daily Sales Report List</h4>
-            <hr/>
+            <hr />
         </div>
     </div>
     <div class="row">
         <div class="col-md-12 table-responsive">
-            <table id="tbl_daily_sales_report" class="text-center" border="1">
+            <table id="dt_daily_sales_report" class="text-center table-sm" border="1">
                 <thead class="bg-light">
-                  <tr>
-                    <th rowspan="2">Date</th>
-                    <th rowspan="2">Branch</th>
-                    <th rowspan="2">SI No</th>
-                    <th rowspan="2">Name</th>
-                    <th rowspan="2">Status</th>
-                    <th rowspan="2">Phone Number</th>
-                    <th rowspan="2">Therapy</th>
-                    <th rowspan="2">Therapist</th>
-                    <th rowspan="2">Duration</br>(In Min)</th>
+                    <tr>
+                        <th rowspan="2">Date</th>
+                        <th rowspan="2">Branch</th>
+                        <th rowspan="2">SI No</th>
+                        <th rowspan="2">Name</th>
+                        <th rowspan="2">Status</th>
+                        <th rowspan="2">Phone Number</th>
+                        <th rowspan="2">Therapy</th>
+                        <th rowspan="2">Therapist</th>
+                        <th rowspan="2">Duration</br>(In Min)</th>
 
-                    <th colspan="3">Amount</th>
+                        <th colspan="3">Amount</th>
 
-                    <th rowspan="2">Bank</th>
-                    <!-- <th rowspan="2">Date</th> -->
-                    <th rowspan="2">Time-In</th>
-                    <th rowspan="2">Time-Out</th>
-                    <th rowspan="2">Remarks</th>
-                  </tr>
-                  <tr>
-                    <th>Cash</th>
-                    <th>Debit-Card</th>
-                    <th>Bharat QR</th>
-                  </tr>
+                        <th rowspan="2">Bank</th>
+                        <!-- <th rowspan="2">Date</th> -->
+                        <th rowspan="2">Time-In</th>
+                        <th rowspan="2">Time-Out</th>
+                        <th rowspan="2">Remarks</th>
+                    </tr>
+                    <tr>
+                        <th>Cash</th>
+                        <th>Debit-Card</th>
+                        <th>Bharat QR</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {% for guest in guests %}
-                        <tr>
-                            <td>{{guest.date|date:'d-M-Y'}}</td>
-                            <td>branch-----</td>
-                            <td>{{guest.id}}</td>
-                            <td>{{guest.gname}}</td>
-                            <td rowspan="2">status-----</td>
-                            <td rowspan="2">{{guest.mobile}}</td>
-                            <td rowspan="2">{{guest.services.name}}</td>
-                            <td rowspan="2">{{guest.treatment_by.name}}</td>
-                            <td rowspan="2">{{guest.duration.duration}}</td>
-                            <td>Cash---</td>
-                            <td>Debit-Card-----</td>
-                            <td>Bharat QR-----</td>
-                            <td rowspan="2">Bank------</td>
-                            <!-- <td rowspan="2">{{guest.date|date:'d-M-Y'}}</td> -->
-                            <td rowspan="2">{% if guest.time_in %}{{guest.time_in}}{% else %}-{% endif %}</td>
-                            <td rowspan="2">{% if guest.time_out %}{{guest.time_out}}{% else %}-{% endif %}</td>
-                            <td rowspan="2">{% if guest.comments %}{{guest.comments}}{% else %}-{% endif %}</td>
-                        </tr>
+                    <tr>
+                        <td>{{guest.date|date:'d-M-Y'}}</td>
+                        <td>--branch--</td>
+                        <td>{{guest.id}}</td>
+                        <td>{{guest.gname}}</td>
+                        <td>--status--</td>
+                        <td>{{guest.mobile}}</td>
+                        <td>{{guest.services.name}}</td>
+                        <td>{{guest.treatment_by.name}}</td>
+                        <td>{{guest.duration.duration}}</td>
+                        <td>--Cash--</td>
+                        <td>--Debit-Card--</td>
+                        <td>--Bharat QR--</td>
+                        <td>--Bank--</td>
+                        <td>{% if guest.time_in %}{{guest.time_in}}{% else %}-{% endif %}</td>
+                        <td>{% if guest.time_out %}{{guest.time_out}}{% else %}-{% endif %}</td>
+                        <td>{% if guest.comments %}{{guest.comments}}{% else %}-{% endif %}</td>
+                    </tr>
                     {% endfor %}
                 </tbody>
+                <tfoot class="bg-light">
+                    <tr>
+                        <th rowspan="2">Date</th>
+                        <th rowspan="2">Branch</th>
+                        <th rowspan="2">SI No</th>
+                        <th rowspan="2">Name</th>
+                        <th rowspan="2">Status</th>
+                        <th rowspan="2">Phone Number</th>
+                        <th rowspan="2">Therapy</th>
+                        <th rowspan="2">Therapist</th>
+                        <th rowspan="2">Duration</br>(In Min)</th>
+                        <th colspan="3">Total</th>
+                        <th rowspan="2">Bank</th>
+                        <th rowspan="2">Time-In</th>
+                        <th rowspan="2">Time-Out</th>
+                        <th rowspan="2">Remarks</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3">₹&nbsp; 0.00</th>   
+                    </tr>
+                </tfoot>
             </table>
+        </div>
     </div>
-
-    <!-- data tables script -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.1/css/dataTables.dateTime.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
-<script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
+</div>
 
 
 
+   <!--data tables cdn-->
+   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
+   <script src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+   <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+   <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+   <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+   <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+   <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+   <!--data tables cdn-->
 
-<script>
-    $('#tbl_daily_sales_report').dataTable({
-        dom: 'Bfrtip',
-        buttons: [{
-            extend: 'excelHtml5',
-            title: 'GUEST LIST',
-            text: 'Export to excel',
-            className: 'btn btn-success',
-            footer: true,
-            
-            exportOptions: {
-                columns: ':not(.notexport)'
-            }
-
-            //Columns to export
-            //exportOptions: {
-            //     columns: [0, 1, 2, 3,4,5,6]
-            // }
-        }, {
-            extend: 'pdfHtml5',
-            title: 'GUEST LIST',
-            text: 'Export to PDF',
-            className: 'btn btn-primary ml-1',
-            footer: true,
-            exportOptions: {
-                columns: ':not(.notexport)'
-            }
-            //Columns to export
-            //exportOptions: {
-            //     columns: [0, 1, 2, 3, 4, 5, 6]
-            //  }
-        }],
-    })
-</script>
 <script>
     $(document).ready( function () {
-        $('#tbl_daily_sales_report').DataTable({
+        $('#dt_daily_sales_report').DataTable({
             dom: 'Bfrtip',
             buttons: [
                 // 'copyHtml5',
@@ -192,6 +186,4 @@
         });
     });
 </script>
-</div>
-
 {% endblock %}

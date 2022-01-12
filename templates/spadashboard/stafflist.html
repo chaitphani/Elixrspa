@@ -47,18 +47,18 @@
 		{% csrf_token %}
 		<div class="row">
 			<div class="col-md-4 form-group">
-				<label class="label" for="name">Staff Name</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-				<input type="name" name="name" class="form-control" required="required" />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+				<label class="label" for="name">Staff Name</label>
+				<input type="name" name="name" class="form-control" required="required" />
 			</div>
 			<div class="col-md-4 form-group">
-				<label class="label" for="mobileno">Mobile_No</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+				<label class="label" for="mobileno">Mobile_No</label>
 				<input type="text" name="mobileno" class="form-control"
-					required="required" />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+					required="required" />
 			</div>
 			<div class="col-md-4 form-group">
-				<label for="city" class="label">City</label>
-				<select name="city" class="form-control" required>
-					<option selected disabled> Select City..</option>
+				<label class="label">Group Master</label>
+				<select name="group_master" class="form-control" required>
+					<option value=""> Select Group..</option>
 					{% for cities in city %}
 						<option value="{{cities.id}}">{{ cities.name }}</option>
 					{% endfor %}
@@ -85,7 +85,7 @@
 					<tr>
 						<th>NAME</th>
 						<th>Mobile_No</th>
-						<th>city</th>
+						<th>Group Master</th>
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
@@ -95,14 +95,16 @@
 						<td>{{ staf.name }}</td>
 						<td>{{ staf.mobileno }}</td>
 						<td>{{ staf.city }}</td>
-						<input type="hidden" name="{{ staf.id }}" value="">
+						<!-- <input type="hidden" name="{{ staf.id }}" value=""> -->
 						<td>
+							<div class="btn-group">
 							<a class="btn btn-warning text-white font-weight-bold" 
 								onclick="edit_{{ staf.id }}()" data-toggle="modal" data-target="#myModal">
 								Edit
 							</a>
 							<a class="btn btn-danger text-white font-weight-bold" onclick="delete_{{ staf.id }}" data-toggle="modal" data-target="#myModals">Delete
 							</a>
+							</div>
 						</td>
 					</tr>
 					{% endfor %}
@@ -131,8 +133,8 @@
 									required="required" />
 							</div>
 							<div class="form-group">
-								<label for="name" class="label">City</label>
-								<select name="city" id="city" class="form-control">
+								<label for="name" class="label">Group Master</label>
+								<select name="group_master" id="group-master" class="form-control">
 								{% for cities in city %}
 									<option value="{{cities.id}}">{{cities.name}}</option>
 								{% endfor %}

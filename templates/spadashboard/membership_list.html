@@ -1,0 +1,123 @@
+{% extends 'spadashboard/index.html' %}
+{% load static %}
+{% block heading %}
+
+<div class="page-title-wrapper">
+    <div class="page-title-heading">
+        <div class="page-title-icon">
+            <i class="fa fa-address-book icon-gradient bg-mean-fruit"></i>
+        </div>
+        <div>
+            Membership List
+            <div class="page-title-subheading">
+                Here you can see all Membership.
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}
+{% block home %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#membershiplistsection").hide();
+        $("#btnviewmembership").click(function () {
+            $("#membershiplistsection").toggle();
+        });
+
+        $("#btnclosemembership").click(function () {
+            $("#membershiplistsection").hide();
+        });
+    
+    });
+</script>
+
+
+
+<div class="container-fluid" id="membershiplistsection">
+    <div class="row">
+        <div class="offset-md-4 col-md-4 pt-2 mb-3 rounded bg-white">
+            <h5 class="text-center">Member Name<span class="pull-right"><a href="#" style="text-decoration:none;" id="btnclosemembership">&times;</a></span></h5>
+            <hr class="p-0 m-0"/>
+            <div class="col-12 table table-responsive">
+                <table class="table text-center table-borderless">
+                        <thead>
+                            <tr>
+                                <th colspan="11">12/01/2022</th>
+                                <th class="text-right"><i class="fa fa-rupee"></i>&nbsp; 0.00</th>
+                            </tr>
+                            <tr class="text-center border-top">
+                                <th colspan="12" class="text-center">Membership ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            
+                            <tr>
+                                <td colspan="12">Membership Name</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="12">Mobile Number</td>
+                            </tr>
+                            <tr>
+                                <td colspan="12">Remaining Service</td>
+                            </tr>
+                            <tr>
+                                <th colspan="12">Total Service</th>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="border-top">
+                                <th colspan="12" class="text-center"><button class="btn btn-secondary">Check history</button></th>
+                            </tr>
+                        </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid p-3 mb-3 rounded bg-white">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h4>Membership List</h4>
+            <hr />
+            <div class="col-12 table table-responsive">
+            <table class="table text-center table-bordered table-striped">
+                <thead class="bg-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Member Name</th>
+                        <th>Mobile</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="btn-group">
+                                <button id="btnviewhistory" data-toggle="tooltip" title="view member history" class="btn btn-secondary text-white"><i class="fa fa-clock fa-lg"></i></button>
+                                <button id="btnviewmembership" data-toggle="tooltip" title="view member details" class="btn btn-info text-white"><i class="fa fa-eye fa-lg"></i></button>
+                                <button class="btn btn-success" data-toggle="tooltip" title="edit member"><i class="fa fa-edit text-white fa-lg"></i></button>
+                                <button class="btn btn-danger" data-toggle="tooltip" title="delete member"><i class="fa fa-trash text-white fa-lg"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

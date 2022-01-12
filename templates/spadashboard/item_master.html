@@ -1,0 +1,100 @@
+{% extends 'spadashboard/index.html' %}
+{% load static %}
+{% block heading %}
+
+<div class="page-title-wrapper">
+    <div class="page-title-heading">
+        <div class="page-title-icon">
+            <i class="fa fa-info-circle icon-gradient bg-mean-fruit"></i>
+        </div>
+        <div>
+            Item Master
+            <div class="page-title-subheading">
+                Here you can manage all Items.
+            </div>
+        </div>
+    </div>
+    <div class="page-title-actions">
+        <button type="button" id="btnadditem" data-toggle="tooltip" title="Add new items" data-placement="bottom"
+            class="btn btn-info">
+            <i class="fa fa-info-circle"></i>&nbsp; Add New Item
+        </button>
+
+    </div>
+</div>
+{% endblock %}
+{% block home %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#itemlistsection").hide();
+        $("#btnadditem").click(function () {
+            $("#itemlistsection").toggle();
+        });
+    });
+</script>
+
+<div class="container-fluid p-3 mb-3 rounded bg-white" id="itemlistsection">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+        <div class="col-md-12 text-center">
+            <h4>Add New Item</h4>
+            <hr />
+        </div>
+            <div class="col-6">
+                <input type="text" name="name" class="form-control" placeholder="Enter Item Name here">
+            </div>
+            <div class="col-6">
+                <input type="number" name="quantity" class="form-control" placeholder="Enter Item quantity here">
+            </div>
+            <div class="col-12  mt-3">
+                <input type="textarea" row="3" name="description" class="form-control"
+                    placeholder="Enter Item description here">
+            </div>
+            <div class="col-12 mt-3 text-center">
+                <input type="submit" class="btn btn-info btn-lg" value="Create Item">
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container-fluid p-3 mb-3 rounded bg-white">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h4>Item List</h4>
+            <hr />
+            <div class="col-12 table table-responsive">
+            <table class="table text-center table-bordered table-striped">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Item Code</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                        <div class="btn-group">
+                            <button class="btn btn-success">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -5,6 +5,7 @@ from spadashboard import views
 urlpatterns = (
 
     path('',views.home,name='homek'),
+    path('login',views.login,name='login'),
     path('attendancelist',views.attendancelist,name='attendancelist'),
 
     path('appointment',views.appointment,name='appointment'),
@@ -13,8 +14,8 @@ urlpatterns = (
     path('group-master',views.group_master,name='group_master'),
     path('account-master',views.account_master,name='account_master'),
     
-    path('payment_mode',views.payment_mode,name='payment_mode'),
-    path('payment_mode/<int:id>/delete', views.payment_mode_delete, name='delete_payment_mode'),
+    path('payment-mode',views.payment_mode,name='payment_mode'),
+    path('payment-mode/<int:id>/delete', views.payment_mode_delete, name='delete_payment_mode'),
 
     path('duration',views.duration,name='duration'),
     path('duration/<int:id>/delete', views.duration_delete, name='delete_duration'),
@@ -55,4 +56,9 @@ urlpatterns = (
 
     path('attendace/in', views.in_attendace, name='attendance_in'),
     path('attendace/out', views.out_attendace, name='attendance_out'),
+    
+    path('item-master',views.item_master,name='item_master'),
+    path('add-commission',views.add_commission,name='add_commission'),
+    path('membership-plan',views.membership_plan,name='membership_plan'),
+    path('membership-list',views.membership_list,name='membership_list'),
 )
