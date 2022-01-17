@@ -94,18 +94,17 @@
         </div>
         <div class="row mt-2">
             <div class="col-md-12 text-center">
-                <hr />
-                <input type="submit" value="Create Account" class="btn btn-success font-weight-bold btn-lg">
+                <input type="submit" value="Create Account" class="btn btn-primary font-weight-bold btn-lg">
             </div>
         </div>
     </form>
 </div>
 
-<!--Account List -->
+<!--Account Master List -->
 <div class="container-fluid p-3 mb-3 rounded bg-white">
     <div class="row">
         <div class="col-md-12 text-center">
-            <h4>Account List</h4>
+            <h4>Account Master List</h4>
             <hr />
         </div>
         <div class="col-md-12 table-responsive">
@@ -138,7 +137,7 @@
                         <td>{{master.mobile_number}}</td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-success text-white" onclick="edit_{{ master.id }}()" data-toggle="modal"
+                                <button class="btn btn-primary text-white" onclick="edit_{{ master.id }}()" data-toggle="modal"
                                     data-target="#editModal">Edit</button>
                                 <button class="bt btn-danger" onclick="delete_{{ master.id }}()" data-toggle="modal"
                                     data-target="#delete_modal">Delete</button>
@@ -197,11 +196,11 @@
                         <div class="row mt-2">
                             <div class="form-group col-md-6">
                                 <label class="label">Change Address 2</label>
-                                <input id="add2Id" type="text" name="address_2" class="form-control" />
+                                <input id="add_2Id" type="text" name="address_2" class="form-control" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="label">Change Address 3</label>
-                                <input id="add3_Id" type="text" name="address_3" class="form-control" />
+                                <input id="add_3Id" type="text" name="address_3" class="form-control" />
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -259,8 +258,17 @@
 	{% for master in account_master %}
 		function edit_{{ master.id }} (){
 			$("#grpmstr_name").val("{{ master.name }}")
+			$("#groupId").val("{{ master.group_master.id }}")
+			$("#groupId").attr("selected")
+			$("#branchId").val("{{ master.branch_master.id }}")
+			$("#branchId").attr("selected")
 			$("#add_1Id").val("{{ master.address_1 }}")
-			$("#mobId").val("{{ master.mobile_number }}")
+			$("#add_2Id").val("{{ master.address_2 }}")
+            $("#add_3Id").val("{{ master.address_3 }}")
+            $("#pinId").val("{{ master.pincode }}")
+            $("#stateId").val("{{ master.state }}")
+            $("#mobId").val("{{ master.mobile_number }}")
+            $('#update_form').attr('action', '{% url 'update_account_master' master.id %}')
 		}
 	{% endfor %}
 </script>

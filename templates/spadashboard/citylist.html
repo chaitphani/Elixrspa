@@ -14,6 +14,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="page-title-actions">
 		<button id="btnaddcity" type="button" class="btn btn-info">
 			<span class="btn-icon-wrapper">
@@ -25,6 +26,7 @@
 </div>
 {% endblock %}
 {% block home %}
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function () {
@@ -35,7 +37,7 @@
 	});
 </script>
 
-<!--add city -->
+<!--add city start -->
 <div class="container-fluid p-3 mb-3 rounded bg-white" id="citylistsection">
 	<div class="row">
 		<div class="col-md-12 text-center">
@@ -46,16 +48,17 @@
 	<form method="POST">
 		{% csrf_token %}
 		<div class="row">
-			<div class="col-md-6 form-group">
-				<label class="label" for="city">Enter City Name</label></br>
-				<input type="text" name="name" class="form-control" required/>
+			<div class="col-8 form-group">
+				<label class="label" for="city">Enter City Name</label>
+				<input type="text" placeholder="New delhi, Hyderabad" name="name" class="form-control" required/>
 			</div>
-			<div class="col-md-6 form-group pt-2"></br>
-				<input type="submit" class="btn btn-lg btn-block btn-info font-weight-bold" value="Add New City">
+			<div class="col-4 form-group pt-2"></br>
+				<input type="submit" class="btn btn-lg btn-primary font-weight-bold" value="Add New City">
 			</div>
 		</div>
 	</form>
 </div>
+<!--add city end-->
 
 <!--city list here-->
 <div class="container-fluid p-3 mb-3 rounded bg-white">
@@ -65,25 +68,21 @@
 			<hr />
 		</div>
 		<div class="col-md-12">
-			<table class="table text-center table-bordered" id="dtBasicExample">
+			<table class="table table-bordered table-striped text-center " id="dt_city_master">
 				<thead class="alert-light">
 					<tr>
 						<th>NAME</th>
-						<th class="text-center">Action</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for city in cities %}
 					<tr>
-						<td>{{ city.name }}</td>
-						<input type="hidden" name="{{ city.id }}" value="">
-						<td class="btn-group">
-							<a class="btn btn-primary font-weight-bold text-white" 
-								onclick="edit_{{ city.id }}()" data-toggle="modal"
-								data-target="#myModal"><i class="fa fa-fw fa-pencil"></i>&nbsp;Edit
-							</a>
-							<a class="btn btn-sm btn-danger" href="delete/{{ city.id }}">
-								<i class="fa fa-fw fa-trash"></i>&nbsp;Delete</a>
+						<td><input type="hidden" name="{{ city.id }}" value="">{{ city.name }}</td>
+						
+						<td class="btn-group" style="border:none">
+							<a class="btn btn-primary text-white" onclick="edit_{{ city.id }}()" data-toggle="modal" data-target="#myModal"><i class="fa fa-fw fa-pencil"></i>&nbsp;Edit</a>
+							<a class="btn btn-danger" href="delete/{{ city.id }}"><i class="fa fa-fw fa-trash"></i>&nbsp;Delete</a>
 						</td>
 					</tr>
 					{% endfor %}
@@ -92,35 +91,35 @@
 		</div>
 	</div>
 	<!-- Modal -->
-<div class="container">
-	<div class="modal" id="myModal" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"></button>
-					<h4 class="modal-title text-center">Edit City</h4>
+	<div class="container">
+		<div class="modal" id="myModal" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"></button>
+						<h4 class="modal-title text-center">Edit City</h4>
+					</div>
+					<div class="modal-body">
+						<form id="update_form" method="POST">
+							{% csrf_token %}
+							<div class="form-group">
+								<label for="name" class="label">Change Name</label>
+								<input id="city_name" type="text" name="name" class="form-control" required="required"/>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-sm btn-success">Update</button>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
 				</div>
-				<div class="modal-body">
-					<form id="update_form" method="POST">
-						{% csrf_token %}
-						<div class="form-group">
-							<label for="name" class="label">Change Name</label>
-							<input id="city_name" type="text" name="name" class="form-control" required="required"/>
-						</div>
-						<div class="form-group">
-							<button type="submit" class="btn btn-sm btn-success">Update</button>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-				</div>
-			</div>
 
+			</div>
 		</div>
 	</div>
-</div>
 
 	<!-- Modal -->
 	<div class="modal" id="myModals" role="dialog">
@@ -152,6 +151,37 @@
 		</div>
 	</div>
 </div>
+
+
+ <!--data tables cdn-->
+ <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
+ <script src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+ <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+ <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+ <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+ <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+ <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+ <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+ <!--data tables cdn-->
+
+<script>
+  $(document).ready( function () {
+	  $('#dt_city_master').DataTable({
+		  dom: 'Bfrtip',
+		  buttons: [
+			  // 'copyHtml5',
+			  // 'excelHtml5',
+			  'csvHtml5',
+			  'pdfHtml5'
+		  ]
+	  });
+  });
+</script>
+
 
 <script>
 	{% for city in cities %}
@@ -199,5 +229,4 @@
 	})
 
 </script>
-
 {% endblock %}

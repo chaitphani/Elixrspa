@@ -51,7 +51,7 @@
 		</div>
 		<div class="col-md-6">
 
-			<select name="city" class="form-control" id="">
+			<select name="city" class="form-control" id="" required>
 				<option value="">--Select City--</option>
 				{% for val in city %}
 
@@ -61,7 +61,7 @@
 
 		</div>
 		<div class="col-md-12 mt-3 text-center">
-			<input type="submit" class="btn btn-success btn-lg font-weight-bold" value="Add Group">
+			<input type="submit" class="btn btn-primary btn-lg font-weight-bold" value="Add Group">
 		</div>
 	</div>
 </form>
@@ -93,8 +93,8 @@
 						<td>{{master.city.name}}</td>
 						<td>
 							<div class="btn-group">
-								<button type="button" onclick="edit_{{ master.id }}()" data-toggle="modal" data-target="#editModal" class="btn btn-success text-white">Edit</button>
-								<button type="button" onclick="delete_{{ master.id }}()"	data-toggle="modal" data-target="#delete_modal" class="btn btn-danger">Delete</button>
+								<button type="button" onclick="edit_{{ master.id }}()" data-toggle="modal" data-target="#editModal" class="btn btn-primary text-white">Edit</button>
+								<button type="button" onclick="delete_{{ master.id }}()" data-toggle="modal" data-target="#delete_modal" class="btn btn-danger">Delete</button>
 							</div>
 						</td>
 					</tr>
@@ -105,8 +105,6 @@
 
 	</div>
 </div>
-
-
 
 <div class="container">
 	<div class="modal" id="editModal" role="dialog">
@@ -144,9 +142,6 @@
 	</div>
 </div>
 
-
-
-
 <!--working delete client details-->
 <div class="modal fade" id="delete_modal" role="dialog">
 	<div class="modal-dialog">
@@ -166,9 +161,6 @@
 	</div>
 </div>
 <!--end of delete client details-->
-
-
-
 
 <!--data tables cdn-->
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">

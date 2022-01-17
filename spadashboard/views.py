@@ -514,7 +514,7 @@ def account_master_edit(request, id):
 
     account_master_obj = AccountMaster.objects.get(id=id)
     branch_master_obj = BranchMaster.objects.get(id=request.POST.get('branch_master'))
-    group_master_obj = BranchMaster.objects.get(id=request.POST.get('group_master'))
+    group_master_obj = GroupMaster.objects.get(id=request.POST.get('group_master'))
 
     account_master_obj.name = request.POST.get('name')
     account_master_obj.address_1 = request.POST.get('address_1')

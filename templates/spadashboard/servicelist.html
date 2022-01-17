@@ -6,20 +6,19 @@
 <div class="page-title-wrapper">
 	<div class="page-title-heading">
 		<div class="page-title-icon">
-			<i class="fa fa-plus-circle icon-gradient bg-mean-fruit">
-			</i>
+			<i class="fa fa-plus-circle icon-gradient bg-mean-fruit"></i>
 		</div>
 		<div>
-			Manage Service
-			<div class="page-title-subheading">You can manage your service list here.</div>
+			Manage Therapy
+			<div class="page-title-subheading">You can manage your Therapy list here.</div>
 		</div>
 	</div>
 	<div class="page-title-actions">
 		<button id="btnaddservice" type="button" class="btn btn-info">
 			<span class="btn-icon-wrapper">
-				<i class="fa fa-plus-circle fa-fw"></i>
+				<i class="fa fa-plus-circle fa-lg"></i>
 			</span>
-			Add Service
+			Add Therapy
 		</button>
 	</div>
 </div>
@@ -41,7 +40,7 @@
 <div class="container-fluid p-5 mb-3 rounded bg-white" id="servicelistsection">
 	<div class="row">
 		<div class="col-md-12 text-center">
-			<h4>Service List
+			<h4>Therapy List
 				<hr class="hr1">
 			</h4>
 		</div>
@@ -50,11 +49,11 @@
 		{% csrf_token %}
 		<div class="row">
 			<div class="col-md-8 form-group">
-				<label for="city" class="label">Service Name</label>
+				<label for="city" class="label">Therapy Name</label>
 				<input type="text" name="name" class="form-control" required="required" />
 			</div>
 			<div class="col-md-4 pt-2"></br>
-				<button type="submit" class="btn btn-lg btn-block font-weight-bold btn-info"> Add Service</button>
+				<button type="submit" class="btn btn-lg font-weight-bold btn-info"> Add Therapy</button>
 			</div>
 		</div>
 	</form>
@@ -63,7 +62,7 @@
 <div class="container-fluid p-3 mb-3 rounded bg-white" id="servicelistsection">
 	<div class="row">
 		<div class="col-md-12 text-center">
-			<h4>Service List</h4>
+			<h4>Therapy List</h4>
 			<hr />
 		</div>
 		<div class="col-12">
@@ -103,13 +102,13 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"></button>
-						<h4 class="modal-title text-center">Update Service</h4>
+						<h4 class="modal-title text-center">Update Therapy</h4>
 					</div>
 					<div class="modal-body">
 						<form id="modify_form" method="POST">
 							{% csrf_token %}
 							<div class="form-group">
-								<label for="name" class="label">Change Service</label>
+								<label for="name" class="label">Change Therapy</label>
 								<input id="service_name" type="text" name="name" class="form-control" required/>
 							</div>
 							<div class="form-group">

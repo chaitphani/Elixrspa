@@ -5,11 +5,11 @@
 <div class="page-title-wrapper">
     <div class="page-title-heading">
         <div class="page-title-icon">
-            <i class="fa fa-user icon-gradient bg-mean-fruit">
+            <i class="fa fa-hourglass-half icon-gradient bg-mean-fruit">
             </i>
         </div>
         <div>
-            Manage Daily Service
+            Manage Daily Sales
             <div class="page-title-subheading">You can manage your clients here.
             </div>
         </div>
@@ -17,7 +17,7 @@
     <div class="page-title-actions">
         <button id="btnaddclient" type="button" class="btn btn-info">
             <span class="btn-icon-wrapper">
-                <i class="fa fa-user-plus fa-fw"></i>
+                <i class="fa fa-hourglass-half fa-fw"></i>
             </span>
             Add Sales
         </button>
@@ -63,7 +63,7 @@
                     </div>                       
                     <div class="col-md-4 form-group">
                         <label>Therapy</label>
-                        <select name="service" id="treatementService" style="width: 100%;" required>
+                        <select name="service" class="form-control" id="treatementService" style="width: 100%;" required>
                             <option value=""> Select Therapy..</option>
                             {% for service in services %}
                                 <option value="{{service.id}}">{{ service.name }}</option>
@@ -72,7 +72,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label>Therapist</label>
-                        <select name="serviceby" id="treatmentBy" style="width: 100%;" required>
+                        <select name="serviceby" class="form-control" id="treatmentBy" style="width: 100%;" required>
                             <option value=""> Select Therapist..</option>
                             {% for staff in staffs %}
                                 <option value="{{staff.id}}">{{ staff.name }}</option>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label>Duration(In-Minute)</label>
-                        <select id="duration" name="duration" onchange="myFunction($('#timein.val'), this)" required style="width: 100%;">
+                        <select id="duration" class="form-control" name="duration" onchange="myFunction($('#timein.val'), this)" required style="width: 100%;">
                             <option value="">Select Duration..</option>
                             {% for d in duration %}
                                 <option value="{{d.duration}}">{{ d.duration }}</option>
@@ -121,7 +121,7 @@
 <div class="container p-3 rounded bg-white" id="clientlisttable">
     <div class="row">
         <div class="col-md-12 text-center">
-            <h4>Client Details</h4><hr/>
+            <h4>Daily Sales List</h4><hr/>
         </div>
         
         <div class="col-12 table table-responsive">

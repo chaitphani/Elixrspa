@@ -4,7 +4,7 @@
 <div class="page-title-wrapper">
     <div class="page-title-heading">
         <div class="page-title-icon">
-            <i class="fa fa-user icon-gradient bg-mean-fruit">
+            <i class="fa fa-clock icon-gradient bg-mean-fruit">
             </i>
         </div>
         <div>
@@ -16,7 +16,7 @@
     <div class="page-title-actions">
         <button id="btnaddclient" type="button" class="btn btn-info">
             <span class="btn-icon-wrapper">
-                <i class="fa fa-user-plus fa-fw"></i>
+                <i class="fa fa-clock fa-fw"></i>
             </span>
             Add Duration
         </button>
@@ -44,14 +44,14 @@
             <form method="POST">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="col-md-4 form-group">
+                    <div class="col-8 form-group">
                         <label>Duration*</label>
                         <input type="text" name="duration" class="form-control" required/>
                     </div>
-                </div>
-                <div class="text-center">
-                    <input type="submit" class="btn btn-primary font-weight-bold" value="Add New Client">
-                </div>
+                    <div class="col-4 mt-2"></br>
+                        <input type="submit" class="btn btn-primary font-weight-bold" value="Add New Client">
+                    </div>
+               </div>
             </form>
         </div>
     </div>
@@ -76,7 +76,7 @@
             </div>
             <hr> -->
             <div class="table table-responsive">
-                <table id="example" class="table table-striped table-bordered table-sm">
+                <table id="example" class="table table-striped text-center table-bordered table-sm">
                     <thead>
                         <tr>
                             <th style="display: none;">ID</th>
@@ -86,12 +86,12 @@
                     </thead>
                     {% for duration in durations %}
                     <tbody>
-                        <tr class="text-center">
+                        <tr>
                             <td style="display: none;">{{duration.id}}</td>
                             <td>{{duration.duration}}</td>
                             <td>
                                 <a class="btn btn-sm btn-danger text-white font-weight-bold" onclick="delete_{{ duration.id }}()"
-                                    data-toggle="modal" data-target="#delete_modal"><i class="fa fa-trash fa-lg"></i>
+                                    data-toggle="modal" data-target="#delete_modal"><i class="fa fa-trash"></i>&nbsp; Delete
                                 </a>
                             </td>
                         </tr>
