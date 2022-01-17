@@ -2,6 +2,7 @@
 {% load static %}
 {% block heading %}
 
+
 <div class="page-title-wrapper">
     <div class="page-title-heading">
         <div class="page-title-icon">
@@ -269,6 +270,9 @@
             $("#stateId").val("{{ master.state }}")
             $("#mobId").val("{{ master.mobile_number }}")
             $('#update_form').attr('action', '{% url 'update_account_master' master.id %}')
+		}
+        function delete_{{ master.id }} (){
+			$("#s_delete").attr("href", "{% url 'delete_account_master' master.id %}")
 		}
 	{% endfor %}
 </script>
