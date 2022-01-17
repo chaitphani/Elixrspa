@@ -95,7 +95,7 @@ class AccountMaster(models.Model):
     pincode = models.CharField(max_length=6, null=True, blank=True)
     mobile_number = models.CharField(max_length=13)
 
-    user_existence = models.BooleanField(default=False)  # old, new
+    user_existence = models.CharField(max_length=3, null=True, blank=True)  # old, new
 
     branch_master = models.ForeignKey(BranchMaster, on_delete=models.CASCADE)
     group_master = models.ForeignKey(GroupMaster, on_delete=models.CASCADE)

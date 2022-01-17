@@ -131,8 +131,8 @@ def clientlist(request):
         'services':Services.objects.all(),
         'duration':Addduration.objects.all(),
         "paym": Paymentmod.objects.all(),
-        'clients':AccountMaster.objects.filter(group_member__name='client'),
-        'staffs':AccountMaster.objects.filter(group_member__name='staff'),
+        'clients':AccountMaster.objects.filter(group_master__name='client'),
+        'staffs':AccountMaster.objects.filter(group_master__name='staff'),
         'guests':Guest.objects.all(),
     }
     return render(request,'spadashboard/clientlist.html', data)
@@ -455,8 +455,8 @@ def group_master(request):
         return redirect('group_master')
 
     data = {
-        'group_master':GroupMaster.objects.all(),
         'city':Citys.objects.all(),
+        'group_master':GroupMaster.objects.all()
     }
     return render(request,'spadashboard/group_master.html', data)
 
@@ -479,6 +479,7 @@ def group_master_delete(request, id):
     return redirect('group_master')    
 
 
+
 def account_master(request):
     if request.method == 'POST':
 
@@ -493,7 +494,7 @@ def account_master(request):
         branch_master_obj = BranchMaster.objects.get(id=request.POST.get('branch_master'))
         group_master_obj = GroupMaster.objects.get(id=request.POST.get('group_master'))
 
-        if AccountMaster.objects.filter(mobile_number=mobile_number, group_master_obj__name='client').exists():
+        if AccountMaster.objects.filter(mobile_number=mobile_number, group_master__name='client').exists():
             new_account_master = AccountMaster.objects.create(name=name, address_1=address_1, address_2=address_2, address_3=address_3, state=state, pincode=pincode, mobile_number='Repeat', branch_master=branch_master_obj, group_master=group_master_obj, user_existence='old')
         else:
             new_account_master = AccountMaster.objects.create(name=name, address_1=address_1, address_2=address_2, address_3=address_3, state=state, pincode=pincode, mobile_number=mobile_number, branch_master=branch_master_obj, group_master=group_master_obj, user_existence='New')
@@ -515,7 +516,7 @@ def account_master_edit(request, id):
 
     account_master_obj = AccountMaster.objects.get(id=id)
     branch_master_obj = BranchMaster.objects.get(id=request.POST.get('branch_master'))
-    group_master_obj = BranchMaster.objects.get(id=request.POST.get('group_master'))
+    group_master_obj = GroupMaster.objects.get(id=request.POST.get('group_master'))
 
     account_master_obj.name = request.POST.get('name')
     account_master_obj.address_1 = request.POST.get('address_1')

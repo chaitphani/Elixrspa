@@ -43,7 +43,6 @@
 			<hr />
 		</div>
 	</div>
-
 	<form action="" method="post">
 		{% csrf_token %}
 		<div class="row">
@@ -54,12 +53,13 @@
 				<select name="city" class="form-control" id="" required>
 					<option value="">--Select City--</option>
 					{% for val in city %}
-						<option value="{{val.id}}">{{val.name}}</option>
+					<option value="{{val.id}}">{{val.name}}</option>
 					{% endfor %}
 				</select>
+
 			</div>
 			<div class="col-md-12 mt-3 text-center">
-				<input type="submit" class="btn btn-success btn-lg font-weight-bold" value="Add Group">
+				<input type="submit" class="btn btn-primary btn-lg font-weight-bold" value="Add Group">
 			</div>
 		</div>
 	</form>
@@ -80,6 +80,7 @@
 						<th>Group Code#</th>
 						<th>Group name</th>
 						<th>City Name</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -88,6 +89,15 @@
 						<td>{{master.code}}</td>
 						<td>{{master.name}}</td>
 						<td>{{master.city}}</td>
+							<td>{{master.city.name}}</td>
+							<td>
+								<div class="btn-group">
+									<button type="button" onclick="edit_{{ master.id }}()" data-toggle="modal"
+										data-target="#editModal" class="btn btn-primary text-white">Edit</button>
+									<button type="button" onclick="delete_{{ master.id }}()" data-toggle="modal"
+										data-target="#delete_modal" class="btn btn-danger">Delete</button>
+								</div>
+							</td>
 					</tr>
 					{% endfor %}
 				</tbody>
@@ -97,7 +107,61 @@
 	</div>
 </div>
 
+<div class="container">
+	<div class="modal" id="editModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-center">Edit Group Master</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form id="update_form" method="POST">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="name" class="label">Change Group Name</label>
+							<input id="grpmstr_name" type="text" name="name" class="form-control" required="required" />
+						</div>
+						<div class="form-group">
+							<label>City Name</label>
+							<select name="city" id="cityId" class="form-control" required>
+								{% for val in city %}
+								<option value="{{val.id}}">{{val.name}}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group text-right">
+							<button type="submit" class="btn btn-sm btn-success font-weight-bold">Update</button>
+						</div>
+					</form>
+				</div>
 
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!--working delete client details-->
+<div class="modal fade" id="delete_modal" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content p-3">
+			<div class="modal-header">
+				<h4 class="modal-title text-center">Delete Group master</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure to delete Group master</p>
+				<div class="text-right">
+					<a id="s_delete" class="btn btn-danger text-white">Delete</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end of delete client details-->
 
 <!--data tables cdn-->
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
@@ -127,4 +191,5 @@
 		});
 	});
 </script>
+
 {% endblock %}
