@@ -386,12 +386,15 @@ def duration_delete(request, id):
 def payment_mode(request):
 
     if request.method == 'POST':
-        new_payment_mode = Paymentmod.objects.create(name=request.POST.get('name'))
+
+        group_master = GroupMaster.objects.get(id=request.POST.get('group_master'))
+        new_payment_mode = Paymentmod.objects.create(name=request.POST.get('name'), group_master=group_master)
         new_payment_mode.save()
         return redirect('payment_mode')
 
     data = {
-        'payment_modes':Paymentmod.objects.all()
+        'payment_modes':Paymentmod.objects.all(),
+        'group_master':GroupMaster.objects.all(),
     }
     return render(request,'spadashboard/payment_mode.html', data)
 
