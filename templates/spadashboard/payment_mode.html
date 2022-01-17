@@ -50,8 +50,11 @@
                     </div>
                     <div class="col-6">
                         <label>Group Master*</label>
-                        <select class="form-control" name="group_master" id="">
+                        <select class="form-control" name="group_master" id="" required>
                             <option value="">--Select Group Master--</option>
+                            {% for master in group_master %}
+                                <option value="{{master.id}}">{{master.name}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="col-12">
