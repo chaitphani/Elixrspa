@@ -447,13 +447,16 @@ def group_master(request):
 
     if request.method == 'POST':
         city = Citys.objects.get(id=request.POST.get('city'))
+
         new_group_master = GroupMaster.objects.create(name=request.POST.get('name'), city=city)
         new_group_master.code = '20000-'+str(new_group_master.id)
         new_group_master.save()
+            
         return redirect('group_master')
 
     data = {
-        'group_master':GroupMaster.objects.all()
+        'group_master':GroupMaster.objects.all(),
+        'city':Citys.objects.all(),
     }
     return render(request,'spadashboard/group_master.html', data)
 

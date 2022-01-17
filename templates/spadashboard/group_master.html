@@ -44,19 +44,25 @@
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="col-md-6">
-			<input type="text" placeholder="Group Name" class="form-control" required>
+	<form action="" method="post">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-md-6">
+				<input type="text" name="name" placeholder="Group Name" class="form-control" required>
+			</div>
+			<div class="col-md-6">
+				<select name="city" class="form-control" id="" required>
+					<option value="">--Select City--</option>
+					{% for val in city %}
+						<option value="{{val.id}}">{{val.name}}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="col-md-12 mt-3 text-center">
+				<input type="submit" class="btn btn-success btn-lg font-weight-bold" value="Add Group">
+			</div>
 		</div>
-		<div class="col-md-6">
-			<select name="" class="form-control" id="">
-				<option value="">--Select City--</option>
-			</select>
-		</div>
-		<div class="col-md-12 mt-3 text-center">
-			<input type="button" class="btn btn-success btn-lg font-weight-bold" value="Add Group">
-		</div>
-	</div>
+	</form>
 </div>
 
 <!--Branch City -->
@@ -81,7 +87,7 @@
 					<tr>
 						<td>{{master.code}}</td>
 						<td>{{master.name}}</td>
-						<td></td>
+						<td>{{master.city}}</td>
 					</tr>
 					{% endfor %}
 				</tbody>
