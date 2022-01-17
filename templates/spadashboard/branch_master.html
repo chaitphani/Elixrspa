@@ -69,6 +69,7 @@
 					<tr>
 						<th>Branch Code#</th>
 						<th>Branch name</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -76,11 +77,71 @@
 						<tr>
 							<td>{{master.code}}</td>
 							<td>{{master.name}}</td>
+							<td class="btn-group" style="border:none">
+								<div class="btn-group">
+									<button type="button" onclick="edit_{{ master.id }}()" data-toggle="modal"
+										data-target="#editModal" class="btn btn-primary text-white">Edit</button>
+									<button type="button" onclick="delete_{{ master.id }}()" data-toggle="modal"
+										data-target="#delete_modal" class="btn btn-danger">Delete</button>
+								</div>
+							</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
+	</div>
+</div>
+
+
+<!-- Modal -->
+<div class="container">
+	<div class="modal" id="editModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-center">Edit Branch</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form id="update_form" method="POST">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="name" class="label">Change Name</label>
+							<input id="branch_name" type="text" name="name" class="form-control" required="required"/>
+						</div>
+						<div class="form-group text-right">
+							<button type="submit" class="btn btn-lg btn-success text-white">Update</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="delete_modal" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title text-center">Delete Branch</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+
+				<p>Are you sure want delete data</p>
+
+				<div class="form-group text-right">
+					<a class="btn btn-lg btn-danger text-white" id="delbranch">Delete</a>
+				</div>
+
+			</div>
+		</div>
+
 	</div>
 </div>
 
@@ -113,5 +174,21 @@
 		  ]
 	  });
   });
+</script>
+
+<script>
+	{% for master in branch_master %}
+
+	function edit_{{master.id}}(){
+	$('#branch_name').val('{{master.name}}')
+$('#update_form').attr('action','{%url 'update_branch_master' master.id %}')
+	}
+
+	function delete_{{master.id}}(){
+	$('#delbranch').attr('href','{%url 'delete_branch_master' master.id %}')
+		}
+
+	{% endfor %}
+
 </script>
 {% endblock %}
