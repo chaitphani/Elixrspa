@@ -89,7 +89,6 @@
 						<td>{{master.code}}</td>
 						<td>{{master.name}}</td>
 						<td>{{master.city}}</td>
-							<td>{{master.city.name}}</td>
 							<td>
 								<div class="btn-group">
 									<button type="button" onclick="edit_{{ master.id }}()" data-toggle="modal"
@@ -125,7 +124,8 @@
 						</div>
 						<div class="form-group">
 							<label>City Name</label>
-							<select name="city" id="cityId" class="form-control" required>
+							<select name="city" id="groupID" class="form-control" required>
+								<option value="">Select city</option>
 								{% for val in city %}
 								<option value="{{val.id}}">{{val.name}}</option>
 								{% endfor %}
@@ -136,9 +136,7 @@
 						</div>
 					</form>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
 </div>
@@ -192,4 +190,18 @@
 	});
 </script>
 
+<script>
+	{% for master in group_master %}
+		function edit_{{ master.id }} (){
+			$("#grpmstr_name").val("{{ master.name }}")
+			$("#groupID").val("{{ master.city.id }}")
+			$("#groupID").attr("selected")
+			$("#update_form").attr("action", "{% url 'update_group_master' master.id %}")
+		}
+
+		function delete_{{ master.id }}(){
+			$('#s_delete').attr("href", "{% url 'delete_group_master' master.id %}")
+		}
+	{% endfor %}
+</script>
 {% endblock %}

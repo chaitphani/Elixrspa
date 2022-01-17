@@ -80,7 +80,7 @@ def city_edit(request, id):
 
 def city_delete(request, id):
     city_obj = Citys.objects.get(id=id)
-    city_obj.delte()
+    city_obj.delete()
     return redirect('citylist')
 
 

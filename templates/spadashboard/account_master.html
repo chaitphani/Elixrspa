@@ -81,7 +81,7 @@
         </div>
         <div class="row mt-2">
             <div class="col-md-6">
-                <input type="number" name="pincode" placeholder="Pin Code" class="form-control">
+                <input type="text" name="pincode" placeholder="Pin Code" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" maxlength="6" minlength="6">
             </div>
             <div class="col-md-6">
                 <input type="text" name="state" placeholder="State" class="form-control">
@@ -89,7 +89,7 @@
         </div>
         <div class="row mt-2">
             <div class="col-md-12">
-                <input type="number" name="mobile_number" placeholder="Mobile Number" class="form-control" required>
+                <input type="text" name="mobile_number" placeholder="Mobile Number" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" class="form-control" maxlength="12" minlength="10" required>
             </div>
         </div>
         <div class="row mt-2">

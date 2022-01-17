@@ -79,10 +79,17 @@
 					{% for city in cities %}
 					<tr>
 						<td><input type="hidden" name="{{ city.id }}" value="">{{ city.name }}</td>
-						
 						<td class="btn-group" style="border:none">
-							<a class="btn btn-primary text-white" onclick="edit_{{ city.id }}()" data-toggle="modal" data-target="#myModal"><i class="fa fa-fw fa-pencil"></i>&nbsp;Edit</a>
-							<a class="btn btn-danger" href="delete/{{ city.id }}"><i class="fa fa-fw fa-trash"></i>&nbsp;Delete</a>
+							<!-- <a class="btn btn-primary text-white" onclick="edit_{{ city.id }}()" data-toggle="modal" data-target="#myModal"><i class="fa fa-fw fa-pencil"></i>&nbsp;Edit</a> -->
+							<button onclick="edit_{{ city.id }}()" data-toggle="modal"
+								data-target="#editModal" class="btn btn-primary text-white">
+								<i class="fa fa-fw fa-pencil"></i>&nbsp;Edit
+							</button>
+							<!-- <a class="btn btn-danger" href="delete/{{ city.id }}"><i class="fa fa-fw fa-trash"></i>&nbsp;Delete</a> -->
+							<button type="button" onclick="delete_{{ city.id }}()" data-toggle="modal"
+									data-target="#delete_modal" class="btn btn-danger"><i class="fa fa-fw fa-trash"></i>
+										&nbsp;Delete
+							</button>
 						</td>
 					</tr>
 					{% endfor %}
@@ -92,7 +99,7 @@
 	</div>
 	<!-- Modal -->
 	<div class="container">
-		<div class="modal" id="myModal" role="dialog">
+		<div class="modal" id="editModal" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->
 				<div class="modal-content">
@@ -122,32 +129,21 @@
 	</div>
 
 	<!-- Modal -->
-	<div class="modal" id="myModals" role="dialog">
+	<div class="modal fade" id="delete_modal" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
-			<div class="modal-content">
+			<div class="modal-content p-3">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"></button>
 					<h4 class="modal-title text-center">Delete City</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-
-					<p>Are you sure want delete data</p>
-
-					<div class="form-group">
-						{% if city %}
-
-						<a class="btn btn-sm btn-danger" href="delete/{{ city.id }}">Delete</a>
-						{%endif%}
+					<p>Are you sure to delete City</p>
+					<div class="text-right">
+						<a id="city_delete" class="btn btn-danger text-white">Delete</a>
 					</div>
-
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>
@@ -181,13 +177,15 @@
 	  });
   });
 </script>
-
-
 <script>
 	{% for city in cities %}
 		function edit_{{ city.id }} (){
 			$("#city_name").val("{{ city.name }}")
 			$("#update_form").attr("action", "{% url 'update_city' city.id %}")
+		}
+
+		function delete_{{ city.id }}(){
+			$('#city_delete').attr("href", "{% url 'delete_city' city.id %}")
 		}
 	{% endfor %}
 </script>

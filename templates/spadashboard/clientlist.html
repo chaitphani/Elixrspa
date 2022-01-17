@@ -463,21 +463,23 @@
 </script>
 <script>
     $(document).ready(function() {
-        $('#duration').select2({
-            theme: "classic"
-        });
-    });
-    
-    $(document).ready(function() {
-        $('#pm').select2({
-            theme: "classic"
-        });
-    });
-
-    $(document).ready(function() {
         $('#account_master').select2({
             theme: "classic"
         });
-    });    
+        $('#treatementService').select2({
+            theme: "classic"
+        });
+
+        $('#treatmentBy').select2({
+            theme: "classic"
+        });
+        $('#pm').select2({
+            theme: "classic"
+        });
+        $('#duration').select2({
+            theme: "classic"
+        });
+    });  
+    
 </script>
 {% endblock %}
